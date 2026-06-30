@@ -43,7 +43,6 @@ export function MythicFeedbackDialog(props) {
       props.onClose();
     },
     onError: error => {
-      console.log(error)
       snackActions.warning(error.message);
     }
   });

@@ -163,7 +163,6 @@ const VirtualTreeRow = React.memo(({
 }) => {
   const itemTreeData = ListProps.data[ListProps.index];
   const item = ListProps.treeRootData[itemTreeData.group]?.[itemTreeData.host]?.[itemTreeData.full_path_text] || itemTreeData;
-  //console.log("item", item, "itemlookup", ListProps.treeRootData[itemTreeData.host]?.[itemTreeData.name])
   const theme = useTheme();
   const handleOnClickButton = (e) => {
     e.stopPropagation();
@@ -284,7 +283,6 @@ const caseInsensitiveCompare = (a, b) => {
     try{
         return a.localeCompare(b);
     }catch(error){
-        console.log("localeCompare failed for", a, b);
         return a < b;
     }
 }
@@ -304,7 +302,6 @@ const FileBrowserVirtualTreePreMemo = ({
   const flattenNode = useCallback(
     // node is just a full_path_text
     (node, group, host, depth = 0) => {
-        //console.log(node, group, host, depth);
       if(depth === 0){
         return [
           {
@@ -371,10 +368,8 @@ const FileBrowserVirtualTreePreMemo = ({
     [openNodes, showDeletedFiles, treeAdjMatrix] // eslint-disable-line react-hooks/exhaustive-deps
   );
   const flattenedNodes = useMemo(() => {
-    //console.log("in tree", treeRootData, treeAdjMatrix)
     // need to return an array
     let finalData = [];
-    //console.log(treeAdjMatrix);
       const groupKeys = Object.keys(treeAdjMatrix).sort(caseInsensitiveCompare);
       for(let i = 0; i < groupKeys.length; i++){
         finalData.push({
@@ -409,7 +404,6 @@ const FileBrowserVirtualTreePreMemo = ({
                 children: treeAdjMatrix[groupKeys[i]][hostKeys[j]][""],
                 full_path_text: hostKeys[j],
             });
-            //console.log(matrix);
             finalData.push(...Object.keys(treeAdjMatrix[groupKeys[i]][hostKeys[j]][""]).sort(caseInsensitiveCompare).reduce((prev, c) => {
                 if(!showDeletedFiles && c.deleted) {
                     return [...prev];

@@ -168,7 +168,6 @@ export function MitreAttack({me}){
     }
     const [getCommands] = useLazyQuery(Get_CommandAttacks,{
       onError: data => {
-        console.error(data)
       },
       fetchPolicy: "network-only",
       onCompleted: (data) => {
@@ -181,7 +180,6 @@ export function MitreAttack({me}){
             // now check if there's a data.attackcommand entry with attack_id == updatingMitre[key].rows[i].id
             updatingMitre[key].rows[i].commands = [];
             attackCommands = attackCommands.filter( (attackcommand) => {
-              //console.log(attackcommand, updatingMitre[key].rows[i]);
               if(attackcommand.attack_id === updatingMitre[key].rows[i].id){
                 updatingMitre[key].rows[i].commands.push({...attackcommand.command});
                 // we've already added this entry from data.attackcommand, so not bother processing it for the next row/column
@@ -199,7 +197,6 @@ export function MitreAttack({me}){
     });
     const [getCommandsFiltered] = useLazyQuery(Get_CommandAttacksFiltered,{
       onError: data => {
-        console.error(data)
       },
       fetchPolicy: "network-only",
       onCompleted: (data) => {
@@ -212,7 +209,6 @@ export function MitreAttack({me}){
             // now check if there's a data.attackcommand entry with attack_id == updatingMitre[key].rows[i].id
             updatingMitre[key].rows[i].commands = [];
             attackCommands = attackCommands.filter( (attackcommand) => {
-              //console.log(attackcommand, updatingMitre[key].rows[i]);
               if(attackcommand.attack_id === updatingMitre[key].rows[i].id){
                 updatingMitre[key].rows[i].commands.push({...attackcommand.command});
                 // we've already added this entry from data.attackcommand, so not bother processing it for the next row/column
@@ -230,7 +226,6 @@ export function MitreAttack({me}){
     });
     const [getTasks] = useLazyQuery(Get_TaskAttacks,{
       onError: data => {
-        console.error(data)
       },
       fetchPolicy: "network-only",
       onCompleted: (data) => {
@@ -244,7 +239,6 @@ export function MitreAttack({me}){
             // now check if there's a data.attackcommand entry with attack_id == updatingMitre[key].rows[i].id
             updatingMitre[key].rows[i].tasks = [];
             attackTasks = attackTasks.filter( (attacktask) => {
-              //console.log(attackcommand, updatingMitre[key].rows[i]);
               if(attacktask.attack_id === updatingMitre[key].rows[i].id){
                 updatingMitre[key].rows[i].tasks.push({...attacktask.task});
                 // we've already added this entry from data.attackcommand, so not bother processing it for the next row/column
@@ -262,7 +256,6 @@ export function MitreAttack({me}){
     });
     const [getTasksFiltered] = useLazyQuery(Get_TaskAttacksFiltered,{
       onError: data => {
-        console.error(data)
       },
       fetchPolicy: "network-only",
       onCompleted: (data) => {
@@ -276,7 +269,6 @@ export function MitreAttack({me}){
             // now check if there's a data.attackcommand entry with attack_id == updatingMitre[key].rows[i].id
             updatingMitre[key].rows[i].tasks = [];
             attackTasks = attackTasks.filter( (attacktask) => {
-              //console.log(attackcommand, updatingMitre[key].rows[i]);
               if(attacktask.attack_id === updatingMitre[key].rows[i].id){
                 updatingMitre[key].rows[i].tasks.push({...attacktask.task});
                 // we've already added this entry from data.attackcommand, so not bother processing it for the next row/column
@@ -304,7 +296,6 @@ export function MitreAttack({me}){
             // now check if there's a data.attackcommand entry with attack_id == updatingMitre[key].rows[i].id
             updatingMitre[key].rows[i].tasks = [];
             attackTasks = attackTasks.filter( (attacktask) => {
-              //console.log(attackcommand, updatingMitre[key].rows[i]);
               if(attacktask.attack_id === updatingMitre[key].rows[i].id){
                 updatingMitre[key].rows[i].tasks.push({...attacktask.task});
                 // we've already added this entry from data.attackcommand, so not bother processing it for the next row/column

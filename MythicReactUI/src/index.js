@@ -65,12 +65,11 @@ export const isJWTValid = () => {
           for(let i = 0; i < cookies.length; i++){
               let cookiePieces = cookies[i].split("=");
               if(cookiePieces.length !== 2){
-                  console.log("bad number of cookie pieces", "cookie", cookies[i])
+                  // invalid cookie format, skip
               } else if(cookiePieces[0].trim() !== "user") {
-                  console.log("unknown cookie", "name", cookiePieces[0].trim());
+                  // not the user cookie, skip
               } else {
                   try{
-                      console.log("user cookie found, trying to parse");
                       let cookieString = decodeURIComponent(cookiePieces[1].trim());
                       let cookieJSON = JSON.parse(atob(cookieString));
                       if("access_token" in cookieJSON){
@@ -79,20 +78,17 @@ export const isJWTValid = () => {
                           access_token = localStorage.getItem("access_token");
                       }else{
                           snackActions.warning("Invalid Authentication");
-                          console.log("Error", cookieJSON);
                       }
                   }catch(error){
-                      console.log("error processing cookie value", error)
+                      // failed to process cookie
                   }
               }
           }
       }
   }
-  //console.log("in isJWTValid", "access_token", access_token);
   if(access_token){
     const decoded_token = jwtDecode(access_token);
     if(getSkewedNow().getTime() > decoded_token.exp * 1000){
-      console.log("exp is expired: ", decoded_token.exp * 1000, getSkewedNow().getTime())
       return false;
     }else{
       return true;
@@ -103,7 +99,6 @@ export const isJWTValid = () => {
 }
 export const JWTTimeLeft = () => {
   let access_token = localStorage.getItem("access_token");
-  //console.log("in isJWTValid", "access_token", access_token);
   if(access_token){
     const decoded_token = jwtDecode(access_token);
     return (decoded_token.exp * 1000) - getSkewedNow();
@@ -121,15 +116,12 @@ const authLink = setContext( async (_, {headers}) => {
     let access_token = localStorage.getItem('access_token');
     if(access_token){
       const decoded_token = jwtDecode(access_token);
-      //console.log(decoded_token);
       // JWT lifetime is 4 hours. If there's 2hrs or less left of the JWT, update it
       let diff = (decoded_token.exp * 1000) - getSkewedNow();
       let twoHours = 30 * 60000; // 30min in milliseconds
       // we want to make sure we try to get a new access_token while the current one is still active or it'll fail
       if(!isJWTValid()){
-          console.log("token is no longer valid, try to get a new token");
           const updated = await GetNewToken();
-          //console.log("updated?", updated);
           if(updated){
               return{
                   headers: {
@@ -138,13 +130,10 @@ const authLink = setContext( async (_, {headers}) => {
                   }
               }
           } else {
-              console.log("JWT is no longer valid and failed to get new tokens");
               FailedRefresh();
           }
       } else if(diff < twoHours && diff > 0){
-          console.log("token is at its half life or less, try to get a new token");
           const updated = await GetNewToken();
-          //console.log("updated?", updated);
           if(updated){
               return{
                   headers: {
@@ -155,10 +144,8 @@ const authLink = setContext( async (_, {headers}) => {
           }
       }
     }else{
-      console.log("no access token");
       FailedRefresh();
     }
-    //console.log("should be called after updating if needed");
     return {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       headers: {
@@ -168,22 +155,19 @@ const authLink = setContext( async (_, {headers}) => {
     }
 });
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  console.log("errors?");
   try{
     if (graphQLErrors) {
-      console.log("[graphQLError]", graphQLErrors);
       for (let err of graphQLErrors) {
         switch (err.extensions.code) {
           case 'forbidden':
-              snackActions.error(err.message);
+              snackActions.error("You don't have permission to perform this action. Contact your admin.");
               break;
           case 'access-denied':
-              snackActions.error(err.message);
+              snackActions.error("Access denied. Please check your permissions or log in again.");
               break;
             //fallsthrough
           case 'start-failed':
             // when AuthenticationError thrown in resolver
-              console.log("got start-failed error in graphql");
             // modify the operation context with a new token
             /*
             return promiseToObservable(
@@ -196,23 +180,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
                 },
               });
               // retry the request, returning the new observable
-              console.log("forwarding operation in promise thingy", localStorage.getItem("access_token"))
-              return forward(operation);
               });
               */
-             console.log("would have asked for new token, but auth link will handle it");
           case 'validation-failed':
-            console.log(err);
             return;
           default:
-              console.log(err);
               snackActions.error(err.message);
         }
       }
     }
     if (networkError) {
-      console.log("[Network error]", networkError);
-      console.log(networkError.extensions, networkError.message);
       
       if(networkError.extensions === undefined){
         meState({...meState(), badConnection: true});
@@ -222,22 +199,19 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       }
       switch (networkError.extensions.code) {
           case 'access-denied':
-            snackActions.warning("Access Denied");
+            snackActions.warning("Access denied. Your session may have expired. Please log in again.");
             break;
           case 'start-failed':
             // when AuthenticationError thrown in resolver
-              console.log("got start-failed error in network");
               FailedRefresh();
               window.location = "/new/login";
               break;
           default:
-              console.log(networkError);
         }
         
     }
   }catch(error){
-    snackActions.error("Failed to connect to Mythic, please refresh");
-    console.log(error);
+    snackActions.error("Connection lost. Reconnecting...");
     restartWebsockets();
     window.location = "/new/login";
     return;
@@ -260,21 +234,16 @@ export const GetNewToken = async () =>{
       const response = await fetch('/refresh', requestOptions);
       if (response.ok) {
           return response.json().then(data => {
-              //console.log(data)
               if("access_token" in data){
                   successfulRefresh(data);
-                  console.log("successfully got new access_token");
                   fetchingNewToken = false;
                   return true;
               }else{
-                  console.log("calling FailedRefresh from GetNewToken call");
                   FailedRefresh();
                   fetchingNewToken = false;
                   return false;
               }
           }).catch(error => {
-              console.log("Error trying to get json response in GetNewToken", error);
-              console.log(response);
               FailedRefresh();
               fetchingNewToken = false;
               return false;
@@ -287,7 +256,6 @@ export const GetNewToken = async () =>{
           return true
       }
   }catch(error){
-      console.log(error);
       FailedRefresh();
       fetchingNewToken = false;
       return false;
@@ -303,11 +271,9 @@ const wsClient = createClient({
     reconnectionAttempts: 3,
     on: {
       error: (err) => {
-          //console.log("in on.error", err);
           meState({...meState(), badConnection: true});
       },
       connected: (socket) => {
-          //console.log("in on.connected", socket);
           meState({...meState(), badConnection: false});
       }
     },
@@ -337,14 +303,12 @@ export const apolloClient = new ApolloClient({
     cache
   });
 export function restartWebsockets () {
-    console.log("restarting websockets");
     wsClient.dispose();
 }
   // if the user refreshes the page, we lose all react tracking, so try to reload from localstorage first
 if(localStorage.getItem("access_token") !== null){
   if(isJWTValid(localStorage.getItem("access_token"))){
       if(localStorage.getItem("user") !== null){
-          console.log("loading meState from localStorage")
           try {
               let userData = JSON.parse(localStorage.getItem("user"));
               if(userData.user_id !== undefined && userData.user_id > 0){
@@ -358,7 +322,6 @@ if(localStorage.getItem("access_token") !== null){
                   FailedRefresh();
               }
           }catch(error){
-              console.log("failed to parse saved user state", error);
               FailedRefresh();
           }
       } else {

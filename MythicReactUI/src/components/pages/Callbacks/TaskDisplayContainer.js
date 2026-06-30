@@ -221,7 +221,7 @@ const SideDisplayGeneric = ({toggleViewBrowserScript, toggleSelectAllOutput,
         if(result){
             snackActions.success("Copied text!");
         }else{
-            snackActions.error("Failed to copy text");
+            snackActions.error("Could not copy to clipboard.");
         }
     };
     const [reissueTask] = useMutation(ReissueTaskMutationGQL, {
@@ -233,7 +233,6 @@ const SideDisplayGeneric = ({toggleViewBrowserScript, toggleSelectAllOutput,
             }
         },
         onError: data => {
-            console.log(data);
             snackActions.error("Failed to re-issue task: " + data);
         }
     });
@@ -247,7 +246,6 @@ const SideDisplayGeneric = ({toggleViewBrowserScript, toggleSelectAllOutput,
 
         },
         onError: data => {
-            console.log(data);
             snackActions.error("Error resubmitting task for handling: " + data);
         }
     });
@@ -488,7 +486,7 @@ const SpeedDialDisplayGeneric = ({toggleViewBrowserScript, toggleSelectAllOutput
     if(result){
       snackActions.success("Copied text!");
     }else{
-      snackActions.error("Failed to copy text");
+      snackActions.error("Could not copy to clipboard.");
     }
     setOpenSpeedDial(false);
   };
@@ -501,7 +499,6 @@ const SpeedDialDisplayGeneric = ({toggleViewBrowserScript, toggleSelectAllOutput
       }
     },
     onError: data => {
-      console.log(data);
       snackActions.error("Failed to re-issue task: " + data);
     }
   });
@@ -515,7 +512,6 @@ const SpeedDialDisplayGeneric = ({toggleViewBrowserScript, toggleSelectAllOutput
 
     },
     onError: data => {
-      console.log(data);
       snackActions.error("Error resubmitting task for handling: " + data);
     }
   });

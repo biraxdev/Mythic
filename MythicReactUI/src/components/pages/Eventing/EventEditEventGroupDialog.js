@@ -44,7 +44,6 @@ export function EventGroupTableEditDialog({onClose, selectedEventGroup, includeS
 
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error("Failed to update");
         }
     });
@@ -72,7 +71,6 @@ export function EventGroupTableEditDialog({onClose, selectedEventGroup, includeS
 
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error("Failed to update");
         }
     });

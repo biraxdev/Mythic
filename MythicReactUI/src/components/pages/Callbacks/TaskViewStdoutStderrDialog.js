@@ -27,7 +27,6 @@ export function TaskViewStdoutStderrDialog(props) {
      return <LinearProgress />;
     }
     if (error) {
-     console.error(error);
      return <div>Error!</div>;
     }
   return (

@@ -17,11 +17,9 @@ export function copyStringToClipboard(str) {
         // Copy text to clipboard
         let success = document.execCommand('copy');
         if(!success){
-            console.log("failed to copy data");
         }
         success = document.execCommand('cut');
         if(!success){
-            console.log("failed to cut data");
         }
         navigator?.clipboard?.writeText(el.value);
         // Remove temporary element
@@ -29,7 +27,6 @@ export function copyStringToClipboard(str) {
         return true;
     } catch (error) {
         document.body.removeChild(el);
-        console.log("warning", "Failed to copy to clipboard: " + error.toString());
         return false;
     }
 }

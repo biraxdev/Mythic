@@ -106,7 +106,6 @@ export function CommandBlockListTable(props){
         },
         onError: (err) => {
           snackActions.warning("Unable to create new block lists");
-          console.log(err);
         }
     });
     const [deleteBlockList] = useMutation(deleteBlockListMutation, {
@@ -121,7 +120,6 @@ export function CommandBlockListTable(props){
         },
         onError: (err) => {
             snackActions.warning("Unable to delete block list");
-            console.log(err);
         }
     })
     const [deleteBlockListEntries] = useMutation(deleteBlockListEntriesMutation, {
@@ -149,7 +147,6 @@ export function CommandBlockListTable(props){
         },
         onError: (err) => {
             snackActions.warning("Unable to delete block list");
-            console.log(err);
         }
     })
     React.useEffect( () => {

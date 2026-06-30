@@ -146,7 +146,6 @@ export function CallbacksTabsHideMultipleDialog({onClose}) {
             onClose();
         },
         onError: data => {
-            console.log(data);
             snackActions.error(data.message);
             onClose();
         }

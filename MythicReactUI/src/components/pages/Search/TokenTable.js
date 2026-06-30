@@ -116,7 +116,7 @@ function TokenTableRow(props){
             snackActions.success("Removed token from callback");
         },
         onError: (data) => {
-            snackActions.error("Operation not allowed");
+            snackActions.error("You don't have permission for this action.");
         }
     });
     const [updateDeleted] = useMutation(updateCredentialDeleted, {
@@ -129,7 +129,7 @@ function TokenTableRow(props){
             props.onEditDeleted(data.update_token_by_pk);
         },
         onError: (data) => {
-            snackActions.error("Operation not allowed");
+            snackActions.error("You don't have permission for this action.");
         }
     });
     const onAcceptDelete = () => {

@@ -49,11 +49,9 @@ export function GetMythicSetting({setting_name, default_value}){
 export function useSetMythicSetting() {
     const [updateSetting] = useMutation(updatePreferences, {
         onCompleted: (data) => {
-            //console.log(data, mePreferences());
         },
         onError: (error) => {
-            snackActions.error("failed to save user setting: " + error.message);
-            console.log(error);
+            snackActions.error("Could not save your setting: " + error.message);
         }
     });
     return [

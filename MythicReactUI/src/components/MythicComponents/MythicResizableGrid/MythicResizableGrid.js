@@ -209,7 +209,6 @@ const ResizableGridWrapper = ({
                         return String(items[0]).length;
                     }
                 }catch(error){
-                    //console.log(itemRow[columnIndex]?.props?.rowData?.[columns[columnIndex].key])
                 }
                 if(typeof itemRow[columnIndex]?.props?.cellData === 'string' ){
                     return itemRow[columnIndex]?.props?.cellData.length;
@@ -255,7 +254,6 @@ const ResizableGridWrapper = ({
             }
             return Math.floor(columnWidth);
         });
-        //console.log(updatedColumnWidths, columnWidths, longestElementInColumn);
         let updatedValues = false;
         for(let i = 0; i < updatedColumnWidths.length; i++){
             if(updatedColumnWidths[i] !== columnWidths[i]){

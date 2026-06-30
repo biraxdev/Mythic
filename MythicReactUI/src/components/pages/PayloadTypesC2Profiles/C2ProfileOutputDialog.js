@@ -22,7 +22,6 @@ export function C2ProfileOutputDialog(props) {
     useQuery(getProfileOutputQuery, {
         variables: {id: props.profile_id},
         onCompleted: data => {
-            //console.log("got data from debug output", data.getProfileOutput);
             if(data.getProfileOutput.status === "success"){
                 if(data.getProfileOutput.output.length === 0){
                     setOutputData("No data from server");
@@ -37,7 +36,6 @@ export function C2ProfileOutputDialog(props) {
         },
         onError: data => {
             snackActions.error(data.message);
-            console.log(data);
         },
         fetchPolicy: "no-cache"
     });

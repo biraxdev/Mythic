@@ -425,8 +425,7 @@ export const SearchTabTasksPanel = (props) =>{
     const handleCallbackSearchFailure = (data) => {
         snackActions.dismiss();
         setAlreadySearching(false);
-        snackActions.error("Failed to fetch data for search");
-        console.log(data);
+        snackActions.error("Search failed. Please try again.");
     }
     const getOutputSearch = useMythicLazyQuery(responseSearch, {
         fetchPolicy: "no-cache"

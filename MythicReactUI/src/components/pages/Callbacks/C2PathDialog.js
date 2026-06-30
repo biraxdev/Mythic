@@ -119,7 +119,6 @@ export function C2PathDialog({callback, callbackgraphedges, onClose, onOpenTab})
         }});
     const onSubmitSelectedLinkCommand = (cmd) => {
         setSelectedLinkCommand(cmd.command);
-        //console.log(cmd);
         setOpenParametersDialog(true);
     }
     const [createTask] = useMutation(createTaskingMutation, {
@@ -138,10 +137,8 @@ export function C2PathDialog({callback, callbackgraphedges, onClose, onOpenTab})
     }
     const [hideCallback] = useMutation(hideCallbackMutation, {
         update: (cache, {data}) => {
-            //console.log(data);
         },
         onError: (error) => {
-            console.log(error)
             snackActions.error(error.message);
             //setContextMenuOpen(false);
         },
@@ -157,7 +154,6 @@ export function C2PathDialog({callback, callbackgraphedges, onClose, onOpenTab})
     });
     const [manuallyRemoveEdge] = useMutation(removeEdgeMutation, {
         update: (cache, {data}) => {
-            //console.log(data);
             snackActions.success("Successfully removed edge, updating graph...");
         },
         onError: (err) => {
@@ -166,7 +162,6 @@ export function C2PathDialog({callback, callbackgraphedges, onClose, onOpenTab})
     });
     const [manuallyAddEdge] = useMutation(addEdgeMutation, {
         update: (cache, {data}) => {
-            //console.log(data);
             snackActions.success("Successfully added edge, updating graph...");
         },
         onError: (err) => {
@@ -197,7 +192,6 @@ export function C2PathDialog({callback, callbackgraphedges, onClose, onOpenTab})
         {
             title: 'Interact',
             onClick: function(node){
-                //console.log(node);
                 if(onOpenTab){
                     onOpenTab({tabType: "interact", tabID: node.callback_id + "interact", callbackID: node.callback_id});
                 } else {
@@ -660,14 +654,11 @@ const getLabel = (edge, label_components) => {
         if(name === "ip"){
             try{
                 let parts = JSON.parse(edge[name]);
-                //console.log("ip parts", parts)
                 if(parts.length > 0 && parts[0].length > 0){
                     return parts[0]
                 }
-                //console.log("no ip parts for the following",edge[name])
                 return "127.0.0.1";
             }catch(error){
-                console.log(error)
                 if(!edge[name] || edge[name].length === 0){
                     return "127.0.0.1"
                 }
@@ -1158,10 +1149,8 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
             let toMythicIds = new Set();
             let loop_count = 0;
             while(edgesUpdated < edgesToUpdate){
-                //console.log(edges, tempEdges, edgesToUpdate, edgesUpdated)
 
                 tempNewEdges = tempNewEdges.map( e => {
-                    //console.log(e)
                     if(!e.source.to_mythic && !e.destination.to_mythic){
                         if(e.source.id === e.destination.id){
                             e.source.to_mythic = true;
@@ -1202,7 +1191,6 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
                 })
                 loop_count += 1;
                 if (loop_count > 2 * edgesToUpdate){
-                    //console.log("aborting early", tempEdges, edgesUpdated)
                     edgesUpdated = edgesToUpdate;
 
                 }
@@ -1243,7 +1231,6 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
                         if(edge.id > getEdge(destination_str_id, source_str_id, edge.c2profile.name).mythic_id){
                             add_edge_p2p(edge, view_config);
                         }else{
-                            //console.log("doing nothing, dropping data");
                         }
                     }else{
                         //this is a new edge
@@ -1257,7 +1244,6 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
                         if(edge.id > getEdge(source_str_id, destination_str_id, edge.c2profile.name).mythic_id){
                             add_edge_p2p(edge, view_config);
                         }else{
-                            //console.log("doing nothing, dropping data");
                         }
                     }else{
                         //this is a new edge
@@ -1301,15 +1287,12 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
             for(let i = 0; i < parentIds.length; i++){
                 // every parentNode needs a connection to _something_ - either to Mythic or another parentNode
                 for(let j = 0; j < tempEdges.length; j++){
-                    //console.log("checking", parentNodes[i].id, tempEdges[j].data.source.parentNode, tempEdges[j].data.target.parentNode)
                     if(tempEdges[j].data.source.parentId === parentIds[i].id){
                         // don't process where source.parentNode == target.parentNode
                         if(parentIds[i].id === tempEdges[j].data.target.parentId){
-                            //console.log("skipping")
                             continue
                         }
                         if(!hasFakeEdge(`${parentIds[i].id}`)){
-                            //console.log("adding new fake edge")
                             tempEdges.push(
                                 {
                                     id: `e${parentIds[i].id}-${tempEdges[j].data.target.parentId}`,
@@ -1328,7 +1311,6 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
                                 },
                             )
                         } else if(tempEdges[j].data.target.parentId === "Mythic") {
-                            //console.log("fake edge is for Mythic, and one exists already - update it")
                             for(let k = tempEdges.length-1; k >= 0 ; k--){
                                 if(tempEdges[k].source === parentIds[i].id){
                                     tempEdges[k] = {
@@ -1350,7 +1332,6 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
                                 }
                             }
                         } else {
-                            //console.log("already have fake edge added, skipping")
                         }
                     }
                 }
@@ -1378,7 +1359,6 @@ export const DrawC2PathElementsFlow = ({edges, panel, view_config, contextMenu, 
             }
             tempNodes[i].data.sourceCount = sourceCount;
         }
-        //console.log([...tempNodes], tempEdges);
         setGraphData({
             groups: shouldUseGroups(view_config) ? parentIds : [],
             nodes: tempNodes,
@@ -1463,7 +1443,6 @@ const getGroupTaskBy = (node, view_config) => {
         try{
             return node?.subtask_group_name || "";
         }catch(error){
-            console.log("bad group by", node);
             return "";
         }
     }
@@ -1474,7 +1453,6 @@ const getGroupBrowserscriptBy = (node, view_config) => {
     try{
         return node?.[view_config["group_by"]] || "";
     }catch(error){
-        console.log(error)
     }
 }
 export const DrawBrowserScriptElementsFlowWithProvider = (props) => {
@@ -1852,7 +1830,6 @@ export const DrawBrowserScriptElementsFlow = ({edges, panel, view_config, theme,
                 }
             }
             if(!found){
-                //console.log("adding node", node)
                 tempNodes.push(
                     {
                         id: `${node.id}`,
@@ -1879,7 +1856,6 @@ export const DrawBrowserScriptElementsFlow = ({edges, panel, view_config, theme,
                 }
             }
             if(!found && groupByValue !== ""){
-                //console.log("adding parent", node)
                 parentIds.push({
                     id: groupByValue,
                     position: { x: 110, y: 110 },
@@ -1903,7 +1879,6 @@ export const DrawBrowserScriptElementsFlow = ({edges, panel, view_config, theme,
         }
         const createEdge = (edge, localViewConfig) =>{
             let edgeID = `e${edge.source.id}-${edge.destination.id}-${edge.label}`;
-            //console.log("adding edge", edge);
             let groupByValueSource = getGroupTaskBy(edge.source, localViewConfig);
             let groupByValueDestination = getGroupTaskBy(edge.destination, localViewConfig);
             let dupEdges = tempEdges.filter( e => e.id === edgeID)
@@ -1993,16 +1968,12 @@ export const DrawBrowserScriptElementsFlow = ({edges, panel, view_config, theme,
             for(let i = 0; i < parentIds.length; i++){
                 // every parentNode needs a connection to _something_ - either to Mythic or another parentNode
                 for(let j = 0; j < tempEdges.length; j++){
-                    //console.log("checking", parentNodes[i].id, tempEdges[j].data.target.parentNode, tempEdges[j].data.source.id)
                     if(tempEdges[j].data.target.parentId === parentIds[i].id){
                         // don't process where source.parentNode == target.parentNode
-                        //console.log("found match")
                         if(parentIds[i].id === tempEdges[j].data.source.parentId){
-                            //console.log("skipping")
                             continue
                         }
                         if(!hasFakeEdge(`${parentIds[i].id}`)){
-                            //console.log("adding new fake edge")
                             tempEdges.push(
                                 {
                                     id: `e${parentIds[i].id}-${tempEdges[j].data.source.id}`,
@@ -2035,7 +2006,6 @@ export const DrawBrowserScriptElementsFlow = ({edges, panel, view_config, theme,
             }
         }
 
-        //console.log("parent groups", shouldUseTaskGroups(view_config), [...parentNodes, ...tempNodes], tempEdges);
         setGraphData({
             groups: shouldUseTaskGroups(localViewConfig) ? parentIds : [],
             nodes: tempNodes,
@@ -2057,7 +2027,6 @@ export const DrawBrowserScriptElementsFlow = ({edges, panel, view_config, theme,
                 for(let i = 0; i < newNodes.length; i++){
                     updateNodeInternals(newNodes[i].id);
                 }
-                //console.log("new graph data", newNodes, newEdges)
                 window.requestAnimationFrame(() => {
                     for(let i = 0; i < newNodes.length; i++){
                         updateNodeInternals(newNodes[i].id);

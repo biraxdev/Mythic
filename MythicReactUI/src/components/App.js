@@ -38,18 +38,11 @@ import {Eventing} from "./pages/Eventing/Eventing";
 import {InviteForm} from "./pages/Login/InviteForm";
 import {snackActions} from "./utilities/Snackbar";
 import {TopAppBarVertical} from "./TopAppBarVertical";
-import { library } from '@fortawesome/fontawesome-svg-core';
-import * as Icons from '@fortawesome/free-solid-svg-icons';
 import {Jupyter} from "./pages/Jupyter/Jupyter";
 import {Hasura} from "./pages/Hasura/Hasura";
-
-// add all fas icons
-const iconList = Object
-    .keys(Icons)
-    .filter(key => key !== "fas" && key !== "prefix" )
-    .map(icon => Icons[icon])
-
-library.add(...iconList)
+import {MythicKeyboardShortcuts} from "./MythicComponents/MythicKeyboardShortcuts";
+import {MythicBreadcrumbs} from "./MythicComponents/MythicBreadcrumbs";
+import {MythicOnboarding} from "./MythicComponents/MythicOnboarding";
 
 export const MeContext = createContext({});
 export const userSettingsQuery = gql`
@@ -62,6 +55,63 @@ query getUserSettings {
 }
 `;
 
+const resolveColor = (prefs, defaults, key, mode) => {
+    const isDark = mode === 'dark';
+    const prefVal = isDark ? prefs?.[key]?.dark : prefs?.[key]?.light;
+    const defaultVal = isDark ? defaults[key].dark : defaults[key].light;
+    return prefVal || defaultVal;
+};
+
+const buildThemeConfig = (mode, prefs, defaults, fontFamily) => ({
+    transitions: {
+        create: () => 'all 0.2s ease-in-out',
+    },
+    palette: {
+        contrastThreshold: 4.5,
+        primary: { main: resolveColor(prefs, defaults, 'primary', mode) },
+        error: { main: resolveColor(prefs, defaults, 'error', mode) },
+        success: { main: resolveColor(prefs, defaults, 'success', mode) },
+        secondary: { main: resolveColor(prefs, defaults, 'secondary', mode) },
+        info: { main: resolveColor(prefs, defaults, 'info', mode) },
+        warning: { main: resolveColor(prefs, defaults, 'warning', mode) },
+        mode,
+        background: {
+            contrast: mode === 'dark'
+                ? (prefs?.background?.light || defaults.background.light)
+                : (prefs?.background?.dark || defaults.background.dark),
+            default: resolveColor(prefs, defaults, 'background', mode),
+            paper: resolveColor(prefs, defaults, 'paper', mode),
+            image: resolveColor(prefs, defaults, 'backgroundImage', mode),
+        },
+        text: {
+            primary: resolveColor(prefs, defaults, 'text', mode),
+            contrast: mode === 'dark' ? '#000' : '#fff',
+        },
+        graphGroupRGBA: mode === 'dark' ? 'rgba(57, 76, 93, 0.5)' : 'rgba(211, 215, 232, 0.5)',
+        speedDialAction: mode === 'dark' ? '#495054' : '#ffffff',
+    },
+    folderColor: '#f1d592',
+    tableHeader: resolveColor(prefs, defaults, 'tableHeader', mode),
+    selectedCallbackColor: resolveColor(prefs, defaults, 'selectedCallbackColor', mode),
+    selectedCallbackHierarchyColor: resolveColor(prefs, defaults, 'selectedCallbackHierarchyColor', mode),
+    tableHover: resolveColor(prefs, defaults, 'tableHover', mode),
+    navBarTextIconColor: resolveColor(prefs, defaults, 'navBarIcons', mode),
+    navBarTextColor: resolveColor(prefs, defaults, 'navBarText', mode),
+    pageHeader: { main: resolveColor(prefs, defaults, 'pageHeader', mode) },
+    pageHeaderText: { main: 'white' },
+    topAppBarColor: resolveColor(prefs, defaults, 'navBarColor', mode),
+    topAppBarBottomColor: resolveColor(prefs, defaults, 'navBarBottomColor', mode),
+    typography: { fontSize: 12, fontFamily },
+    taskPromptTextColor: resolveColor(prefs, defaults, 'taskPromptTextColor', mode),
+    taskPromptCommandTextColor: resolveColor(prefs, defaults, 'taskPromptCommandTextColor', mode),
+    taskContextColor: resolveColor(prefs, defaults, 'taskContextColor', mode),
+    taskContextImpersonationColor: resolveColor(prefs, defaults, 'taskContextImpersonationColor', mode),
+    taskContextExtraColor: resolveColor(prefs, defaults, 'taskContextExtraColor', mode),
+    emptyFolderColor: resolveColor(prefs, defaults, 'emptyFolderColor', mode),
+    outputBackgroundColor: resolveColor(prefs, defaults, 'outputBackgroundColor', mode),
+    outputTextColor: resolveColor(prefs, defaults, 'outputTextColor', mode),
+    borderColor: resolveColor(prefs, defaults, 'borderColor', mode),
+});
 
 export function App(props) {
     const me = useReactiveVar(meState);
@@ -71,195 +121,10 @@ export function App(props) {
     const theme = React.useMemo(
         () => {
             try{
-                return createTheme({
-                    transitions: {
-                        // So we have `transition: none;` everywhere
-                        create: () => 'none',
-                    },
-                    palette: {
-                        contrastThreshold: 4.5,
-                        //tonalOffset: 0.5,
-                        primary: {
-                            main: themeMode === "dark" ? preferences?.palette?.primary?.dark || operatorSettingDefaults.palette.primary.dark :
-                                preferences?.palette?.primary?.light || operatorSettingDefaults.palette.primary.light,
-                        },
-                        error: {
-                            main: themeMode === "dark" ? preferences?.palette?.error?.dark || operatorSettingDefaults.palette.error.dark :
-                                preferences?.palette?.error?.light || operatorSettingDefaults.palette.error.light,
-                        },
-                        success: {
-                            main: themeMode === 'dark' ? preferences?.palette?.success?.dark || operatorSettingDefaults.palette.success.dark :
-                                preferences?.palette?.success?.light || operatorSettingDefaults.palette.success.light,
-                        },
-                        secondary: {
-                            main: themeMode === 'dark' ? preferences?.palette?.secondary?.dark || operatorSettingDefaults.palette.secondary.dark :
-                                preferences?.palette?.secondary?.light || operatorSettingDefaults.palette.secondary.light,
-                        },
-                        info: {
-                            main: themeMode === 'dark' ? preferences?.palette?.info?.dark || operatorSettingDefaults.palette.info.dark :
-                                preferences?.palette?.info?.light || operatorSettingDefaults.palette.info.light,
-                        },
-                        warning: {
-                            main: themeMode === 'dark' ? preferences?.palette?.warning?.dark || operatorSettingDefaults.palette.warning.dark :
-                                preferences?.palette?.warning?.light || operatorSettingDefaults.palette.warning.light,
-                        },
-                        mode: themeMode,
-                        background: {
-                            contrast: themeMode === 'dark' ? preferences?.palette?.background?.light || operatorSettingDefaults.palette.background.light :
-                                preferences?.palette?.background?.dark || operatorSettingDefaults.palette.background.dark,
-                            default: themeMode === "dark" ? preferences?.palette?.background?.dark || operatorSettingDefaults.palette.background.dark :
-                                preferences?.palette?.background?.light || operatorSettingDefaults.palette.background.light,
-                            paper: themeMode === "dark" ?  preferences?.palette?.paper?.dark || operatorSettingDefaults.palette.paper.dark :
-                                preferences?.palette?.paper?.light || operatorSettingDefaults.palette.paper.light,
-                            image: themeMode === "dark" ?  preferences?.palette?.backgroundImage?.dark || operatorSettingDefaults.palette.backgroundImage.dark :
-                                preferences?.palette?.backgroundImage?.light || operatorSettingDefaults.palette.backgroundImage.light,
-                        },
-                        text: {
-                            primary: themeMode === 'dark' ? preferences?.palette?.text?.dark || operatorSettingDefaults.palette.text.dark :
-                                preferences?.palette?.text?.light || operatorSettingDefaults.palette.text.light,
-                            contrast: themeMode === 'dark' ? '#000' : '#fff',
-                        },
-                        graphGroupRGBA: themeMode === 'dark' ? 'rgba(57, 76, 93, 0.5)' : 'rgba(211, 215, 232, 0.5)',
-                        speedDialAction: themeMode === 'dark' ? '#495054' : '#ffffff',
-                    },
-                    folderColor: '#f1d592',
-                    tableHeader: themeMode === 'dark' ? preferences?.palette?.tableHeader?.dark || operatorSettingDefaults.palette.tableHeader.dark :
-                        preferences?.palette?.tableHeader?.light || operatorSettingDefaults.palette.tableHeader.light,
-                    selectedCallbackColor: themeMode === 'dark' ? preferences?.palette?.selectedCallbackColor?.dark || operatorSettingDefaults.palette.selectedCallbackColor.dark :
-                        preferences?.palette?.selectedCallbackColor?.light || operatorSettingDefaults.palette.selectedCallbackColor.light,
-                    selectedCallbackHierarchyColor:  themeMode === 'dark' ? preferences?.palette?.selectedCallbackHierarchyColor?.dark || operatorSettingDefaults.palette.selectedCallbackHierarchyColor.dark :
-                        preferences?.palette?.selectedCallbackHierarchyColor?.light || operatorSettingDefaults.palette.selectedCallbackHierarchyColor.light,
-                    tableHover: themeMode === 'dark' ? preferences?.palette?.tableHover?.dark || operatorSettingDefaults.palette.tableHover.dark :
-                        preferences?.palette?.tableHover?.light || operatorSettingDefaults.palette.tableHover.light,
-                    navBarTextIconColor: themeMode === 'dark' ? preferences?.palette?.navBarIcons?.dark || operatorSettingDefaults.palette.navBarIcons.dark :
-                        preferences?.palette?.navBarIcons?.light || operatorSettingDefaults.palette.navBarIcons.light,
-                    navBarTextColor: themeMode === 'dark' ? preferences?.palette?.navBarText?.dark || operatorSettingDefaults.palette.navBarText.dark :
-                        preferences?.palette?.navBarText?.light || operatorSettingDefaults.palette.navBarText.light,
-                    pageHeader: {
-                        main: themeMode === 'dark' ? preferences?.palette?.pageHeader?.dark || operatorSettingDefaults.palette.pageHeader.dark :
-                            preferences?.palette?.pageHeader?.light || operatorSettingDefaults.palette.pageHeader.light,
-                    },
-                    pageHeaderText: {
-                        main: 'white',
-                    },
-                    topAppBarColor: themeMode === 'dark' ? (preferences?.palette?.navBarColor?.dark || operatorSettingDefaults.palette.navBarColor.dark) :
-                        (preferences?.palette?.navBarColor?.light || operatorSettingDefaults.palette.navBarColor.light),
-                    topAppBarBottomColor: themeMode === 'dark' ? preferences?.palette?.navBarBottomColor?.dark || operatorSettingDefaults.palette.navBarBottomColor.dark :
-                        preferences?.palette?.navBarBottomColor?.light || operatorSettingDefaults.palette.navBarBottomColor.light,
-                    typography: {
-                        fontSize: 12, //preferences?.fontSize,
-                        fontFamily: preferences?.fontFamily
-                    },
-                    taskPromptTextColor: themeMode === 'dark' ? preferences?.palette?.taskPromptTextColor?.dark || operatorSettingDefaults.palette.taskPromptTextColor.dark :
-                        preferences?.palette?.taskPromptTextColor?.light || operatorSettingDefaults.palette.taskPromptTextColor.light,
-                    taskPromptCommandTextColor: themeMode === 'dark' ? preferences?.palette?.taskPromptCommandTextColor?.dark || operatorSettingDefaults.palette.taskPromptCommandTextColor.dark :
-                        preferences?.palette?.taskPromptCommandTextColor?.light || operatorSettingDefaults.palette.taskPromptCommandTextColor.light,
-                    taskContextColor: themeMode === 'dark' ? preferences?.palette?.taskContextColor?.dark || operatorSettingDefaults.palette.taskContextColor.dark :
-                        preferences?.palette?.taskContextColor?.light || operatorSettingDefaults.palette.taskContextColor.light,
-                    taskContextImpersonationColor: themeMode === 'dark' ? preferences?.palette?.taskContextImpersonationColor?.dark || operatorSettingDefaults.palette.taskContextImpersonationColor.dark :
-                        preferences?.palette?.taskContextImpersonationColor?.light || operatorSettingDefaults.palette.taskContextImpersonationColor.light,
-                    taskContextExtraColor: themeMode === 'dark' ? preferences?.palette?.taskContextExtraColor?.dark || operatorSettingDefaults.palette.taskContextExtraColor.dark :
-                        preferences?.palette?.taskContextExtraColor?.light || operatorSettingDefaults.palette.taskContextExtraColor.light,
-                    emptyFolderColor: themeMode === 'dark' ? preferences?.palette?.emptyFolderColor?.dark || operatorSettingDefaults.palette.emptyFolderColor.dark :
-                        preferences?.palette?.emptyFolderColor?.light || operatorSettingDefaults.palette.emptyFolderColor.light,
-                    outputBackgroundColor: themeMode === 'dark' ? preferences?.palette?.outputBackgroundColor?.dark || operatorSettingDefaults.palette.outputBackgroundColor.dark :
-                        preferences?.palette?.outputBackgroundColor?.light || operatorSettingDefaults.palette.outputBackgroundColor.light,
-                    outputTextColor: themeMode === 'dark' ? preferences?.palette?.outputTextColor?.dark || operatorSettingDefaults.palette.outputTextColor.dark :
-                        preferences?.palette?.outputTextColor?.light || operatorSettingDefaults.palette.outputTextColor.light,
-                    borderColor: themeMode === 'dark' ? preferences?.palette?.borderColor?.dark || operatorSettingDefaults.palette.borderColor.dark :
-                        preferences?.palette?.borderColor?.light || operatorSettingDefaults.palette.borderColor.light,
-                })
+                return createTheme(buildThemeConfig(themeMode, preferences?.palette, operatorSettingDefaults.palette, preferences?.fontFamily));
             }catch(error){
-                console.log(error);
                 snackActions.error(error.message);
-                return createTheme({
-                    transitions: {
-                        // So we have `transition: none;` everywhere
-                        create: () => 'none',
-                    },
-                    palette: {
-                        contrastThreshold: 4.5,
-                        //tonalOffset: 0.5,
-                        primary: {
-                            main: themeMode === "dark" ? operatorSettingDefaults.palette.primary.dark :
-                                operatorSettingDefaults.palette.primary.light,
-                        },
-                        error: {
-                            main: themeMode === "dark" ? operatorSettingDefaults.palette.error.dark :
-                                operatorSettingDefaults.palette.error.light,
-                        },
-                        success: {
-                            main: themeMode === 'dark' ? operatorSettingDefaults.palette.success.dark :
-                                operatorSettingDefaults.palette.success.light,
-                        },
-                        secondary: {
-                            main: themeMode === 'dark' ? operatorSettingDefaults.palette.secondary.dark :
-                                operatorSettingDefaults.palette.secondary.light,
-                        },
-                        info: {
-                            main: themeMode === 'dark' ? operatorSettingDefaults.palette.info.dark :
-                                operatorSettingDefaults.palette.info.light,
-                        },
-                        warning: {
-                            main: themeMode === 'dark' ? operatorSettingDefaults.palette.warning.dark :
-                                operatorSettingDefaults.palette.warning.light,
-                        },
-                        mode: themeMode,
-                        background: {
-                            contrast: themeMode === 'dark' ?operatorSettingDefaults.palette.background.light :
-                                operatorSettingDefaults.palette.background.dark,
-                            default: themeMode === "dark" ? operatorSettingDefaults.palette.background.dark :
-                                operatorSettingDefaults.palette.background.light,
-                            paper: themeMode === "dark" ?  operatorSettingDefaults.palette.paper.dark :
-                                operatorSettingDefaults.palette.paper.light,
-                            image: themeMode === "dark" ?  operatorSettingDefaults.palette.backgroundImage.dark :
-                                operatorSettingDefaults.palette.backgroundImage.light,
-                        },
-                        text: {
-                            primary: themeMode === 'dark' ? operatorSettingDefaults.palette.text.dark :
-                                operatorSettingDefaults.palette.text.light,
-                            contrast: themeMode === 'dark' ? '#000' : '#fff',
-                        },
-                        graphGroupRGBA: themeMode === 'dark' ? 'rgba(57, 76, 93, 0.5)' : 'rgba(211, 215, 232, 0.5)',
-                        speedDialAction: themeMode === 'dark' ? '#495054' : '#ffffff',
-                    },
-                    folderColor: '#f1d592',
-                    tableHeader: themeMode === 'dark' ? operatorSettingDefaults.palette.tableHeader.dark :
-                        operatorSettingDefaults.palette.tableHeader.light,
-                    selectedCallbackColor: themeMode === 'dark' ? operatorSettingDefaults.palette.selectedCallbackColor.dark :
-                        operatorSettingDefaults.palette.selectedCallbackColor.light,
-                    selectedCallbackHierarchyColor:  themeMode === 'dark' ? operatorSettingDefaults.palette.selectedCallbackHierarchyColor.dark :
-                        operatorSettingDefaults.palette.selectedCallbackHierarchyColor.light,
-                    tableHover: themeMode === 'dark' ? operatorSettingDefaults.palette.tableHover.dark :
-                        operatorSettingDefaults.palette.tableHover.light,
-                    navBarTextIconColor: themeMode === 'dark' ? operatorSettingDefaults.palette.navBarIcons.dark :
-                        operatorSettingDefaults.palette.navBarIcons.light,
-                    navBarTextColor: themeMode === 'dark' ? operatorSettingDefaults.palette.navBarText.dark :
-                        operatorSettingDefaults.palette.navBarText.light,
-                    pageHeader: {
-                        main: themeMode === 'dark' ? operatorSettingDefaults.palette.pageHeader.dark :
-                            operatorSettingDefaults.palette.pageHeader.light,
-                    },
-                    pageHeaderText: {
-                        main: 'white',
-                    },
-                    topAppBarColor: themeMode === 'dark' ? operatorSettingDefaults.palette.navBarColor.dark :
-                        operatorSettingDefaults.palette.navBarColor.light,
-                    topAppBarBottomColor: themeMode === 'dark' ? operatorSettingDefaults.palette.navBarBottomColor.dark :
-                        operatorSettingDefaults.palette.navBarBottomColor.light,
-                    emptyFolderColor: themeMode === 'dark' ? operatorSettingDefaults.palette.emptyFolderColor.dark :
-                        operatorSettingDefaults.palette.emptyFolderColor.light,
-                    outputBackgroundColor: themeMode === 'dark' ? operatorSettingDefaults.palette.outputBackgroundColor.dark :
-                        operatorSettingDefaults.palette.outputBackgroundColor.light,
-                    outputTextColor: themeMode === 'dark' ? operatorSettingDefaults.palette.outputTextColor.dark :
-                        operatorSettingDefaults.palette.outputTextColor.light,
-                    borderColor: themeMode === 'dark' ? operatorSettingDefaults.palette.borderColor.dark :
-                        operatorSettingDefaults.palette.borderColor.light,
-                    typography: {
-                        fontSize: 12,//operatorSettingDefaults?.fontSize,
-                        fontFamily: operatorSettingDefaults?.fontFamily
-                    },
-                })
+                return createTheme(buildThemeConfig(themeMode, null, operatorSettingDefaults.palette, operatorSettingDefaults?.fontFamily));
             }
         },[themeMode, loadingPreference, preferences.fontSize, preferences.fontFamily, preferences.palette]
     );
@@ -268,7 +133,6 @@ export function App(props) {
     const [getUserPreferences] = useLazyQuery(userSettingsQuery, {
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
-            //console.log("got preferences", data.getOperatorPreferences.preferences)
             if(data.getOperatorPreferences.status === "success"){
                 if(data.getOperatorPreferences.preferences !== null){
                     mePreferences({...preferences, ...data.getOperatorPreferences.preferences});
@@ -279,7 +143,6 @@ export function App(props) {
             setLoadingPreferences(false);
         },
         onError: (error) => {
-            console.log(error);
             snackActions.error(error.message);
             setLoadingPreferences(false);
         }
@@ -288,7 +151,6 @@ export function App(props) {
         // interval should run every 10 minutes (600000 milliseconds) to check JWT status
         let millisecondsLeft = JWTTimeLeft();
         // if we have 30min left of our token, prompt the user to extend. 30 min is 1,800,000 milliseconds
-        //console.log("jwt time left: ", millisecondsLeft)
         if(millisecondsLeft <= 1800000 && !openRefreshDialog && me.loggedIn){
             if(isJWTValid()){
                 setOpenRefreshDialog(true);
@@ -339,7 +201,7 @@ export function App(props) {
                                     wordBreak: "break-all", flexDirection: "column", justifyContent: "center",}}
                                     pauseOnFocusLoss={false}
                     />
-                    <div style={{ maxHeight: '100%', height: '100%', display: 'flex', flexDirection: 'row', maxWidth: "100%", width:"100%",
+                    <div role="application" aria-label="Mythic Command and Control" style={{ maxHeight: '100%', height: '100%', display: 'flex', flexDirection: 'row', maxWidth: "100%", width:"100%",
                         ...background}}>
                         {openRefreshDialog &&
                             <MythicDialog fullWidth={true} maxWidth="sm" open={openRefreshDialog}
@@ -351,7 +213,9 @@ export function App(props) {
                         {me.loggedIn && me.user !== undefined && me.user !== null &&
                             <TopAppBarVertical me={me} toggleTheme={themeToggler} />
                         }
-                        <div style={{
+                        {me.loggedIn && <MythicKeyboardShortcuts />}
+                        {me.loggedIn && <MythicOnboarding />}
+                        <main role="main" aria-label="Main content" style={{
                             maxHeight: '100%',
                             flexGrow: 1,
                             display: 'flex',
@@ -381,9 +245,10 @@ export function App(props) {
                                     color: "white",
                                     border: `1px solid ${theme.topAppBarColor || "grey"}`
                                 }}>
-                                    {"Can't connect to Mythic. Please check connection and refresh"}
+                                    {"Connection lost. Please check your network and refresh the page."}
                                 </Typography>
                             }
+                            <MythicBreadcrumbs />
                             <div style={{
                                 margin: '0px 0px 0px 0px',
                                 flexGrow: 1,
@@ -445,7 +310,7 @@ export function App(props) {
                                     <Route exact path='/new/hasura' element={<LoggedInRoute me={me}><Hasura/></LoggedInRoute>}/>
                                 </Routes>
                             </div>
-                        </div>
+                        </main>
                     </div>
                 </MeContext.Provider>
             </ThemeProvider>

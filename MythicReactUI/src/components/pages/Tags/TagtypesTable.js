@@ -46,7 +46,6 @@ export function TagtypesTable({tagtypes, onDeleteTagtype, onNewTag, onUpdateTagt
     const [openNewDialog, setOpenNewDialog] = React.useState(false);
     const [importTagTypes] = useMutation(importTagtypesMutation, {
         update: (cache, {data}) => {
-            console.log(data);
             if(data.importTagtypes.status === "success"){
                 snackActions.success("Successfully loaded tagtypes");
             } else {
@@ -54,7 +53,6 @@ export function TagtypesTable({tagtypes, onDeleteTagtype, onNewTag, onUpdateTagt
             }
         },
         onError: error => {
-            console.log(error);
         }
       }); 
     const onFileChange = (evt) => {
@@ -75,7 +73,6 @@ export function TagtypesTable({tagtypes, onDeleteTagtype, onNewTag, onUpdateTagt
         downloadFileFromMemory(JSON.stringify(finalData, null, 2), "tagtypes.json");
     }
     const exportTagTypesError = (data) => {
-        console.log(data);
     }
     const exportTagtypes = useMythicLazyQuery(exportTagtypesQuery, {
     })

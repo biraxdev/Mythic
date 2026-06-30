@@ -151,8 +151,7 @@ export function FileMetaDownloadTable(props){
             }
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to zip up files");
+            snackActions.error("Could not create zip file. Please try again.");
         }
     })
     const onDownloadBulk = () => {
@@ -180,8 +179,7 @@ export function FileMetaDownloadTable(props){
 
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete files");
+            snackActions.error("Could not delete files. Please try again.");
         }
     })
     const onDeleteBulk = () => {
@@ -299,8 +297,7 @@ function FileMetaDownloadTableRow(props){
             props.onDelete(data.deleteFile);
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete file");
+            snackActions.error("Could not delete file. Please try again.");
         }
     });
     const onAcceptDelete = () => {
@@ -538,8 +535,7 @@ export function FileMetaUploadTable(props){
             }
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to zip up files");
+            snackActions.error("Could not create zip file. Please try again.");
         }
     })
     const onDownloadBulk = () => {
@@ -567,8 +563,7 @@ export function FileMetaUploadTable(props){
 
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete files");
+            snackActions.error("Could not delete files. Please try again.");
         }
     })
     const onDeleteBulk = () => {
@@ -687,8 +682,7 @@ function FileMetaUploadTableRow(props){
             props.onDelete(data.deleteFile);
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete file");
+            snackActions.error("Could not delete file. Please try again.");
         }
     })
     const onAcceptDelete = () => {
@@ -1029,8 +1023,7 @@ function FileMetaScreenshotTableRow(props){
             props.onDelete(data.deleteFile);
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete file");
+            snackActions.error("Could not delete file. Please try again.");
         }
     })
     const onAcceptDelete = () => {
@@ -1181,8 +1174,7 @@ export function FileMetaEventingWorkflowsTable(props){
             }
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to zip up files");
+            snackActions.error("Could not create zip file. Please try again.");
         }
     })
     const onDownloadBulk = () => {
@@ -1210,8 +1202,7 @@ export function FileMetaEventingWorkflowsTable(props){
 
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete files");
+            snackActions.error("Could not delete files. Please try again.");
         }
     })
     const onDeleteBulk = () => {
@@ -1327,8 +1318,7 @@ function FileMetaEventingWorkflowsTableRow(props){
             props.onDelete(data.deleteFile);
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete file");
+            snackActions.error("Could not delete file. Please try again.");
         }
     })
     const onAcceptDelete = () => {

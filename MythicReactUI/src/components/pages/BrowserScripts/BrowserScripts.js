@@ -68,7 +68,6 @@ export function BrowserScripts({me}){
       variables: {operator_id: me?.user?.id || 0}, fetchPolicy: "no-cache",
       shouldResubscribe: true,
       onSubscriptionData: ({subscriptionData}) => {
-        //console.log(subscriptionData)
         if(!mountedRef.current){return}
         let scripts = [...subscriptionData.data.browserscript];
         scripts.sort((a,b) => {
@@ -87,7 +86,6 @@ export function BrowserScripts({me}){
             snackActions.success("Successfully Updated!", {autoHideDuration: 1000});
         },
         onError: data => {
-            console.error(data);
             snackActions.error("Failed to update status");
         }
     });
@@ -96,7 +94,6 @@ export function BrowserScripts({me}){
             snackActions.success("Successfully Updated!", {autoHideDuration: 1000});
         },
         onError: data => {
-            console.error(data);
             snackActions.error("Failed to update script");
         }
     });
@@ -105,7 +102,6 @@ export function BrowserScripts({me}){
             snackActions.success("Successfully Updated!", {autoHideDuration: 1000});
         },
         onError: data => {
-            console.error(data);
             snackActions.error("Failed to revert script");
         }
     });

@@ -196,7 +196,6 @@ export function Eventing({me}){
             })
         },
         onError: (error) => {
-            console.log(error);
         }
     })
     useSubscription(sub_eventgroups, {

@@ -64,7 +64,6 @@ export function TaskViewParametersDialog(props) {
      return <LinearProgress />;
     }
     if (error) {
-     console.error(error);
      return <div>Error!</div>;
     }
   return (

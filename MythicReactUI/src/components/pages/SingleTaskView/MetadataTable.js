@@ -74,7 +74,6 @@ export function TaskMetadataTable(props){
         getMetadata({variables: {task_range: props.taskIDs } }).then(({data}) => {
             setTasks(data.task);
         }).catch(({data}) => {
-            console.log("error!", data)
         });
     }, [props.taskIDs, getMetadata]);
   return (

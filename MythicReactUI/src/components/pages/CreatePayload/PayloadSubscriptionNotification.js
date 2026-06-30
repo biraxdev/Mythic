@@ -221,7 +221,6 @@ export function PayloadSubscriptionNotification(props) {
             }
             setPayloadData({...data.data.payload_stream[0]});
         } else {
-            console.log(data.data.payload_stream[0])
         }
     }
     });

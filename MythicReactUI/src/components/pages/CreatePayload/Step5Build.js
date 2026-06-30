@@ -193,7 +193,6 @@ export function Step5Build(props){
             "build_parameters": buildParameters,
             "c2_profiles": c2Profiles
             };
-        //console.log("finishedPayload", finishedPayload)
         snackActions.info("Submitted Creation to Mythic...", {autoClose: 1000});
         createPayloadMutation({variables: {payload: JSON.stringify(finishedPayload)}}).catch( (e) => {console.log(e)} );
     }

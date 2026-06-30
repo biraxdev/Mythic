@@ -181,11 +181,10 @@ const StringTagDataEntry = ({name, value}) => {
       }
     }).catch(error => {
       if(error.toString() === "TypeError: Failed to fetch"){
-        snackActions.warning("Failed to make connection - this could be networking issues or ssl certs that need to be accepted first");
+        snackActions.warning("Cannot connect to server. Check your network or SSL certificate.");
       } else {
         snackActions.warning("Error talking to server: " + error.toString());
       }
-      console.log("There was an error!", error);
     })
   }
   if(RegExp(regex)?.test(value)){
@@ -266,7 +265,6 @@ function ViewTagDialog(props) {
       setSelectedTag(newTag);
     },
     onError: error => {
-      console.log("query error", error);
     },
     fetchPolicy: "network-only"
   })
@@ -422,7 +420,6 @@ export function ViewEditTagsDialog(props) {
       }
     },
     onError: error => {
-      console.log(error);
     },
     fetchPolicy: "network-only"
   })
@@ -448,7 +445,7 @@ export function ViewEditTagsDialog(props) {
       }
     },
     onError: error => {
-      snackActions.error("Failed to delete tag: " + error.message);
+      snackActions.error("Could not delete tag: " + error.message);
     }
 });
   const [updateTag] = useMutation(updateTagMutationTemplate, {
@@ -457,7 +454,7 @@ export function ViewEditTagsDialog(props) {
       props.onClose();
     },
     onError: error => {
-      snackActions.error("Failed to update: " + error.message);
+      snackActions.error("Could not save changes: " + error.message);
     }
   })
 

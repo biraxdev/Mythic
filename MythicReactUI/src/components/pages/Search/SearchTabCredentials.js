@@ -160,8 +160,7 @@ const SearchTabCredentialsSearchPanel = (props) => {
             
         },
         onError: (data) => {
-            snackActions.error("Failed to create credential");
-            console.log(data);
+            snackActions.error("Could not save credential. Please try again.");
         }
     })
     const handleSearchValueChange = (name, value, error) => {
@@ -329,8 +328,7 @@ export const SearchTabCredentialsPanel = (props) =>{
     }
     const handleCallbackSearchFailure = (data) => {
         snackActions.dismiss();
-        snackActions.error("Failed to fetch data for search");
-        console.log(data);
+        snackActions.error("Search failed. Please try again.");
     }
     const getAccountSearch = useMythicLazyQuery(accountSearch, {
         fetchPolicy: "no-cache"

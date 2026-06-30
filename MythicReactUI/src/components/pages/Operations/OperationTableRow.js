@@ -87,7 +87,6 @@ export function OperationTableRow(props){
       },
       onError: (data) => {
         snackActions.error("Failed to update current operation");
-        console.error(data);
       }
     })
     const makeCurrentOperation = () => {

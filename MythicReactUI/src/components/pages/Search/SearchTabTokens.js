@@ -198,8 +198,7 @@ export const SearchTabTokensPanel = (props) =>{
     }
     const handleCallbackSearchFailure = (data) => {
         snackActions.dismiss();
-        snackActions.error("Failed to fetch data for search");
-        console.log(data);
+        snackActions.error("Search failed. Please try again.");
     }
     const getUserGroupSearch = useMythicLazyQuery(userGroupSearch, {
         fetchPolicy: "network-only"

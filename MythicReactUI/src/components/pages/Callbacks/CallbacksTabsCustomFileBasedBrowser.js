@@ -260,7 +260,6 @@ export const CallbacksTabsCustomFileBasedBrowserPanel = ({ index, value, tabInfo
                        }
                    }
                }catch(error){
-                   console.log(error);
                }
                 for(let j = 0; j < currentGroups.length; j++){
                     if(treeRootDataRef.current[currentGroups[j]] === undefined){
@@ -302,7 +301,6 @@ export const CallbacksTabsCustomFileBasedBrowserPanel = ({ index, value, tabInfo
                }
                 return prev;
            }, {...treeAdjMtx});
-           //console.log(treeRootDataRef.current);
            setTreeAdjMtx(newMatrix);
             setSelectedFolderData({
                 full_path_text: '',
@@ -406,7 +404,6 @@ export const CallbacksTabsCustomFileBasedBrowserPanel = ({ index, value, tabInfo
             loadingCommandsRef.current = false;
         },
         onError: (data) => {
-            console.log(data);
             loadingCommandsRef.current = false;
         }
     });
@@ -433,12 +430,10 @@ export const CallbacksTabsCustomFileBasedBrowserPanel = ({ index, value, tabInfo
     }
     const [getFolderData] = useLazyQuery(folderQuery, {
         onError: (data) => {
-            console.error(data);
         },
         fetchPolicy: 'no-cache',
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => {
-            //console.log("getFolderData", data)
             let mythictree = [...data.parents, ...data.children];
             snackActions.dismiss();
             // add in all of the raw data
@@ -476,7 +471,6 @@ export const CallbacksTabsCustomFileBasedBrowserPanel = ({ index, value, tabInfo
                                 existingData.metadata = {...existingData.metadata, ...mythictree[i].metadata};
                             }
                         }
-                        //console.log("updating permissions", "existing", existingData.metadata.permissions, "new", mythictree[i].metadata)
 
                         treeRootDataRef.current[currentGroups[j]][mythictree[i]["host"]][mythictree[i]["full_path_text"]] = {...existingData};
                         if(selectedFolderData.group === currentGroups[j] && selectedFolderData.host === mythictree[i]["host"] &&
@@ -507,9 +501,7 @@ export const CallbacksTabsCustomFileBasedBrowserPanel = ({ index, value, tabInfo
                 }
                 return prev;
             }, {...treeAdjMtx});
-            //console.log(treeRootDataRef.current);
             setTreeAdjMtx(newMatrix);
-            //console.log("just set treeAdjMtx, about to close backdrop")
             setBackdropOpen(false);
             if(data.self.length > 0){
                 //setSelectedFolderData({...selectedFolderData, task_id: data.self[0].task_id, success: data.self[0].success});
@@ -532,7 +524,6 @@ export const CallbacksTabsCustomFileBasedBrowserPanel = ({ index, value, tabInfo
         },
     });
     const onSetTableData = useCallback((nodeData) => {
-        //console.log("setTableData", nodeData);
         setSelectedFolderData(nodeData);
     }, []);
     const fetchFolderData = useCallback((nodeData, fromHistory) => {
@@ -798,7 +789,6 @@ const FileBrowserTableTop = ({
             }
         },
         onError: (error) => {
-            console.log(error);
         }
     })
     React.useEffect(() => {
@@ -901,7 +891,6 @@ const FileBrowserTableTop = ({
     }
     const moveIndexToNextListing = () => {
         // we're getting close to index 0, the newest listing
-        //console.log(historyIndex, history);
         if(historyIndex <= 0){
             return
         }

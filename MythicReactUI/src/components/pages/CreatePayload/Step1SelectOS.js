@@ -245,7 +245,6 @@ export function Step1SelectOS(props){
                 setOpenBackdrop(false);
             })
             .catch(({data}) => {
-                console.log(data);
                 setOpenBackdrop(false);
             });
     }, [selectedPayloadType, os]);
@@ -391,7 +390,6 @@ export function Step1SelectOS(props){
                         c2profileparametersinstances: [...cur.c2profileparameter.c2profile.c2profileparametersinstances]
                     }]
                 }, []);
-                //console.log("before getModifiedC2Params", c2);
 
                 const profiles = c2.map( (profile) => {
                     const parameters = getModifiedC2Params(profile, profile.c2profileparameters, newConfig[1], true);
@@ -401,7 +399,6 @@ export function Step1SelectOS(props){
                 });
                 newConfig[3].c2 = profiles;
 
-                //console.log("newConfig", newConfig);
                 props.setAllData(newConfig);
             })
             .catch((data) => console.log(data));
@@ -794,7 +791,6 @@ export const GetGroupedParameters = ({buildParameters, os, c2_name}) => {
                                             should_hide = true;
                                         }
                                     }catch(e){
-                                        console.log("couldn't parse build parameter value as int", e);
                                     }
 
                                     break;
@@ -804,7 +800,6 @@ export const GetGroupedParameters = ({buildParameters, os, c2_name}) => {
                                             should_hide = true;
                                         }
                                     }catch(e){
-                                        console.log("couldn't parse build parameter value as int", e);
                                     }
                                     break;
                                 case HideConditionOperandGreaterThan:
@@ -813,7 +808,6 @@ export const GetGroupedParameters = ({buildParameters, os, c2_name}) => {
                                             should_hide = true;
                                         }
                                     }catch(e){
-                                        console.log("couldn't parse build parameter value as int", e);
                                     }
                                     break;
                                 case HideConditionOperandGreaterThanOrEqual:
@@ -822,7 +816,6 @@ export const GetGroupedParameters = ({buildParameters, os, c2_name}) => {
                                             should_hide = true;
                                         }
                                     }catch(e){
-                                        console.log("couldn't parse build parameter value as int", e);
                                     }
                                     break;
                                 case HideConditionOperationStartsWith:

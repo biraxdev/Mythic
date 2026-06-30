@@ -83,7 +83,7 @@ function CallbackSearchTableRow(props){
             props.onEditDeleted({id: props.id, active: !props.active});
         },
         onError: (data) => {
-            snackActions.error("Operation not allowed");
+            snackActions.error("You don't have permission for this action.");
         }
     });
     const ips = JSON.parse(props.ip);

@@ -337,7 +337,6 @@ export function CallbacksTop(props){
             callbacks.current = updated;
         },
         onError: ({data}) => {
-            console.log(data)
         },
     });
     useQuery(Query_Callbacks_And_Edges, {

@@ -161,6 +161,52 @@ export const operatorSettingDefaults =  {
     },
 }
 
+export const themePresets = {
+    "Default": operatorSettingDefaults.palette,
+    "Midnight": {
+        ...operatorSettingDefaults.palette,
+        primary: { dark: "#6c8ebf", light: "#4a7ab5" },
+        background: { dark: "#1a1a2e", light: "#f0f0ff" },
+        paper: { dark: "#16213e", light: "#e8e8f5" },
+        navBarColor: { dark: "#0f3460", light: "#2c3e8c" },
+        navBarBottomColor: { dark: "#1a1a2e", light: "#1a1a4e" },
+        pageHeader: { dark: "#0f3460", light: "#2c3e8c" },
+        tableHeader: { dark: "#1e3a5f", light: "#b8c8e8" },
+    },
+    "Forest": {
+        ...operatorSettingDefaults.palette,
+        primary: { dark: "#6b9e6b", light: "#3a7a3a" },
+        success: { dark: "#7cc47c", light: "#2d8a2d" },
+        background: { dark: "#1a2e1a", light: "#f0f5f0" },
+        paper: { dark: "#1e321e", light: "#e5ede5" },
+        navBarColor: { dark: "#1a3a1a", light: "#2d5a2d" },
+        navBarBottomColor: { dark: "#0d1f0d", light: "#1a4a1a" },
+        pageHeader: { dark: "#1a3a1a", light: "#2d5a2d" },
+        tableHeader: { dark: "#2a4a2a", light: "#b8d8b8" },
+    },
+    "Crimson": {
+        ...operatorSettingDefaults.palette,
+        primary: { dark: "#b85c5c", light: "#a03030" },
+        error: { dark: "#d44040", light: "#c02020" },
+        background: { dark: "#2e1a1a", light: "#f5f0f0" },
+        paper: { dark: "#321e1e", light: "#ede5e5" },
+        navBarColor: { dark: "#5c1a1a", light: "#8a2020" },
+        navBarBottomColor: { dark: "#3a0d0d", light: "#601515" },
+        pageHeader: { dark: "#5c1a1a", light: "#8a2020" },
+        tableHeader: { dark: "#4a2a2a", light: "#d8b8b8" },
+    },
+    "High Contrast": {
+        ...operatorSettingDefaults.palette,
+        primary: { dark: "#ffffff", light: "#000000" },
+        text: { dark: "#ffffff", light: "#000000" },
+        background: { dark: "#000000", light: "#ffffff" },
+        paper: { dark: "#1a1a1a", light: "#f0f0f0" },
+        tableHeader: { dark: "#333333", light: "#cccccc" },
+        navBarColor: { dark: "#1a1a1a", light: "#333333" },
+        navBarBottomColor: { dark: "#000000", light: "#1a1a1a" },
+    },
+};
+
 export const mePreferences = makeVar(operatorSettingDefaults);
 
 
@@ -204,7 +250,6 @@ export const successfulRefresh = (data) => {
     localStorage.setItem("user", JSON.stringify(me));
 }
 export const FailedRefresh = (restart_websockets) =>{
-    console.log("failed refresh");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("user");

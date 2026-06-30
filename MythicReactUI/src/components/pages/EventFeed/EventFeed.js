@@ -147,7 +147,6 @@ export function EventFeed({}){
 
   const [getMoreEventFeedWithWarning] = useLazyQuery(GET_Event_Feed_Warnings, {
       onError: data => {
-          console.error(data)
       },
       fetchPolicy: "no-cache",
       onCompleted: (data) => {
@@ -162,7 +161,6 @@ export function EventFeed({}){
   });
   const [getMoreEventFeed] = useLazyQuery(GET_Event_Feed_No_Warnings, {
     onError: data => {
-      console.error(data)
     },
     fetchPolicy: "no-cache",
     onCompleted: (data) => {

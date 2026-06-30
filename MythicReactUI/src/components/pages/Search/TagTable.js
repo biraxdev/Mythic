@@ -66,7 +66,7 @@ function TagTableRow(props){
             props.onDelete(props.id);
         },
         onError: (data) => {
-            snackActions.error("Failed to delete tag");
+            snackActions.error("Could not delete tag. Please try again.");
         }
     })
     const onAcceptDelete = () => {
@@ -379,7 +379,6 @@ function TagTableRowElement(props){
             )
 
         } else {
-            console.log("unknown id for tag", props)
         }
     }
     return getElement()

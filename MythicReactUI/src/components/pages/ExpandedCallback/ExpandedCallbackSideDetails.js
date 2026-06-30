@@ -48,7 +48,6 @@ export function ExpandedCallbackSideDetailsTable(props){
 
         },
         onError: data => {
-            console.log(data);
             snackActions.warning(data);
         }
     });

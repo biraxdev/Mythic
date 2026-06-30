@@ -87,7 +87,6 @@ export function b64DecodeUnicode(str) {
       try{
         return window.atob(str);
       }catch(error3){
-        console.log("Failed to base64 decode response", error, error2)
         return str;
       }
     }
@@ -188,10 +187,8 @@ const NonInteractiveResponseDisplay = (props) => {
     setOpenBackdrop(false);
   }, 1000);
   const subscriptionDataCallback =  ({data}) => {
-    //console.log("fetchLimit", fetchLimit, "totalCount", totalCount);
       if(rawResponses.length >= initialResponseStreamLimit && initialResponseStreamLimit > 0 && !props.selectAllOutput){
         // we won't display it
-        console.log("got more than we can see currently", totalCount);
         setOpenBackdrop(false);
         let newTotal = totalCount;
         data.data.response_stream.forEach( (r) => {
@@ -247,7 +244,6 @@ const NonInteractiveResponseDisplay = (props) => {
     onData: subscriptionDataCallback
   });
   const onSubmitPageChange = (currentPage) => {
-    //console.log("onSubmitPageChange")
     if(search.current === undefined || search.current === ""){
         fetchMoreResponses({variables: {task_id: props.task.id,
             fetchLimit: initialResponseStreamLimit === 0 ? undefined : initialResponseStreamLimit,
@@ -264,7 +260,6 @@ const NonInteractiveResponseDisplay = (props) => {
   }
   const onSubmitSearch = React.useCallback( (newSearch) => {
     search.current = newSearch;
-    //console.log("onSubmitSearch")
     //setOpenBackdrop(true);
     if(newSearch === undefined || newSearch === ""){
       if(props.selectAllOutput){
@@ -336,7 +331,6 @@ export const NonInteractiveResponseDisplayConsole = (props) => {
   const [rawResponses, setRawResponses] = React.useState([]);
   const taskID = React.useRef(props.task.id);
   const subscriptionDataCallback = React.useCallback( ({data}) => {
-    //console.log("fetchLimit", fetchLimit, "totalCount", totalCount);
     if(props.task.id !== taskID.current){
       taskID.current = props.task.id;
       const responseArray = data.data.response_stream.map( r =>{ return {...r, response: b64DecodeUnicode(r.response)}});
@@ -509,7 +503,6 @@ const ResponseDisplayComponent = ({rawResponses, viewBrowserScript, output, comm
         if(rawResponses.length > 0){
           setViewBrowserScript(false);
           setBrowserScriptData({});
-          console.log(error);
         }
       }
     } else {
@@ -524,7 +517,6 @@ const ResponseDisplayComponent = ({rawResponses, viewBrowserScript, output, comm
           script.current = Function(`"use strict";return(${data.browserscript[0]["script"]})`)();
         }catch(error){
           script.current = undefined;
-          console.log(error);
         }
       }else{
         setViewBrowserScript(false);
@@ -533,7 +525,6 @@ const ResponseDisplayComponent = ({rawResponses, viewBrowserScript, output, comm
       setLoadingBrowserScript(false);
     },
     onError: (data) => {
-      console.log("error loading scripts", data);
     }
   });
   useEffect( () => {

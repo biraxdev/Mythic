@@ -76,7 +76,6 @@ export function EventGroupInstances({selectedEventGroup, me, setSelectedInstance
    });
   },
   onError: (data) => {
-   console.log(data);
   }
  })
  useSubscription(sub_eventgroups, {

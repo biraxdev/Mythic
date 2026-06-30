@@ -43,7 +43,6 @@ export function C2ProfileConfigDialog(props) {
             if(data.containerDownloadFile.status === "error"){
                 config.current = "Errored trying to read file from container\n" + data.containerDownloadFile.error;
             }else{
-                //console.log(data);
                 config.current = atob(data.containerDownloadFile.data);
             }
             setFetchedData(true);
@@ -56,7 +55,6 @@ export function C2ProfileConfigDialog(props) {
      return <LinearProgress />;
     }
     if (error) {
-     console.error(error);
      return <div>Error! {error.message}</div>;
     }
     const onConfigSubmit = () => {

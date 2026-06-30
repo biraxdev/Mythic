@@ -231,7 +231,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                         snackActions.warning("no available options", snackMessageStyles);
                     }
                 }catch(error){
-                    console.log(error);
                     setBackdropOpen(false);
                     snackActions.warning("Failed to parse dynamic parameter results", snackMessageStyles);
                     tabOptions.current = [];
@@ -245,7 +244,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
         },
         onError: (data) => {
             snackActions.warning("Failed to query payload type container for options", snackMessageStyles);
-            console.log(data);
             setBackdropOpen(false);
         }
     });
@@ -348,7 +346,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
         }
     });
     React.useEffect( () => {
-        //console.log("filter updated")
         const filteredOptions = taskOptions.current.filter( c => applyFilteringToTasks(c));
         setFilteredTaskOptions(filteredOptions);
         let active = false;
@@ -495,7 +492,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                     }
                     return;
                 }
-                console.log(cmd.commandparameters);
                 if(cmd.commandparameters.length > 0){
                     if(message[message.length -1] === " "){
                         // somebody hit tab after a parameter name or after a parameter value
@@ -509,7 +505,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                             return;
                         }
                         const [lastSuppliedParameter, lastSuppliedParameterHasValue] = getLastSuppliedArgument(cmd, message, parsed);
-                        console.log("lastSuppliedParameter", lastSuppliedParameter, "has_value", lastSuppliedParameterHasValue);
                         lastValueTypedBeforeDynamicParamsRef.current = lastSuppliedParameterHasValue;
                         if (lastSuppliedParameter !== undefined && parsed[lastSuppliedParameter.cli_name] !== undefined && lastSuppliedParameterHasValue === ""){
                             if (lastSuppliedParameter.choices.length > 0){
@@ -537,7 +532,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                                 return;
                             }
                         }
-                        console.log("cmdGroupNames in tab", cmdGroupNames);
                         for(let i = 0; i < cmd.commandparameters.length; i++){
                             if(cmd.commandparameters[i]["required"] &&
                                 (!(cmd.commandparameters[i]["cli_name"] in parsed) || (IsRepeatableCLIParameterType(cmd.commandparameters[i]["parameter_type"])) ) &&
@@ -591,7 +585,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                                 return;
                             }
                             // determine if we're looking at a valid flag name in lastFlag or if it's simply the start of a flag
-                            //console.log("swapping parameter name, group options: ", cmdGroupNames);
                             let exactMatch = cmd.commandparameters.find(cur => 
                                 cmdGroupNames.includes(cur.parameter_group_name) && 
                                 cur.cli_name === lastFlag.slice(1) &&
@@ -664,7 +657,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                                 return;
                             }
                             const [lastSuppliedParameter, lastSuppliedParameterHasValue] = getLastSuppliedArgument(cmd, message, parsed);
-                            console.log("lastSuppliedParameter", lastSuppliedParameter)
                             lastValueTypedBeforeDynamicParamsRef.current = lastSuppliedParameterHasValue;
                             if (lastSuppliedParameter !== undefined && parsed[lastSuppliedParameter.cli_name] !== undefined){
                                 if (lastSuppliedParameter.choices.length > 0){
@@ -792,7 +784,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
 
         str.split('').forEach((value, i, s) => {
             //loop over every value in the string
-            //console.log(value);
             if( (sQuoted || dQuoted) && value === "\\"){
                 if(!backslash){
                     backslash = true;
@@ -805,7 +796,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                 
             }
             if(!sQuoted && !dQuoted){
-                //console.log("not sQuoted and not dQuoted");
                 if(value === `'`){
                     if(backslash){
                         backslash = false;
@@ -823,7 +813,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                         return;
                     }
                     dQuoted = true;
-                    //console.log("double quoted now, skipping char: ", value);
                     buffer += value;
                     return;
                 }
@@ -836,13 +825,10 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                     }
                     if(buffer.length > 0){
                         if(buffer[buffer.length-1] === buffer[0] && [`'`, `"`].includes(buffer[0])){
-                            //console.log("stripping off surrounding ' or \" for ", buffer)
                             res.push(buffer.slice(1, -1))
                         }else{
-                            //console.log("not stripping off for", buffer);
                             res.push(buffer);
                         }
-                        //console.log("pushed to buffer:", buffer);
                     }
                     buffer = '';
                     return;
@@ -877,7 +863,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                 }
                 return;
             }
-            //console.log("adding to buffer: ", value);
             if(backslash){
                 buffer += `\\${value}`;
                 backslash = false;
@@ -890,12 +875,9 @@ export function CallbacksTabsTaskingInputPreMemo(props){
             buffer += "\\"; // try to account for a trailing \
         }
         if(buffer.length > 0){
-            //console.log("pushed end buffer: ", buffer);
             if(buffer[buffer.length-1] === buffer[0] && [`'`, `"`].includes(buffer[0])){
-                //console.log("stripping off surrounding ' or \" for ", buffer)
                 res.push(buffer.slice(1, -1))
             }else{
-                //console.log("not stripping off for", buffer);
                 res.push(buffer);
             }
         }
@@ -1154,11 +1136,8 @@ export function CallbacksTabsTaskingInputPreMemo(props){
         
         try{
             let new_command_line = command_line;//.replaceAll("\\", "\\\\");
-            //console.log("new_command_line", new_command_line);
             const argv = parseToArgv(new_command_line);
-            console.log("argv", argv, "command_line", new_command_line);
             const yargs_parsed = parseArgvToDict(argv, cmd);
-            console.log("yargs_parsed", yargs_parsed);
             return yargs_parsed;
         }catch(error){
             snackActions.warning("Failed to parse command line: " + error, snackMessageStyles);
@@ -1185,7 +1164,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                 finalGroupNames.push(currentGroupName);
             }
         }
-        console.log(finalGroupNames)
         if(finalGroupNames.length === 0){
             return "";
         } else if(finalGroupNames.length === 1){
@@ -1214,7 +1192,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                 let paramGroups = [];
                 let foundParamGroup = false;
                 for(let i = 0; i < cmd.commandparameters.length; i++){
-                    //console.log(cmd.commandparameters[i], key)
                     if(cmd.commandparameters[i]["cli_name"] === key || cmd.commandparameters[i]["display_name"] === key || cmd.commandparameters[i]["name"] === key){
                         foundParamGroup = true;
                         paramGroups.push(cmd.commandparameters[i]["parameter_group_name"])
@@ -1222,7 +1199,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                 }
                 // now paramGroups has all the group names associated with `key`
                 // we have some set of possible options, so we need to find the intersection with paramGroups and cmdGroupOptions
-                //console.log(cmdGroupOptions, paramGroups)
                 let intersection = cmdGroupOptions.reduce( (prev, cur) => {
                     if(paramGroups.includes(cur)){
                         return [...prev, cur];
@@ -1242,7 +1218,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
             }
         }
         // now cmdGroupOptions is a list of all the matching parameter_group_names for the commandline arguments we've specified
-        console.log("cmdGroupOptions", cmdGroupOptions)
         return cmdGroupOptions;
     }
     const fillOutPositionalArguments = (cmd, parsed, groupNames) => {
@@ -1262,7 +1237,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
         const groupParameters = cmd.commandparameters.filter(c => c.parameter_group_name === usedGroupName);
         groupParameters.sort((a,b) => a.ui_position < b.ui_position ? -1 : 1);
         // now we have all of the parameters and they're sorted by `ui_position`
-        console.log("groupParameters", groupParameters);
         let unSatisfiedArguments = [];
         for(let i = 0; i < groupParameters.length; i++){
             if( !(groupParameters[i]["cli_name"] in parsedCopy)){
@@ -1271,7 +1245,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
             }
         }
         // now iterate over the unsatisfied arguments and add in the positional parameters
-        //console.log("unsatisfiedParameters", unSatisfiedArguments)
         for(let i = 0; i < unSatisfiedArguments.length; i++){
             // we cut this short by one so that the last unSatisifedArgument can do a greedy matching for the rest of what was supplied
             // this parameter hasn't been supplied yet, check if we have any positional parameters in parsedCopy["_"]
@@ -1325,7 +1298,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                 break;
             }
         }
-        //console.log("unsatisfied filled, but still some args", JSON.parse(JSON.stringify(parsedCopy)))
         if(unSatisfiedArguments.length > 0 && parsedCopy["_"].length > 0){
             //parsedCopy["_"] = parsedCopy["_"].map( c => typeof(c) === "string" && c.includes(" ") ? "\"" + c + "\"" : c);
             let temp = ""; //parsedCopy["_"].join(" ");
@@ -1341,7 +1313,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                             temp = "'" + parsedCopy["_"][pci] + "' " + temp;
                         }
                     }else{
-                        console.log("mismatched quotes?", message[startIndex-1], message[startIndex + parsedCopy["_"][pci].length + 1])
                     }
                 }else if(message[startIndex -1] === '"'){
                     if(startIndex + parsedCopy["_"][pci].length  < message.length){
@@ -1349,7 +1320,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
                             temp = '"' + parsedCopy["_"][pci] + '" ' + temp;
                         }
                     }else{
-                        console.log("mismatched quotes?", message[startIndex-1], message[startIndex + parsedCopy["_"][pci].length ])
                     }
                 }else{
                     temp = parsedCopy["_"][pci] + " " + temp;
@@ -1432,12 +1402,10 @@ export function CallbacksTabsTaskingInputPreMemo(props){
         }
         if(failed_json_parse){
             let parsed = parseCommandLine(params, cmd);
-            //console.log("result of parseCommandLine", parsed, !parsed)
             if(parsed === undefined){
                 return;
             }
             parsed = {...parsed};
-            //console.log(message, parsed);
             cmdGroupName = determineCommandGroupName(cmd, parsed);
             if(cmdGroupName !== undefined){
                 cmdGroupName.sort();
@@ -1449,7 +1417,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
             if(cmd.commandparameters.length > 0){
                 parsed["_"].unshift(cmd);
                 parsedWithPositionalParameters = fillOutPositionalArguments(cmd, parsed, cmdGroupName);
-                console.log("what's left", parsedWithPositionalParameters);
                 if(parsedWithPositionalParameters === undefined){
                     return;
                 }
@@ -1487,9 +1454,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
             setUnmodifiedHistoryValue("parsed_cli");
             return;
         }
-        console.log("positional args added in:", parsedWithPositionalParameters);
-        console.log("about to call onSubmitCommandLine", cmd);
-        console.log("commandOptionsForcePopup", Boolean(commandOptionsForcePopup.current), "group name", cmdGroupName)
         props.onSubmitCommandLine(message, cmd, parsedWithPositionalParameters, Boolean(commandOptionsForcePopup.current), cmdGroupName, unmodifiedHistoryValue);
         setMessage("");
         setCommandPayloadType("");
@@ -1501,7 +1465,6 @@ export function CallbacksTabsTaskingInputPreMemo(props){
     const onSubmitCommandLine = (evt, force_parsed_popup) => {
         evt.preventDefault();
         evt.stopPropagation();
-        //console.log("onSubmitCommandLine", evt, message);
         let splitMessage = message.trim().split(" ");
         let cmd = loadedOptions.current.filter( l => l.cmd === splitMessage[0]);
         if(cmd === undefined || cmd.length === 0){

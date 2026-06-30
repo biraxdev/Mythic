@@ -165,7 +165,6 @@ function CallbacksTablePreMemo(props){
 
         },
         onError: data => {
-            console.log(data);
             snackActions.warning(data);
         }
     });
@@ -239,7 +238,6 @@ function CallbacksTablePreMemo(props){
                 return {visible: storageItem, hidden: newHidden};
             }
         }catch(error){
-            console.log("Failed to load callbacks_table_columns", error);
         }
         return defaults;
     });
@@ -249,7 +247,6 @@ function CallbacksTablePreMemo(props){
         
       },
       onError: data => {
-          console.log(data);
           snackActions.warning(data);
       }
     });
@@ -263,7 +260,6 @@ function CallbacksTablePreMemo(props){
 
         },
         onError: data => {
-            console.log(data);
         }
     });
     const [lockCallback] = useMutation(lockCallbackMutation, {
@@ -276,7 +272,6 @@ function CallbacksTablePreMemo(props){
 
         },
         onError: data => {
-            console.log(data);
             snackActions.warning(data);
         }
     });
@@ -290,7 +285,6 @@ function CallbacksTablePreMemo(props){
 
         },
         onError: data => {
-            console.log(data);
             snackActions.warning(data);
         }
     });
@@ -304,7 +298,6 @@ function CallbacksTablePreMemo(props){
 
         },
         onError: data => {
-            console.log(data);
             snackActions.warning(data);
         }
     })
@@ -331,7 +324,6 @@ function CallbacksTablePreMemo(props){
             }
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error("Failed to export configuration: " + data.message)
         }
     });
@@ -659,7 +651,6 @@ function CallbacksTablePreMemo(props){
           setColumnVisibility({visible: storageItem, hidden: newHidden});
         }
       }catch(error){
-        console.log("Failed to load callbacks_table_columns", error);
       }
       try {
         const storageItemOptions = GetMythicSetting({setting_name: "callbacks_table_filter_options", default_value: operatorSettingDefaults.callbacks_table_filters});
@@ -667,7 +658,6 @@ function CallbacksTablePreMemo(props){
             setFilterOptions(storageItemOptions);
         }
       }catch(error){
-        console.log("Failed to load callbacks_table_filter_options", error);
       }
         try {
             const storageColumnOrder = GetMythicSetting({setting_name: "callbacks_table_column_order", default_value: callbackTableInitialColumns.map(c => c.name)});
@@ -686,7 +676,6 @@ function CallbacksTablePreMemo(props){
                 }
             }
         }catch(error){
-            console.log("Failed to load callbacks_table_filter_options", error);
         }
         setLoadingSettings(false);
     }, [])
@@ -947,7 +936,6 @@ function CallbacksTablePreMemo(props){
       try{
           updateSetting({setting_name: "callbacks_table_filter_options", value: {...filterOptions, [selectedColumn.key]: value }});
       }catch(error){
-          console.log("failed to save filter options");
       }
     }
     const sortColumn = columns.findIndex((column) => column.key === sortData.sortKey);

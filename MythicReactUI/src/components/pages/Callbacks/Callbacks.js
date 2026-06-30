@@ -26,7 +26,6 @@ export const getCallbackIdFromClickedTab = (tabId) => {
     }else if(tabId.includes("customProcessBasedBrowser")) {
         return Number(tabId.split("customProcessBasedBrowser")[0]);
     } else {
-        console.log("unknown tab type", tabId);
         return 0;
     }
 }
@@ -64,7 +63,6 @@ export function Callbacks({me}) {
                     setClickedTabId(lastClickedTab);
                 }
             } catch (error) {
-                console.log('failed to parse oldTabs', error);
             }
         }
         const oldSizes = localStorage.getItem("callbackTableSplitSizes");
@@ -72,7 +70,6 @@ export function Callbacks({me}) {
             try{
                 setCallbackTableSplitSizes(JSON.parse(oldSizes));
             }catch(error){
-                console.log("failed to parse callback table split sizes");
             }
         }
     }, []);
@@ -90,7 +87,6 @@ export function Callbacks({me}) {
         openTabRef.current.forEach((tab) => {
             if (tab.tabID === tabData.tabID) found = true;
         });
-        //console.log("found is", found, tabData.tabID, tabData.tabType, tabData.callbackID, openTabs);
         if (!found) {
             const tabs = [...openTabRef.current, { ...tabData }];
             localStorage.setItem('openTabs', JSON.stringify(tabs));
@@ -142,7 +138,6 @@ export function Callbacks({me}) {
         }
     }, [openTabs]);
     const onDragTab = ({selected, toLeftOf}) => {
-        //console.log("onDragTab in CallbacksTabs", selected, toLeftOf);
         let selectedPieces = selected.split("-");
         let targetTabIndex = selectedPieces[selectedPieces.length -1] -0;
         let newLocationPieces = toLeftOf.split("-");
@@ -150,17 +145,14 @@ export function Callbacks({me}) {
         if(newLocation > targetTabIndex){
             newLocation = newLocation -1;
         }
-        //console.log("from index", targetTabIndex, "to index", newLocation);
         if(targetTabIndex === newLocation){
             return;
         }
         let newOpenTabList = [];
         for(let i = 0; i < openTabs.length; i++){
             if(i === targetTabIndex){
-                //console.log("matched targetTabIndex")
                 continue;
             } else if(i === newLocation){
-                //console.log("matched new location")
                 if(newLocation > targetTabIndex){
                     newOpenTabList.push(openTabs[i]);
                     newOpenTabList.push(openTabs[targetTabIndex]);

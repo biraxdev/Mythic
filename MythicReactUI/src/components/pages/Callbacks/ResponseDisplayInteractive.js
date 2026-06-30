@@ -46,7 +46,6 @@ const getTaskingStatus = (task) => {
     } else if(task.status === "submitted"){
         return  <CircularProgress size={"1rem"} />
     } else {
-        console.log(task.status);
         return null
     }
 }
@@ -75,9 +74,7 @@ const getClassnames = (entry) => {
         classnames.push("ansi-" + entry.decorations[i])
     }
     if(entry.bg_truecolor || entry.fg_truecolor){
-        console.log(entry);
     }
-    //console.log(entry);
     return classnames.join(" ");
 }
 const handleTerminalCodes = (response) => {
@@ -120,7 +117,6 @@ export const GetOutputFormatAll = ({data, myTask, taskID,  useASNIColor, message
                     if(useASNIColor){
                         let removedTerminalCodes = handleTerminalCodes(d.response);
                         let ansiJSON = Anser.ansiToJson(removedTerminalCodes, { use_classes: true });
-                        //console.log(ansiJSON)
                         return (
                             ansiJSON.map( (a, i) => (
                                 <pre id={"response" + d.timestamp + d.id} style={{display: "inline", margin: "0 0 0 0",
@@ -156,10 +152,8 @@ export const GetOutputFormatAll = ({data, myTask, taskID,  useASNIColor, message
             if(el && el.scrollHeight - el.scrollTop - el.clientHeight < 500){
                 if(!search){
                     messagesEndRef?.current?.scrollIntoView({ behavior: "auto", block: "nearest" });
-                    //console.log("scrolling");
                 }
             } else {
-               // console.log("not scrolled down enough")
             }
         }
     }, [dataElement]);
@@ -223,7 +217,6 @@ export const ResponseDisplayInteractive = (props) =>{
     const {loading: loadingTasks} = useSubscription(getInteractiveTaskingQuery, {
       variables: {parent_task_id: props.task.id},
       onError: data => {
-          console.error(data)
       },
       fetchPolicy: "no-cache",
       onData: ({data}) => {
@@ -463,7 +456,6 @@ const InteractiveTaskingBar = ({
             }
         },
         onError: data => {
-            console.error(data);
         }
     });
     const [taskOptionsIndex, setTaskOptionsIndex] = React.useState(-1);

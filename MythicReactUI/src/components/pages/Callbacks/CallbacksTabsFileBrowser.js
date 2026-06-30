@@ -240,7 +240,6 @@ export const CallbacksTabsFileBrowserPanel = ({ index, value, tabInfo, me, setNe
                        }
                    }
                }catch(error){
-                   console.log(error);
                }
                 for(let j = 0; j < currentGroups.length; j++){
                     if(treeRootDataRef.current[currentGroups[j]] === undefined){
@@ -282,7 +281,6 @@ export const CallbacksTabsFileBrowserPanel = ({ index, value, tabInfo, me, setNe
                }
                 return prev;
            }, {...treeAdjMtx});
-           //console.log(treeRootDataRef.current);
            setTreeAdjMtx(newMatrix);
             setSelectedFolderData({
                 full_path_text: '',
@@ -402,7 +400,6 @@ export const CallbacksTabsFileBrowserPanel = ({ index, value, tabInfo, me, setNe
             loadingCommandsRef.current = false;
         },
         onError: (data) => {
-            console.log(data);
             loadingCommandsRef.current = false;
         }
     });
@@ -429,12 +426,10 @@ export const CallbacksTabsFileBrowserPanel = ({ index, value, tabInfo, me, setNe
     }
     const [getFolderData] = useLazyQuery(folderQuery, {
         onError: (data) => {
-            console.error(data);
         },
         fetchPolicy: 'no-cache',
         notifyOnNetworkStatusChange: true,
         onCompleted: (data) => {
-            //console.log("getFolderData", data)
             let mythictree = [...data.parents, ...data.children];
             snackActions.dismiss();
             // add in all of the raw data
@@ -475,7 +470,6 @@ export const CallbacksTabsFileBrowserPanel = ({ index, value, tabInfo, me, setNe
                         existingData.metadata.size = mythictree[i].metadata.size;
                         existingData.metadata.access_time = mythictree[i].metadata.access_time;
                         existingData.metadata.modify_time = mythictree[i].metadata.modify_time;
-                        //console.log("updating permissions", "existing", existingData.metadata.permissions, "new", mythictree[i].metadata)
                         if(mythictree[i].metadata.permissions !== undefined && mythictree[i].metadata.permissions !== null){
                             if(Array.isArray(existingData.metadata.permissions) && Array.isArray(mythictree[i].metadata.permissions)){
                                 existingData.metadata.permissions = [...existingData.metadata.permissions, ...mythictree[i].metadata.permissions];
@@ -520,9 +514,7 @@ export const CallbacksTabsFileBrowserPanel = ({ index, value, tabInfo, me, setNe
                 }
                 return prev;
             }, {...treeAdjMtx});
-            //console.log(treeRootDataRef.current);
             setTreeAdjMtx(newMatrix);
-            //console.log("just set treeAdjMtx, about to close backdrop")
             setBackdropOpen(false);
             if(data.self.length > 0){
                 //setSelectedFolderData({...selectedFolderData, task_id: data.self[0].task_id, success: data.self[0].success});
@@ -545,7 +537,6 @@ export const CallbacksTabsFileBrowserPanel = ({ index, value, tabInfo, me, setNe
         },
     });
     const onSetTableData = useCallback((nodeData) => {
-        //console.log("setTableData", nodeData);
         setSelectedFolderData(nodeData);
     }, []);
     const fetchFolderData = useCallback((nodeData, fromHistory) => {
@@ -851,7 +842,6 @@ const FileBrowserTableTop = ({
     }
     const moveIndexToNextListing = () => {
         // we're getting close to index 0, the newest listing
-        //console.log(historyIndex, history);
         if(historyIndex <= 0){
             return
         }

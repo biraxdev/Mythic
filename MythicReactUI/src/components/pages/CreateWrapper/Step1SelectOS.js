@@ -132,7 +132,6 @@ export function Step1SelectOS(props){
                 setOpenBackdrop(false);
             })
             .catch(({data}) => {
-                console.log(data);
                 setOpenBackdrop(false);
             });
     }, [selectedPayloadType, os]);

@@ -108,7 +108,7 @@ function ProxySearchTableRow(props){
             }
         },
         onError: (data) => {
-            snackActions.error("Operation not allowed");
+            snackActions.error("You don't have permission for this action.");
         }
     });
     const [testProxy] = useMutation(testProxyMutation, {
@@ -120,7 +120,7 @@ function ProxySearchTableRow(props){
             }
         },
         onError: (data) => {
-            snackActions.error("Operation not allowed");
+            snackActions.error("You don't have permission for this action.");
         }
     });
     const onAcceptDelete = () => {

@@ -30,7 +30,6 @@ export function EventFeedNotifications(props) {
         fetchPolicy: "no-cache",
         shouldResubscribe: true,
         onError: (errorData) => {
-           console.log(errorData);
         },
         onData: ({data}) => {
             if (data.data.operationeventlog_stream.length > 0){

@@ -37,18 +37,15 @@ export function InviteForm(props){
                 return;
             }
             response.json().then(data => {
-                //console.log(data)
                 if(data["status"] === "success"){
                     snackActions.success("Successfully registered new account!");
                     restartWebsockets();
                     window.location = "/new/login";
                 }else{
                     snackActions.warning(data["error"]);
-                    console.log("Error", data);
                 }
             }).catch(error => {
                 snackActions.warning("Error getting JSON from server: " + error.toString());
-                console.log("Error trying to get json response", error, response);
             });
         }).catch(error => {
             if(error.toString() === "TypeError: Failed to fetch"){
@@ -56,7 +53,6 @@ export function InviteForm(props){
             } else {
                 snackActions.warning("Error talking to server: " + error.toString());
             }
-            console.log("There was an error!", error);
         });
     }
     const checkPasswordsMatch = (newValue) => {

@@ -44,7 +44,6 @@ function isTrue(value){
     if(typeof value === 'string'){
         return value.toLowerCase() === 'true' || value.toLowerCase() === 't';
     }
-    console.log("unknown boolean value", value);
 }
 export function CreatePayloadParameter({onChange, parameter_type, default_value, name, required, verifier_regex, id,
                                            description, initialValue, choices, trackedValue, instance_name,
@@ -127,7 +126,6 @@ export function CreatePayloadParameter({onChange, parameter_type, default_value,
         },
         onError: (data) => {
             snackActions.warning("Failed to perform dynamic parameter query");
-            console.log(data);
             setBackdropOpen(false);
         }
     });
@@ -269,7 +267,6 @@ export function CreatePayloadParameter({onChange, parameter_type, default_value,
             }
             setMapArray(initial);
         }else{
-            console.log("hit an unknown parameter type")
         }
         if(dynamic_query_function !== "" && dynamic_query_function !== undefined){
             if(!usingDynamicParamChoices.current){
@@ -403,7 +400,6 @@ export function CreatePayloadParameter({onChange, parameter_type, default_value,
             onChange(name, newDayString, "");
         }catch(error){
             snackActions.warning("invalid date")
-            console.error("invalid date", date);
         }
     }
     const toggleSwitchValue = (evt) => {

@@ -22,6 +22,8 @@ import {useNavigate} from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import { Backdrop, CircularProgress } from '@mui/material';
 import {MythicPageHeader} from "../../MythicComponents/MythicPageHeader";
+import {MythicEmptyState} from "../../MythicComponents/MythicEmptyState";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
 export function PayloadsTable({payload, onDeletePayload, onUpdateCallbackAlert, onRestorePayload, me,
@@ -151,6 +153,15 @@ export function PayloadsTable({payload, onDeletePayload, onUpdateCallbackAlert, 
                         ))}
                     </TableBody>
                 </Table>
+                {!openBackdrop && payload.length === 0 && (
+                    <MythicEmptyState
+                        title="No Agents Created Yet"
+                        description="Create your first agent to start operating. Agents are the payloads that run on target systems."
+                        actionText="Create Agent"
+                        actionLink="/new/createpayload"
+                        icon={<AddCircleIcon style={{fontSize: '48px'}} />}
+                    />
+                )}
             </div>
             <div style={{background: "transparent", display: "flex", justifyContent: "center", alignItems: "center", paddingTop: "5px", paddingBottom: "10px"}}>
                 <Pagination count={Math.ceil(pageData.totalCount / pageData.fetchLimit)} variant="outlined" color="primary" boundaryCount={1}

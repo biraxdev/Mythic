@@ -53,7 +53,6 @@ export function SettingsOperatorAPITokenSearchDialog(props) {
             setSearchResults(result.apitokens);
         },
         onError: (err) => {
-            console.log(err);
             snackActions.error("Unable to search apitokens");
         }
     });
@@ -80,7 +79,6 @@ export function SettingsOperatorAPITokenSearchDialog(props) {
             snackActions.success("successfully deleted API Token");
         },
         onError: (data) => {
-            console.log(data);
         }
     });
     const [toggleAPITokenActive] = useMutation(toggleAPITokenActiveMutation, {

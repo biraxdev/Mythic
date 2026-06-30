@@ -86,7 +86,6 @@ export function Step3SelectCommands(props){
                         return [...prev]
                       }
                     }catch(error){
-                      console.error(error);
                     }
                   }
                 }
@@ -94,7 +93,6 @@ export function Step3SelectCommands(props){
                   // , {...cur, disabled: true, selected: false, reason: "This command isn't supported by the selected OS"}
                 return [...prev];
               }catch(error){
-                console.log(error);
                 return [...prev, {...cur, disabled: false, selected: false, reason: "Failed to parse command attributes"}];
               }
             }, []);

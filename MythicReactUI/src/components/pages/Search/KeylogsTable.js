@@ -44,23 +44,18 @@ export function KeylogsTableOld(props){
         for(const [key, value] of Object.entries(condensed)){
             // key should be a User, Host, or Window
             let newSecondLevel = [];
-            //console.log("key", key, "value", value);
             for(const [key2, value2] of Object.entries(value)){
                 // key2 should be a Host, User, or Host
                 let newThirdLevel = []
-                //console.log("key2", key2, "value2", value2);
                 for( const[key3, value3] of Object.entries(value2)){
                     // key3 should be Window, Window, or User
                     // value3 should always be an array of keylog entries so we can get the actual keystrokes
-                    //console.log("key3", key3, "value3", value3);
                     newThirdLevel.push({"name": key3, "value": value3.reverse()});
                 }
-                //console.log("newThirdLevel", newThirdLevel);
                 newSecondLevel.push({"name": key2, "value": newThirdLevel.reverse()});
             }
             newArrayData.push({"name": key, "value": newSecondLevel.reverse()});
         }
-        console.log(newArrayData);
         setKeylogs([...newArrayData]);
     }, [props.keylogs]);
 //k0["name"]
@@ -162,7 +157,7 @@ function KeylogTableRow(props){
         if(result){
           snackActions.success("Copied text!");
         }else{
-          snackActions.error("Failed to copy text");
+          snackActions.error("Could not copy to clipboard.");
         }
     }
     return (

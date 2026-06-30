@@ -34,12 +34,10 @@ export function TokenUserDialog(props) {
     });
     const [updateComment] = useMutation(updateUserMutation, {
         onCompleted: (data) => {
-          //console.log('udpated');
           props.onUpdateUser({id: props.token_id, user: data.update_token_by_pk.user});
           props.onClose();
         },
         onError: (data) => {
-          console.error(data);
           props.onClose();
         }
         

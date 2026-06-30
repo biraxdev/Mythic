@@ -81,12 +81,10 @@ export function TaskOpsecDialog(props) {
         }
     });
     if (error) {
-     console.error(error);
      return <div>Error! {error.message}</div>;
     }
     const requestAvailable = (opsecData.opsec_pre_blocked === true && !opsecData.opsec_pre_bypassed) || (opsecData.opsec_post_blocked === true && !opsecData.opsec_post_bypassed);
     const onRequestSubmit = () => {
-       //console.log(props.task_id);
         updateOpsecRequest({variables: {task_id: props.task_id}});
         props.onClose();
     }

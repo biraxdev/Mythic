@@ -14,7 +14,6 @@ const getLoadedCommandsBasedOnInput = ({cmd, ui_feature}) => {
     } else if(ui_feature !== undefined && ui_feature !== ""){
         filter_string = "{command: {supported_ui_features: {_contains: $ui_feature}}}";
     } else {
-        console.log("invalid command and ui_feature", "cmd", cmd, "ui_feature", ui_feature)
         filter_string = "{command: {id: {_eq: 0}}}"
     }
     return gql`
@@ -135,7 +134,6 @@ export const TaskFromUIButton = ({callback_id, callback_ids, cmd, ui_feature, pa
                 if(typeof(parameters) === "string"){
                     return [...prev, {...cur.command, "parsedParameters": {}}];
                 }else{
-                    console.log("adding in parsed parameters", parameters);
                     return [...prev, {...cur.command, "parsedParameters": parameters}];
                 }
                 
@@ -191,7 +189,6 @@ export const TaskFromUIButton = ({callback_id, callback_ids, cmd, ui_feature, pa
                 onTasked({tasked: true, variables: savedFinalVariables.current});
             }else {
                 if(callback_ids === undefined){
-                    console.log(data)
                     snackActions.success("Issued \"" + selectedCommand["cmd"] + "\" to Callback " + callbackData.callback_by_pk.display_id);
                 } else {
                     snackActions.success("Issued \"" + selectedCommand["cmd"] + "\" to " + callback_ids.length + " callbacks.\nThis might take a while to process.");
@@ -201,7 +198,6 @@ export const TaskFromUIButton = ({callback_id, callback_ids, cmd, ui_feature, pa
             }
         },
         onError: data => {
-            console.error(data);
             onTasked({tasked: false});
         }
     });

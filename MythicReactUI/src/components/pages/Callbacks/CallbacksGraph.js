@@ -236,7 +236,6 @@ export function CallbacksGraph({onOpenTab}){
         }});
     const onSubmitSelectedLinkCommand = (cmd) => {
         setSelectedLinkCommand(cmd.command);
-        //console.log(cmd);
         setOpenParametersDialog(true);
     }
     const [createTask] = useMutation(createTaskingMutation, {
@@ -263,10 +262,8 @@ export function CallbacksGraph({onOpenTab}){
     });
     const [hideCallback] = useMutation(hideCallbackMutation, {
         update: (cache, {data}) => {
-            //console.log(data);
         },
         onError: (error) => {
-            console.log(error)
             snackActions.error(error.message);
             //setContextMenuOpen(false);
         },
@@ -282,7 +279,6 @@ export function CallbacksGraph({onOpenTab}){
     });
     const [manuallyRemoveEdge] = useMutation(removeEdgeMutation, {
         update: (cache, {data}) => {
-            //console.log(data);
             snackActions.success("Successfully removed edge, updating graph...");
         },
         onError: (err) => {
@@ -291,7 +287,6 @@ export function CallbacksGraph({onOpenTab}){
     });
     const [manuallyAddEdge] = useMutation(addEdgeMutation, {
         update: (cache, {data}) => {
-            //console.log(data);
             snackActions.success("Successfully added edge, updating graph...");
         },
         onError: (err) => {
@@ -373,7 +368,6 @@ export function CallbacksGraph({onOpenTab}){
                 setFilterOptions(storageItemOptions);
             }
         }catch(error){
-            console.log("Failed to load callbacks_table_filter_options", error);
         }
         setLoadingSettings(false);
     }, []);

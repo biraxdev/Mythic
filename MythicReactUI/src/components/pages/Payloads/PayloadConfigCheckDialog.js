@@ -36,7 +36,6 @@ export function PayloadConfigCheckDialog(props) {
      return <LinearProgress style={{marginTop: "10px"}} />;
     }
     if (error) {
-     console.error(error);
      return <div>Error!</div>;
     }
     

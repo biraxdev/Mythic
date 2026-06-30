@@ -47,7 +47,6 @@ export function SettingsOperatorSecretsConfigDialog(props) {
 
         },
         onError: (err) => {
-            console.log(err);
             snackActions.error("Unable to update operator secrets");
         }
     });

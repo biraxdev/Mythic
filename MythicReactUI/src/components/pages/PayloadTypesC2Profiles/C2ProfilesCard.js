@@ -81,7 +81,6 @@ export function C2ProfilesRow({service, showDeleted}) {
     const [alreadyRunningStartStop, setAlreadyRunningStartStop] = React.useState(false);
     const [startStopProfile] = useMutation(startStopProfileMutation, {
         onError: data => {
-            console.error(data);
         },
         onCompleted: data => {
             setAlreadyRunningStartStop(false);
@@ -113,10 +112,8 @@ export function C2ProfilesRow({service, showDeleted}) {
 
         },
         onError: data => {
-            console.error(data);
         },
         onCompleted: data => {
-            //console.log(data);
             if(data.containerWriteFile.status === "success"){
                 snackActions.success("Updated file");
             }else{
@@ -125,7 +122,6 @@ export function C2ProfilesRow({service, showDeleted}) {
         }
     });
     const onConfigSubmit = (content) => {
-        //console.log(content)
         configSubmit({variables: {container_name: service.name, file_path: "config.json", data: content}});
     }
     const [openDelete, setOpenDeleteDialog] = React.useState(false);

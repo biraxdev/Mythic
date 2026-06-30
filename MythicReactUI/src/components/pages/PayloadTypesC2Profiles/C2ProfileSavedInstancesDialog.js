@@ -113,7 +113,6 @@ export function C2ProfileSavedInstancesDialog(props) {
           setCreatedInstances(data.c2profile_by_pk.c2profileparametersinstances);
         },
         onError: data => {
-          console.log(data);
         },
         fetchPolicy: "network-only"
     });
@@ -179,16 +178,13 @@ export function C2ProfileSavedInstancesDialog(props) {
                   return inst;
               })
               updates.sort( (a, b) => a.description < b.description ? -1 : 1);
-              //console.log(updates);
               setCurrentParameters(updates);
           }catch(error){
-              console.log(error);
           }
 
       },
       onError: (data) => {
         snackActions.error("Failed to fetch instance data: " + data);
-        console.log(data);
       },
       fetchPolicy: "no-cache"
     })
@@ -229,7 +225,6 @@ export function C2ProfileSavedInstancesDialog(props) {
         },
         onError: (error) => {
             snackActions.error("Failed to import file")
-            console.log(error)
         }
     })
     if (loading) {
@@ -299,7 +294,6 @@ export function C2ProfileSavedInstancesDialog(props) {
         }
         return param;
       });
-      //console.log(c2params);
       setCurrentParameters(c2params);
     }
     const onChangeCreatedInstanceName = (evt) => {
@@ -360,7 +354,6 @@ export function C2ProfileSavedInstancesDialog(props) {
                         c2profile_name: data["c2profile_name"]
                     }});
             }catch(error){
-                console.log(error);
                 snackActions.error("Failed to import file");
             }
         }

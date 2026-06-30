@@ -211,7 +211,6 @@ export function TaskParametersDialogRow(props){
                         }
                     }
                 }catch(error){
-                    console.log(error);
                     setBackdropOpen(false);
                     snackActions.warning("Failed to parse dynamic parameter results");
                     usingDynamicParamComplexChoices.current = false;
@@ -226,7 +225,6 @@ export function TaskParametersDialogRow(props){
         },
         onError: (data) => {
             snackActions.warning("Failed to perform dynamic parameter query");
-            console.log(data);
             setBackdropOpen(false);
         }
     });
@@ -256,7 +254,6 @@ export function TaskParametersDialogRow(props){
         },
         onError: (data) => {
             snackActions.warning("Failed to perform parse typed array function");
-            console.log(data);
             setBackdropOpen(false);
         }
     });
@@ -266,7 +263,6 @@ export function TaskParametersDialogRow(props){
             props.addedCredential(data.credential_by_pk);
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const [createCredential] = useMutation(createCredentialMutation, {
@@ -280,8 +276,7 @@ export function TaskParametersDialogRow(props){
             }
         },
         onError: (data) => {
-            snackActions.error("Failed to create credential");
-            console.log(data);
+            snackActions.error("Could not save credential. Please try again.");
         }
     });
     const [deleteCredential] = useMutation(updateCredentialDeleted, {
@@ -293,7 +288,6 @@ export function TaskParametersDialogRow(props){
         },
         onError: (data) => {
             snackActions.error("Failed to delete credential");
-            console.log(data);
         }
     });
     const [treatNewlinesAsNewEntries, setTreatNewlinesAsNewEntries] = React.useState(false);
@@ -340,7 +334,6 @@ export function TaskParametersDialogRow(props){
            setFileMultValue(props.value);
        }else if(props.type === "TypedArray"){
            if(value === ""){
-               //console.log(props.value);
                if(props.value.length > 0 && props.value[0][0] === ""){
                    setBackdropOpen(true);
                    snackActions.info("PayloadType Container parsing TypedArray values...",  {autoClose: 1000});
@@ -368,7 +361,6 @@ export function TaskParametersDialogRow(props){
                }
            }
        }else if(props.type === "ChooseMultiple" && props.dynamic_query_function === ""){
-           //console.log("ChooseMultiple", props.value, value);
            if(value === ""){
                 setChooseMultipleValue(props.value);
                 setValue(props.value);
@@ -461,7 +453,6 @@ export function TaskParametersDialogRow(props){
                        try{
                            setValue(parseInt(props.value));
                        }catch(error){
-                           console.log("expected number, but", props.value, "isn't number");
                            setValue(0);
                        }
                    }
@@ -470,7 +461,6 @@ export function TaskParametersDialogRow(props){
                }
            }
            if(props.type === "CredentialJson"){
-               //console.log("updating choiceOptions from useEffect in dialog row: ", [...props.choices])
                setChoiceOptions([...props.choices]);
                if(updateToLatestCredential.current){
                 setValue(0);

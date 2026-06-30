@@ -128,7 +128,6 @@ export function SettingsOperatorTableRow(props){
             }
         },
         onError: (result) => {
-            console.log(result);
         }
     });
     const [deleteAPIToken] = useMutation(deleteAPITokenMutation, {
@@ -147,7 +146,6 @@ export function SettingsOperatorTableRow(props){
             snackActions.success("successfully deleted API Token");
         },
         onError: (data) => {
-            console.log(data);
         }
     });
     const [toggleAPITokenActive] = useMutation(toggleAPITokenActiveMutation, {

@@ -73,7 +73,6 @@ export function OperationTable(props){
         },
         onError: (err) => {
           snackActions.warning("Unable to create new operator - Access Denied");
-          console.log(err);
         }
     });
     const [updateOperation] = useMutation(Update_Operation, {
@@ -97,12 +96,10 @@ export function OperationTable(props){
         },
         onError: (data) => {
           snackActions.error("Failed to update operation");
-          console.log("error updating operation", data);
         }
       });
     const [newOperation] = useMutation(newOperationMutation, {
         onCompleted: (data) => {
-            //console.log(data);
             if(data.createOperation.status === "success"){
                 snackActions.success("Successfully created operation!");
                 props.onNewOperation({name: data.createOperation.operation_name, id: data.createOperation.operation_id});
@@ -112,7 +109,6 @@ export function OperationTable(props){
         },
         onError: (data) => {
             snackActions.error("Unable to create new operation - Access Denied")
-            console.log(data);
         }
     });
     const onUpdateOperation = ({operation_id, name, channel, webhook, complete, banner_text, banner_color}) => {

@@ -56,7 +56,6 @@ function EventGroupConsumingContainersDialogTableRow({container}) {
                 try{
                     return JSON.parse(s);
                 }catch(error){
-                    console.log(error);
                     return {name: "", description: s};
                 }
             })

@@ -61,7 +61,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
                                                      onTaskRowAction, host, group, showDeletedFiles, tabInfo,
                                                      expandOrCollapseAll, getLoadedCommandForUIFeature}) => {
     //const [allData, setAllData] = React.useState([]);
-    //console.log("treeAdjMatrix updated in table", treeAdjMatrix)
     const [updateSetting] = useSetMythicSetting();
     const [loading, setLoading] = React.useState(true);
     const [sortData, setSortData] = React.useState({"sortKey": null, "sortDirection": null, "sortType": null});
@@ -107,7 +106,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
                 }
             }
         }
-        //console.log("treeAdjMatrix updated", treeAdjMatrix)
         for(const [group, hosts] of Object.entries(tempMatrix)){
             if(adjustedMatrix[group] === undefined){adjustedMatrix[group] = {}}
             for(const [host, matrix] of Object.entries(hosts)){
@@ -155,7 +153,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
             }
         }
 
-        console.log("adjustedMatrix", adjustedMatrix, "realMatrix", treeAdjMatrix)
         setUpdatedTreeAdjMatrix(adjustedMatrix);
     }, [treeAdjMatrix]);
     const checkLoop = (nodes, visited) => {
@@ -165,10 +162,8 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
             if(testNodes.hasOwnProperty(checkingKey)){
                 // we found a new node that has the last node we saw as a child
                 found = true;
-                //console.log("found", testNodes, "has", checkingKey, "visited", visited, "testKey", testKey)
                 if(visited.includes(testKey)){
                     // we found a loop
-                    //console.log("found loop", visited, testKey)
                     return true;
                 }
                 visited.push(testKey);
@@ -178,9 +173,7 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
             }
         }
         if(!found){
-            //console.log("didn't find", checkingKey, "in any edges")
         } else {
-            //console.log("found nested, but no loop with", checkingKey)
         }
         return false;
     }
@@ -201,7 +194,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
         });
       };
     const handleOnClickButton = (nodeId) => {
-        //console.log("handleOnClickButton", "nodeId", nodeId, "openNodes", openNodes)
         //if(openNodes[nodeId] !== undefined){
             if (openNodes[nodeId]) {
                 onCollapseNode(nodeId);
@@ -256,7 +248,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
             }, []).flat()
             ];
           }
-          //console.log("openNodes", openNodes, "node", node, "nodeid", treeRootData[host][node])
           //if (openNodes[treeRootData[host][node]?.id] === true) {
             if(openNodes[node] === true){
             return [
@@ -309,7 +300,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
         if(viewSingleTreeData){
             treeToUse = singleTreeData;
         }
-        //console.log("in useMemo", updatedTreeAdjMatrix, "host", host)
         if(host === "" || treeToUse[group]?.[host] === undefined){return finalData}
         finalData.push({
         id: host,
@@ -356,7 +346,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
             });
         } else if (sortData.sortType === 'string') {
             tempData.sort((a, b) => {
-                //console.log(treeRootData[host][a.full_path_text], treeRootData[host][b.full_path_text])
                 if(treeRootData[group][host][a.full_path_text /*+ uniqueSplitString + a.callback_id*/] === undefined){
                     if(treeRootData[group][host][b.full_path_text /*+ uniqueSplitString + b.callback_id*/] === undefined){
                         return 0;
@@ -383,7 +372,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
                 }
                 aData = aData.toLowerCase();
                 bData = bData.toLowerCase();
-                //console.log(aData, bData)
                 return aData > bData ? 1 : bData > aData ? -1 : 0
             });
         }
@@ -397,7 +385,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
         try{
             updateSetting({setting_name: `process_browser_filter_options`, value: {...filterOptions,[selectedColumn.current.key]: value }});
         }catch(error){
-            console.log("failed to save filter options");
         }
         if(viewSingleTreeData){
             return
@@ -441,10 +428,8 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
         // get the parent hierarchy all the way up
         let parent = treeRootData[group][treeElement.host][treeElement.full_path_text /*+ uniqueSplitString + treeElement.callback_id*/].parent_path_text /*+ uniqueSplitString + treeElement.callback_id*/;
         let current = treeElement.full_path_text /*+ uniqueSplitString + treeElement.callback_id*/;
-        //console.log("initial parent", parent, "adj", treeAdjMatrix[treeElement.host][parent])
         while(treeAdjMatrix[group][treeElement.host][parent] !== undefined){
             singleTreeAdjMatrix[group][treeElement.host][parent] = {[current]: 1};
-            //console.log("tree data of parent", treeRootData[treeElement.host][parent])
             if(treeRootData[group][treeElement.host][parent] === undefined){
                 break;
             }
@@ -594,7 +579,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
                                     cellData={treeRootData[group][host][row.full_path_text ]?.metadata?.command_line || ""}
                                 />;
                             default:
-                                console.log("hit default case in switch on c.name)", c.name)
                         }
                     })];
                 }
@@ -670,7 +654,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
                 }
             }
         }catch(error){
-            console.log("Failed to load custom browser_table_columns", error);
         }
         try {
             const storageItemOptions = GetMythicSetting({setting_name: `process_browser_filter_options`, default_value: {}});
@@ -678,7 +661,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
                 setFilterOptions(storageItemOptions);
             }
         }catch(error){
-            console.log("Failed to load custom browser_table_filter_options", error);
         }
         try {
             const storageColumnOrder = GetMythicSetting({setting_name: `process_browser_column_order`, default_value: columns.map(c => c.name)});
@@ -695,7 +677,6 @@ export const CallbacksTabsProcessBrowserTable = ({treeAdjMatrix, treeRootData, m
                 setColumnOrder(newOrder);
             }
         }catch(error){
-            console.log("Failed to load process_browser_table_filter_options", error);
         }
         setLoading(false);
     }, []);
@@ -885,7 +866,6 @@ const FileBrowserTableRowActionCell = ({rowData, onTaskRowAction, treeRootData, 
             setViewPermissionsDialogOpen(true);
         },
         onError: (data) => {
-          console.log("get permissions error", data);
         },
         fetchPolicy: "network-only"
     });

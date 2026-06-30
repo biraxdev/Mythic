@@ -117,7 +117,6 @@ export const CallbacksTabsTaskingSplitPanel = ({tabInfo, index, value, onCloseTa
             }
         },
         onError: data => {
-            console.error(data);
         }
     });
     const equalTaskTrees = (oldArray, newArray) => {
@@ -174,7 +173,6 @@ export const CallbacksTabsTaskingSplitPanel = ({tabInfo, index, value, onCloseTa
         if(index !== value && fetched){
             setNewDataForTab((prev) => {return {...prev, [tabInfo.tabID]: true}});
         }
-        //console.log("new subscription data in CallbacksTabsTasking", subscriptionData);
         const oldLength = taskingDataRef.current.task.length;
         const mergedData = data.data.task.reduce( (prev, cur) => {
             const index = prev.findIndex(element => element.id === cur.id);
@@ -210,13 +208,11 @@ export const CallbacksTabsTaskingSplitPanel = ({tabInfo, index, value, onCloseTa
         variables: {callback_id: tabInfo.callbackID, fromNow:fromNow, limit: taskLimit},
         shouldResubscribe: true,
         onError: data => {
-            console.error(data)
         },
         fetchPolicy: "no-cache",
         onData: subscriptionDataCallback});
     const [getInfiniteScrollTasking, {loading: loadingMore}] = useLazyQuery(getNextBatchTaskingQuery, {
         onError: data => {
-            console.error(data);
         },
         onCompleted: (data) => {
             let foundNew = false;
@@ -275,7 +271,6 @@ export const CallbacksTabsTaskingSplitPanel = ({tabInfo, index, value, onCloseTa
         getInfiniteScrollTasking({variables: {callback_id: tabInfo.callbackID, offset: taskingData.task.length, fetchLimit}});
     }
     const onSubmitCommandLine = (message, cmd, parsed, force_parsed_popup, cmdGroupNames, previousTaskingLocation) => {
-        //console.log(message, cmd, parsed);
         let params = message.split(" ");
         delete params[0];
         params = params.join(" ").trim();
@@ -311,17 +306,14 @@ export const CallbacksTabsTaskingSplitPanel = ({tabInfo, index, value, onCloseTa
                 }
 
             });
-            //console.log("missing File for group? ", fileParamExists, cmdGroupNames);
             let missingRequiredPrams = false;
             if(cmdGroupNames.length === 1){
                 const missingParams = cmd.commandparameters.filter(param => param.required && param.parameter_group_name === cmdGroupNames[0] && !(param.cli_name in parsed || param.name in parsed || param.display_name in parsed));
                 if(missingParams.length > 0){
                     missingRequiredPrams = true;
-                    console.log("missing required params", missingParams,parsed);
                 }
             }else if(cmdGroupNames > 1 && !force_parsed_popup){
                 // need to force a popup because the tasking is ambiguous
-                console.log("command is ambiguous");
                 force_parsed_popup = true;
             }
             if(fileParamExists || force_parsed_popup || missingRequiredPrams){

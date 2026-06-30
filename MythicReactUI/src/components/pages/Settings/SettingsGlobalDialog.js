@@ -58,7 +58,6 @@ export function SettingsGlobalDialog(props) {
             props.onClose();
         },
         onError: (err) => {
-            console.log(err);
             snackActions.error("Unable to update global without Admin permissions");
             props.onClose();
         }
