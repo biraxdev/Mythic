@@ -19,8 +19,6 @@ export function TopAppBarVerticalEventLogNotifications(props) {
     const [alerts, setAlerts] = React.useState(alertCount());
     const { loading, error } = useSubscription(SUB_Event_Logs, {
         onError: data => {
-            console.log("vertical event log error")
-            console.error(data);
         },
         onData: ({data}) => {
 

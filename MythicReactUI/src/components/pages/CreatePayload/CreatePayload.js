@@ -8,6 +8,7 @@ import {Step4C2Profiles} from './Step4C2Profiles';
 import {Step5Build} from './Step5Build';
 import Typography from '@mui/material/Typography';
 import { snackActions } from '../../utilities/Snackbar';
+import { useLocation } from 'react-router-dom';
 
 function getSteps(){
     return ['Select Target OS', 'Configure Payload', 'Select Commands', 'Select C2 Profiles', 'Build']
@@ -16,6 +17,8 @@ function getSteps(){
 export function CreatePayload(props){
     const me = props.me;
     const noOperation = (me?.user?.current_operation_id || 0) > 0 ? false : true;
+    const location = useLocation();
+    const fromTopBar = location.state?.from === 'TopAppBar';
     const [payload, setPayload] = React.useState({}); 
     const [activeStep, setActiveStep] = React.useState(0);
     const getStepContent = (step) => {
@@ -44,7 +47,6 @@ export function CreatePayload(props){
             newPayload[activeStep+1] = undefined;
         }
         setPayload(newPayload);
-        //console.log(activeStep, newPayload);
         handleNext();
       }
       const cancelStep = () => {
@@ -67,7 +69,7 @@ export function CreatePayload(props){
       }
       React.useEffect( () => {
         if(noOperation){
-          snackActions.error("No current operation set! Set a current operation to continue");
+          snackActions.error("Please select an operation first. Go to Operations to set one up.");
         }
       }, [noOperation])
 

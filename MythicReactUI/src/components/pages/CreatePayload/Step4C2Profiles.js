@@ -163,7 +163,6 @@ export function Step4C2Profiles(props){
                 return {...c2, c2profileparameters: parameters, "selected_instance": "None"};
             });
             profiles.sort((a, b) => -b.name.localeCompare(a.name))
-            //console.log(profiles);
             if(profiles.length > 0){
                 setSelectedC2(profiles[0]);
             }
@@ -203,7 +202,6 @@ export function Step4C2Profiles(props){
             });
         });
         if(allValid){
-            //console.log(includedC2Profiles);
             if(!includedC2 && props.buildOptions["agent_type"] === "agent"){
                 // normal agents need to confirm they're not including c2, services can move through
                 setOpenConfirmDialog(true);
@@ -311,7 +309,6 @@ export function Step4C2Profiles(props){
                 })
                 .catch((data) => {
                     snackActions.error("Failed to fetch instance data: " + data);
-                    console.log("error fetching", data);
                 });
         } else {
             getIDefaultValues({variables: {c2profile_id: c2.id}})
@@ -342,7 +339,6 @@ export function Step4C2Profiles(props){
                 })
                 .catch((data) => {
                     snackActions.error("Failed to fetch instance data: " + data);
-                    console.log(data);
                 });
         }
       }

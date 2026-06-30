@@ -466,8 +466,7 @@ export const SearchTabPayloadsPanel = (props) => {
     }
     const handleCallbackSearchFailure = (data) => {
         snackActions.dismiss();
-        snackActions.error("Failed to fetch data for search");
-        console.log(data);
+        snackActions.error("Search failed. Please try again.");
         setOpenBackdrop(false);
     }
 

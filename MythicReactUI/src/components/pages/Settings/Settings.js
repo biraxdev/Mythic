@@ -127,7 +127,6 @@ export function Settings({me}){
           snackActions.success("Successfully updated");
         },
         onError: (err) => {
-          console.log(err);
           snackActions.error("Unable to update operator timestamps without Admin permissions");
         }
     });
@@ -148,7 +147,6 @@ export function Settings({me}){
             snackActions.success("Successfully updated");
         },
         onError: (err) => {
-            console.log(err)
             snackActions.warning("Unable to delete operator without Admin permissions");
         }
     });
@@ -169,7 +167,6 @@ export function Settings({me}){
           snackActions.success("Successfully updated");
       },
       onError: (err) => {
-          console.log(err);
           snackActions.warning("Unable to update operator admin status without Admin permissions");
       }
     });
@@ -190,7 +187,6 @@ export function Settings({me}){
           snackActions.success("Successfully updated");
       },
       onError: (err) => {
-          console.log(err);
           snackActions.warning("Unable to update operator active status without Admin permissions");
       }
     });
@@ -205,7 +201,6 @@ export function Settings({me}){
         },
         onError: (err) => {
           snackActions.warning("Unable to create new operator");
-          console.log(err);
         }
     });
     const [updateUsername] = useMutation(operatorsUpdateUsername, {
@@ -246,7 +241,6 @@ export function Settings({me}){
         }
       },
       onError: (data) => {
-          console.log(data);
         snackActions.warning("Unable to update operator's password without Admin permissions");
       }
     })

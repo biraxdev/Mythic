@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {Button, Paper} from '@mui/material';
+import {Button, Paper, CircularProgress} from '@mui/material';
 import MythicTextField from '../../MythicComponents/MythicTextField';
 import logo from '../../../assets/mythic-red.png';
 import { Navigate } from 'react-router-dom';
@@ -22,12 +22,12 @@ export function LoginForm(props){
     const [password, setPassword] = React.useState("");
     const [requestField, setRequestFields] = React.useState([]);
     const [authOptions, setAuthOptions] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(false);
     const selectedAuthOptionRef = React.useRef({});
     let queryParams = new URLSearchParams(window.location.search);
     const redirectPath = React.useRef(queryParams.has("redirect") ? queryParams.get("redirect") : "/new");
     useEffect( () => {
         if(!isJWTValid()){
-            console.log("calling FailedRefresh on the login page to remove old data");
             FailedRefresh();
         }
         const requestOptions = {
@@ -36,19 +36,18 @@ export function LoginForm(props){
         };
         fetch('/auth_services', requestOptions).then((response) => {
             if(response.status !== 200){
-                snackActions.warning("HTTP " + response.status + " Error: Check Mythic logs");
+                snackActions.warning("Server error. Please try again or check your connection.");
                 return;
             }
             response.json().then(data => {
                 if(data['status'] === 'success'){
                     setAuthOptions(data["idps"]);
                 } else {
-                    snackActions.warning("Failed to fetch potential additional auth methods: " + data["error"]);
+                    snackActions.warning("Could not load additional login methods.");
                 }
 
             }).catch(error => {
                 snackActions.warning("Error getting JSON from server: " + error.toString());
-                console.log("Error trying to get json response", error, response);
             });
         }).catch(error => {
             if(error.toString() === "TypeError: Failed to fetch"){
@@ -56,16 +55,16 @@ export function LoginForm(props){
             } else {
                 snackActions.warning("Error talking to server: " + error.toString());
             }
-            console.log("There was an error!", error);
         });
     }, [])
     // normal username + password to Mythic for local Mythic auth
     const submit = e => {
         e.preventDefault();
         if( username === "" || password === ""){
-            snackActions.warning("Username and Password required");
+            snackActions.warning("Please enter your username and password.");
             return;
         }
+        setIsLoading(true);
         const requestOptions = {
             method: "POST",
             headers: {'Content-Type': 'application/json', MythicSource: "web"},
@@ -73,41 +72,45 @@ export function LoginForm(props){
         };
         fetch('/auth', requestOptions).then((response) => {
             if(response.status === 403){
-                snackActions.warning("Invalid username or password");
+                snackActions.warning("Incorrect username or password. Please try again.");
+                setIsLoading(false);
                 return;
             }else if(response.status === 404){
-                snackActions.warning("Failed to find login endpoint");
+                snackActions.warning("Server not found. Please check your connection.");
+                setIsLoading(false);
                 return;
             }else if(response.status === 502){
-                snackActions.warning("Failed to contact mythic server due to gateway. Please refresh");
+                snackActions.warning("Cannot reach the server. Please wait and try again.");
+                setIsLoading(false);
                 return;
             }else if(response.status === 400){
-                snackActions.warning("Bad format, can't process request");
+                snackActions.warning("Invalid request. Please check your input.");
+                setIsLoading(false);
                 return;
             }
             if(response.status !== 200){
-                snackActions.warning("HTTP " + response.status + " Error: Check Mythic logs");
+                snackActions.warning("Something went wrong (Error " + response.status + "). Please try again.");
+                setIsLoading(false);
                 return;
             }
             response.json().then(data => {
-                //console.log(data)
                 if("access_token" in data){
                     successfulLogin(data);
                 }else{
-                    snackActions.warning("Invalid Username or Password");
-                    console.log("Error", data);
+                    snackActions.warning("Incorrect username or password. Please try again.");
                 }
+                setIsLoading(false);
             }).catch(error => {
-                snackActions.warning("Error getting JSON from server: " + error.toString());
-                console.log("Error trying to get json response", error, response);
+                snackActions.warning("Unexpected server response. Please try again.");
+                setIsLoading(false);
             });
         }).catch(error => {
             if(error.toString() === "TypeError: Failed to fetch"){
-                snackActions.warning("Please refresh and accept the SSL connection error");
+                snackActions.warning("Cannot connect to server. Please check your connection and try again.");
             } else {
-                snackActions.warning("Error talking to server: " + error.toString());
+                snackActions.warning("Connection error. Please try again.");
             }
-            console.log("There was an error!", error);
+            setIsLoading(false);
         });
     }
     const submitNonIDP = e => {
@@ -128,7 +131,6 @@ export function LoginForm(props){
             }
         }).catch(error => {
                 snackActions.warning("Error getting JSON from server: " + error.toString());
-                console.log("Error trying to get json response", error);
             });
     }
     const onUpdateText = (name, value, error) => {
@@ -177,7 +179,6 @@ export function LoginForm(props){
                 }
             }).catch(error => {
                 snackActions.warning("Error getting JSON from server: " + error.toString());
-                console.log("Error trying to get json response", error, response);
             });
         }).catch(error => {
             if(error.toString() === "TypeError: Failed to fetch"){
@@ -185,7 +186,6 @@ export function LoginForm(props){
             } else {
                 snackActions.warning("Error talking to server: " + error.toString());
             }
-            console.log("There was an error!", error);
         });
     }
     const handleClose = (event) => {
@@ -202,8 +202,8 @@ export function LoginForm(props){
 
         <div style={{backgroundColor: "transparent"}}>
             <CardContent >
-                <div style={{height: "400px"}}>
-                    <img src={logo} height="400px" alt="Mythic logo"/>
+                <div style={{height: "200px", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <img src={logo} height="180px" alt="Mythic - Command and Control Framework"/>
                 </div>
 
                 {requestField.length === 0 &&
@@ -213,7 +213,11 @@ export function LoginForm(props){
                         <MythicTextField name='password' type="password" onEnter={submit} value={password} autoComplete={true}
                                          onChange={onPasswordChange} width={31} debounceDelay={0} showLabel={true}/>
                         <Button type="submit" color="primary" onClick={submit} variant="contained"
-                                style={{}}>Login</Button>
+                                disabled={isLoading}
+                                aria-label="Sign in to Mythic"
+                                style={{marginTop: "8px", width: "100%"}}>
+                            {isLoading ? <CircularProgress size={24} color="inherit" /> : "Sign In"}
+                        </Button>
                     </>
                 }
                 {requestField.length > 0 &&

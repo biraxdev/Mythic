@@ -56,7 +56,6 @@ export function TokenDescriptionDialog(props) {
           props.onClose();
         },
         onError: (data) => {
-          console.error(data);
           props.onClose();
         }
         

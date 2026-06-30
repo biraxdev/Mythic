@@ -213,7 +213,6 @@ export const CallbacksTableIPCell = React.memo(({cellData, rowData}) => {
 
         },
         onError: data => {
-            console.log(data)
             snackActions.warning(data);
         }
     });
@@ -229,7 +228,6 @@ export const CallbacksTableIPCell = React.memo(({cellData, rowData}) => {
         const newIPArray = [selected_ip, ...ipArray];
         //const newIPString = JSON.stringify( newIPArray);
         updateIPsInfo({callback_display_id: rowData.display_id, ips: newIPArray});
-        //console.log(newIPString)
     }
     React.useEffect( () => {
         let IPArray = JSON.parse(cellData);
@@ -344,7 +342,6 @@ export const CallbacksTableC2Cell = React.memo(({rowData}) => {
     }, [initialCallbackGraphEdges, localRowData]);
     useEffect( () => {
         //determine if there are any active routes left at all
-        //console.log(localRowData.display_id, callbackgraphedges)
         const activeRoutes = callbackgraphedges.filter( (edge) => {
             if(!edge.c2profile.is_p2p  && edge.end_timestamp === null){
                 return true;

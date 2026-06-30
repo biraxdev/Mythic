@@ -326,7 +326,6 @@ export const ParseForDisplay = ({
                     setRenderObj(JSON.stringify(newDict, null, 2));
                 }
             }catch(error){
-                console.log("Failed to parse parameter value as dictionary", cmd.value, error)
                 return setRenderObj(cmd.value);
             }
         }else if(cmd.parameter_type === "Array" || cmd.parameter_type === "ChooseMultiple") {
@@ -339,7 +338,6 @@ export const ParseForDisplay = ({
                 }
 
             } catch (error) {
-                console.log("Failed to parse parameter value as array or choose multiple", cmd.value, error)
                 setRenderObj(cmd.value);
             }
         } else if(cmd.parameter_type === "File") {
@@ -353,7 +351,6 @@ export const ParseForDisplay = ({
                 }
 
             } catch (error) {
-                console.log("Failed to parse parameter value as file multiple", cmd.value, error);
             }
         } else if(cmd.parameter_type === "Boolean"){
             let val = String(cmd.value).toLowerCase();
@@ -493,11 +490,9 @@ function DetailedPayloadInnerTable(props){
                     snackActions.warning("No new Callback allowed from this Payload");
                 }
             } else {
-                console.log(data.updatePayload);
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     });
     const onToggleCallbackAllowed = () => {
@@ -541,7 +536,6 @@ function DetailedPayloadInnerTable(props){
      return <LinearProgress style={{marginTop: "10px"}}/>;
     }
     if (error) {
-     console.error(error);
      return <div>Error! {error.message}</div>;
     }
     return (

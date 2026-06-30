@@ -50,7 +50,6 @@ export function HostFileDialog(props) {
         },
         onError: (error) => {
             snackActions.error(error.message);
-            console.log(error.message);
         }
     })
     useQuery(getC2ProfilesQuery, {

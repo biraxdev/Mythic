@@ -41,7 +41,6 @@ export function EventTriggerKeywordDialog({onClose, selectedEventGroup}) {
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const handleKeywordChange = (event) => {

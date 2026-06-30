@@ -53,8 +53,7 @@ export const MythicFileContext = ({agent_file_id, display_link, filename, extraS
         }
     }
     const getFileInformationError = (data) => {
-        snackActions.error("Failed to fetch file data: " + data);
-        console.log(data);
+        snackActions.error("Could not load file: " + data);
     }
     const getFileInformation = useMythicLazyQuery(getfileInformationQuery, {
         fetchPolicy: "no-cache"

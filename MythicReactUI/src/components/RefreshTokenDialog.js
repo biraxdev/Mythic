@@ -27,7 +27,7 @@ export function RefreshTokenDialog(props) {
         if(result){
           snackActions.success("Extended your session");
         }else{
-          snackActions.error("Failed to extend your session");
+          snackActions.error("Session expired. Please log in again.");
         }
         props.onClose();
       });

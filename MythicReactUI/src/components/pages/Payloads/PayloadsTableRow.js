@@ -101,7 +101,6 @@ export function PayloadsTableRow(props){
     const [exportConfig] = useLazyQuery(exportPayloadConfigQuery, {
       fetchPolicy: "no-cache",
       onCompleted: (data) => {
-        //console.log(data)
         if(data.exportPayloadConfig.status === "success"){
           const dataBlob = new Blob([data.exportPayloadConfig.config], {type: 'text/plain'});
           const ele = document.getElementById("download_config");
@@ -122,7 +121,6 @@ export function PayloadsTableRow(props){
         }
       },
       onError: (data) => {
-        console.log(data);
         snackActions.error("Failed to export configuration: " + data.message)
       }
     })

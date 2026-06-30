@@ -58,7 +58,6 @@ export const SearchTabSocksPanel = (props) =>{
     useSubscription(callbackPortsSub, {
         fetchPolicy: "no-cache",
         onData: ({data}) => {
-            //console.log("got data", subscriptionData.data.payload_stream)
             const updated = data.data.callbackport_stream.reduce( (prev, cur) => {
                 const index = prev.findIndex( (p) => p.id === cur.id );
                 if(index > -1){
@@ -72,11 +71,9 @@ export const SearchTabSocksPanel = (props) =>{
             setCallbackData(updated);
         },
         onCompleted: (data) => {
-            console.log("completed")
         },
         onError: (data) => {
             snackActions.warning("Failed to get callback ports");
-            console.log(data);
         }
     });
 

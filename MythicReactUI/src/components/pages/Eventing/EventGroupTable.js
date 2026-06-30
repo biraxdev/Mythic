@@ -79,14 +79,12 @@ export function EventGroupTable({selectedEventGroup, me, showInstances, showGrap
      onCompleted: (data) => {
      },
      onError: (data) => {
-        console.log(data);
      }
  })
     const [updateActiveMutation] = useMutation(updateActiveStatusMutation, {
         onCompleted: (data) => {
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const [triggerManually] = useMutation(eventingTriggerManualMutation, {

@@ -36,7 +36,6 @@ export function EventGroupTableRunAsDialog({eventgroupapprovals, me, onClose, se
 
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error("Failed to update");
         }
     });

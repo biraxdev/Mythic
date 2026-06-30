@@ -436,14 +436,12 @@ const DisplayText = ({agent_file_id, expand, filename, preview, fileMetaData}) =
                     setLimitedPreviewWarning(true);
                 }
             }else{
-                console.log(data.previewFile.error);
                 if(data.previewFile.error !== "EOF"){
                     snackActions.error(data.previewFile.error);
                 }
             }
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error(data);
         }
     });
@@ -475,7 +473,6 @@ const DisplayText = ({agent_file_id, expand, filename, preview, fileMetaData}) =
                     }
                 }).catch(error => {
                     snackActions.warning("Error getting contents from server: " + error.toString());
-                    console.log("Error trying to get json response", error, response);
                 });
             }).catch(error => {
                 if(error.toString() === "TypeError: Failed to fetch"){
@@ -483,7 +480,6 @@ const DisplayText = ({agent_file_id, expand, filename, preview, fileMetaData}) =
                 } else {
                     snackActions.warning("Error talking to server: " + error.toString());
                 }
-                console.log("There was an error!", error);
             });
         }
         if(filename){
@@ -622,7 +618,6 @@ const DisplayHex = ({agent_file_id, expand, fileMetaData}) => {
             }
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error(data);
         }
     });
@@ -687,18 +682,15 @@ const DisplayDatabase = ({agent_file_id, expand, fileMetaData}) => {
         if(sql){
             try{
                 const result = sql.exec(query);
-                //console.log(result);
                 if(result.length > 0){
                     setResults([...results, {name: `Query: ${queryCountRef.current}`, query: query, results: result[0]}]);
                     setSelectedTab(queryCountRef.current - 1);
                     queryCountRef.current += 1;
                 }
             }catch(e){
-                console.log(e);
                 snackActions.error(e.message);
             }
         } else {
-            console.log(sql);
             snackActions.error("Failed to load as SQL Database");
         }
     }
@@ -712,7 +704,7 @@ const DisplayDatabase = ({agent_file_id, expand, fileMetaData}) => {
         if(result){
             snackActions.success("Copied text!");
         }else{
-            snackActions.error("Failed to copy text");
+            snackActions.error("Could not copy to clipboard.");
         }
     }
     const onSaveOutputCSV = (result) => {
@@ -777,7 +769,6 @@ const DisplayDatabase = ({agent_file_id, expand, fileMetaData}) => {
                 }).catch(error => {
                         setLoading(false);
                         snackActions.warning("Error getting contents from server: " + error.toString());
-                        console.log("Error trying to get json response", error, response);
                     });
             }).catch(error => {
                 if(error.toString() === "TypeError: Failed to fetch"){
@@ -786,7 +777,6 @@ const DisplayDatabase = ({agent_file_id, expand, fileMetaData}) => {
                     snackActions.warning("Error talking to server: " + error.toString());
                 }
                 setLoading(false);
-                console.log("There was an error!", error);
             });
         }
         initialize();

@@ -62,7 +62,6 @@ export function CreateNewCallbackDialog(props) {
     }
     const [createCallbackMutation] = useMutation(createCallback, {
       onCompleted: data => {
-        console.log(data);
         if (data.createCallback.status === "success"){
           snackActions.success("Successfully create new callback");
         } else {
@@ -71,7 +70,6 @@ export function CreateNewCallbackDialog(props) {
         props.onClose();
       },
       onError: error => {
-        console.log(error)
         props.onClose();
       }
     })

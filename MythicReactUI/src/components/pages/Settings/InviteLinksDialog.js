@@ -90,7 +90,6 @@ export function InviteLinksDialog(props) {
             }, {});
         },
         onError: (err) => {
-            console.log(err);
             snackActions.error("Unable to query operation data");
             props.onClose();
         }
@@ -221,7 +220,6 @@ export function CreateInviteLinksDialog(props) {
             setOperationOptions(operations);
         },
         onError: (err) => {
-            console.log(err);
             snackActions.error("Unable to query operation data");
             props.onClose();
         }
@@ -237,7 +235,6 @@ export function CreateInviteLinksDialog(props) {
             }
         },
         onError: (err) => {
-            console.log(err);
             snackActions.error("Unable to create without global admin permissions");
             props.onClose();
         }
@@ -252,7 +249,6 @@ export function CreateInviteLinksDialog(props) {
             }
         },
         onError: (err) => {
-            console.log(err);
             snackActions.error("Unable to update without Admin permissions");
             props.onClose();
         }

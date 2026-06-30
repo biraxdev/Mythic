@@ -80,7 +80,6 @@ export function PayloadTypeCommandDialog({service, payload_name, onClose}) {
      return <LinearProgress />;
     }
     if (error) {
-     console.error(error);
      return <div>Error! {error.message}</div>;
     }
     const onClickOpenScriptDialog = (e, command) => {
@@ -204,7 +203,6 @@ export function ScriptingCommandDialog({command_id, command_name, onClose}){
                 groupedArray.push(grouped[key]);
             }
             setParams(groupedArray);
-            console.log(groupedArray);
         }
     });
     return (

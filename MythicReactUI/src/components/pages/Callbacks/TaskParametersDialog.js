@@ -323,7 +323,6 @@ export function TaskParametersDialog(props) {
             getAllPayloadsOnHosts({variables: {operation_id: props.operation_id}});
         },
         onError: data => {
-            console.log("failed to add payload on host", data);
             snackActions.error("Failed to add payload on host: " + data.message);
         }
     });
@@ -332,7 +331,6 @@ export function TaskParametersDialog(props) {
             getAllPayloadsOnHosts({variables: {operation_id: props.operation_id}})
         },
         onError: data => {
-            console.log("failed to remove payload from host", data);
             snackActions.error("Failed to remove payload from host: " + data.message);
         }
     });
@@ -392,7 +390,6 @@ export function TaskParametersDialog(props) {
         setSubmenuOpenPreventTask(open);
     }
     useEffect( () => {
-        //console.log("use effect triggered")
         if(!props.command.parsedParameters){
             props.command.parsedParameters = {};
         }
@@ -447,7 +444,6 @@ export function TaskParametersDialog(props) {
                 if(cmd.parameter_group_name !== selectedParameterGroup){
                     return [...prev];
                 }
-                //console.log(props.command);
                 let parsedParameterName = commandInParsedParameters(cmd, props.command.parsedParameters);
                 switch(cmd.type){
                     case "Boolean":
@@ -753,7 +749,6 @@ export function TaskParametersDialog(props) {
                                 return [...prevn, {...cur}];
                             }
                         }, [...organized]);
-                        //console.log("updating choices and payload choices", allOrganized, agentConnectNewPayloads)
                         return [...prev, {...cmd, choices: allOrganized, payload_choices: agentConnectNewPayloads, value: getLinkInfoFromAgentConnect(organized)}];
                     case "PayloadList":
                         let supported_agents = cmd.supported_agents;
@@ -833,7 +828,6 @@ export function TaskParametersDialog(props) {
                     }
                 }
             }
-            //console.log("updated params in useEffect of taskparametersdialog", sorted)
             setParameters(sorted);
         }
     }, [selectedParameterGroup, rawParameters, loadedCommandsLoading, allCommandsLoading, loadedAllEdgesLoading, requiredPieces, loadedAllPayloadsLoading, loadedCredentialsLoading, loadedAllPayloadsOnHostsLoading, props.callback_id, props.choices]);
@@ -852,7 +846,6 @@ export function TaskParametersDialog(props) {
                 case "Array":
                 case "TypedArray":
                 case "LinkInfo":
-                    //console.log("submit param", param)
                     collapsedParameters[param.name] = param.value;
                     break;
                 case "AgentConnect":
@@ -904,7 +897,6 @@ export function TaskParametersDialog(props) {
                     };
                     break;
                 default:
-                    console.log("Unknown parameter type");
             }
         }
         setBackdropOpen(false);
@@ -918,7 +910,6 @@ export function TaskParametersDialog(props) {
         RemovePayloadOnHost({variables: {host: host, payload_id: payload.id, operation_id: payload.operation_id}})
     }
     const onChange = (name, value, error) => {
-        //console.log("called props.onChange to update a value for submission, have these parameters: ", [...parameters]);
         setParameters((previousState, currentProps) => {
             return previousState.map( (param) => {
                 if(param.name === name){
@@ -928,7 +919,6 @@ export function TaskParametersDialog(props) {
                 }
             })
         });
-        //console.log("just set new params from props.onChange with a new value: ", [...params])
     }
     const onChangeParameterGroup = (event) => {
         setSelectedParameterGroup(event.target.value);
@@ -947,7 +937,6 @@ export function TaskParametersDialog(props) {
                 case "Array":
                 case "TypedArray":
                 case "LinkInfo":
-                    //console.log("submit param", param)
                     collapsedParameters[param.name] = param.value;
                     break;
                 case "AgentConnect":
@@ -971,7 +960,6 @@ export function TaskParametersDialog(props) {
                     };
                     break;
                 default:
-                    console.log("Unknown parameter type");
             }
         }
         return collapsedParameters;

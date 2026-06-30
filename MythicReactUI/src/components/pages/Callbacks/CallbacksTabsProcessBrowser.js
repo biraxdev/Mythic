@@ -184,7 +184,6 @@ export const CallbacksTabsProcessBrowserPanel = ({index, value, tabInfo, me, set
                         }
                     }
                 }catch(error){
-                    console.log(error);
                 }
                 for(let j = 0; j < currentGroups.length; j++){
                     if(treeRootDataRef.current[currentGroups[j]] === undefined){
@@ -242,7 +241,6 @@ export const CallbacksTabsProcessBrowserPanel = ({index, value, tabInfo, me, set
         loadingCommandsRef.current = false;
     }
     const getLoadedCommandsQueryError = (data) => {
-        console.log(data);
         loadingCommandsRef.current = false;
     }
     const getLoadedCommandsQuery = useMythicLazyQuery(loadedCommandsQuery, {
@@ -334,9 +332,7 @@ export const CallbacksTabsProcessBrowserPanel = ({index, value, tabInfo, me, set
         }
         // create the top level data in the adjacency matrix
         const newMatrix = getNewMatrix();
-        //console.log(treeRootDataRef.current);
         setTreeAdjMtx(newMatrix);
-        //console.log("just set treeAdjMtx, about to close backdrop")
         setBackdropOpen(false);
     }
     const getHostProcessesQuery = useMythicLazyQuery(treeHostQuery, {

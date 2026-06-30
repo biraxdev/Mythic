@@ -27,7 +27,6 @@ export function EditPayloadConfigDialog(props) {
         variables: {uuid: props.uuid},
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
-            //console.log(data)
             if(data.exportPayloadConfig.status === "success"){
                 setPayloadConfig(data.exportPayloadConfig.config);
             }else{
@@ -35,7 +34,6 @@ export function EditPayloadConfigDialog(props) {
             }
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error("Failed to export configuration: " + data.message)
         }
     })
@@ -70,7 +68,6 @@ export function ViewPayloadConfigJSON(props) {
         variables: {uuid: props.uuid},
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
-            //console.log(data)
             if(data.exportPayloadConfig.status === "success"){
                 setPayloadConfig(data.exportPayloadConfig.config);
             }else{
@@ -78,7 +75,6 @@ export function ViewPayloadConfigJSON(props) {
             }
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error("Failed to export configuration: " + data.message)
         }
     })

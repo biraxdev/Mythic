@@ -77,8 +77,7 @@ function EventFileManageDialogTableRow({eventFile}) {
             snackActions.dismiss();
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to delete file");
+            snackActions.error("Could not delete file. Please try again.");
         }
     });
     const onAcceptDelete = () => {

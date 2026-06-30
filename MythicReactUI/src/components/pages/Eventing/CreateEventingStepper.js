@@ -2378,7 +2378,6 @@ const CreateEventingStep3 = ({finished, back, first, last, cancel, prevData, ste
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     });
     const [testFileForGraphMutation] = useLazyQuery(testFileWebhookMutation, {
@@ -2391,7 +2390,6 @@ const CreateEventingStep3 = ({finished, back, first, last, cancel, prevData, ste
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const previewGraph = () => {

@@ -60,7 +60,6 @@ export const ConsumingServicesTableRow = ({service, showDeleted}) => {
             if (data.consumingServicesTestWebhook.status === "success") {
                 snackActions.success("Successfully sent test message to service");
             } else {
-                console.log(data.consumingServicesTestWebhook.error)
                 snackActions.error("No webhook listening")
             }
 
@@ -78,7 +77,6 @@ export const ConsumingServicesTableRow = ({service, showDeleted}) => {
                 snackActions.success("Successfully sent test message to service");
             } else {
                 snackActions.error("No logger listening")
-                console.log(data.consumingServicesTestLog.error)
             }
 
         },
@@ -103,8 +101,7 @@ export const ConsumingServicesTableRow = ({service, showDeleted}) => {
             snackActions.success("Successfully updated");
         },
         onError: error => {
-            console.log(error);
-            snackActions.error("Failed to update: " + error.message);
+            snackActions.error("Could not save changes: " + error.message);
         }
     });
     const onAcceptDelete = () => {
@@ -132,7 +129,6 @@ export const ConsumingServicesTableRow = ({service, showDeleted}) => {
                         try{
                             return JSON.parse(s);
                         }catch(error){
-                            console.log(error);
                             return {name: "", description: s};
                         }
                     });
@@ -147,7 +143,6 @@ export const ConsumingServicesTableRow = ({service, showDeleted}) => {
                         try{
                             return JSON.parse(s);
                         }catch(error){
-                            console.log(error);
                             return {name: s, type: ""};
                         }
                     });

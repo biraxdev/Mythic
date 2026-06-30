@@ -148,7 +148,6 @@ export function CallbacksTabsTaskMultipleDialog({onClose, callback}) {
       }
     });
     const submitTasking = () => {
-      //console.log("selectedFeature", selectedFeature)
       if(selectedData.current.length === 0){
         //onClose();
           snackActions.warning("No callbacks selected");
@@ -173,7 +172,6 @@ export function CallbacksTabsTaskMultipleDialog({onClose, callback}) {
         setOpenTaskingButton(false);
     }
     const onSubmitCommandLine = (message, cmd, parsed, force_parsed_popup, cmdGroupNames, previousTaskingLocation) => {
-        //console.log(message, cmd, parsed);
         if(selectedData.current.length === 0){
             //onClose();
             snackActions.warning("No callbacks selected");
@@ -224,11 +222,9 @@ export function CallbacksTabsTaskMultipleDialog({onClose, callback}) {
                 const missingParams = cmd.commandparameters.filter(param => param.required && param.parameter_group_name === cmdGroupNames[0] && !(param.cli_name in parsed || param.name in parsed || param.display_name in parsed));
                 if(missingParams.length > 0){
                     missingRequiredPrams = true;
-                    console.log("missing required params", missingParams,parsed);
                 }
             }else if(cmdGroupNames > 1 && !force_parsed_popup){
                 // need to force a popup because the tasking is ambiguous
-                console.log("command is ambiguous");
                 force_parsed_popup = true;
             }
             if(fileParamExists || force_parsed_popup || missingRequiredPrams){

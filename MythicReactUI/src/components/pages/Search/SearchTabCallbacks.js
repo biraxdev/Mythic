@@ -222,7 +222,6 @@ const SearchTabCallbacksSearchPanel = (props) => {
                 setSearch(queryParams.get("search"));
                 adjustedSearch = queryParams.get("search");
             }
-            //console.log(queryParams.get("searchField"));
             if(queryParams.has("searchField") && searchFieldOptions.includes(queryParams.get("searchField"))){
                 setSearchField(queryParams.get("searchField"));
                 props.onChangeSearchField(queryParams.get("searchField"));
@@ -310,8 +309,7 @@ export const SearchTabCallbacksPanel = (props) =>{
     }
     const handleCallbackSearchFailure = (data) => {
         snackActions.dismiss();
-        snackActions.error("Failed to fetch data for search");
-        console.log(data);
+        snackActions.error("Search failed. Please try again.");
     }
     const getUserSearch = useMythicLazyQuery(userSearch, {
         fetchPolicy: "no-cache",

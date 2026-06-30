@@ -268,7 +268,6 @@ export function MythicViewJSONAsTableDialog(props) {
           }
         }
       }catch(error){
-        console.log(error);
       }
       setComment(permissions);
     }, [props.value, props.leftColumn, props.rightColumn]);
@@ -402,14 +401,12 @@ const convertValueToContextValue = (key, value, me) => {
     try{
         return TableRowDateCell({cellData: value, view_utc_time: me?.user?.view_utc_time})
     }catch(error){
-        console.log("failed to parse metadata as date", key, value);
         return value;
     }
   } else if( key.includes("size") ){
       try{
           return TableRowSizeCell({cellData: value})
       }catch(error){
-          console.log("failed to parse metadata as size", key, value);
           return value;
       }
   } else if (value.constructor === Object) {
@@ -453,7 +450,6 @@ export const TableRowDateCell = ({ cellData, rowData, view_utc_time=true }) => {
             const dateData = new Date( ((cellDataInt / 10000000) - 11644473600) * 1000).toISOString();
             return toLocalTime(dateData.slice(0, 10) + " " + dateData.slice(11,-1), view_utc_time);
         }catch(error2){
-            console.log("error with timestamp: ", cellData);
             return String(cellData);
         }
 

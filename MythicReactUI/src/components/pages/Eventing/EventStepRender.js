@@ -1025,7 +1025,6 @@ function EventStepInstanceDetailDialog({selectedEventStepInstance, onClose}) {
         },
         onError: (data) => {
             snackActions.warning("Failed to delete payload");
-            console.log(data);
         }
     });
     const [expandStdout, setExpandStdout] = React.useState(false);
@@ -1329,7 +1328,6 @@ function EventGroupInstanceDetailDialog({selectedEventGroupInstance, onClose}) {
         },
         onError: (data) => {
             snackActions.warning("Failed to delete payload");
-            console.log(data);
         }
     });
     if (loading){
@@ -1591,8 +1589,7 @@ function EventDetailsPayloadsTable({payloads, deletePayload}){
             }
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to zip up files");
+            snackActions.error("Could not create zip file. Please try again.");
         }
     });
     const onDownloadBulkPayloads = () => {
@@ -1730,8 +1727,7 @@ function EventDetailsFilesTable({files}){
             }
         },
         onError: (data) => {
-            console.log(data);
-            snackActions.error("Failed to zip up files");
+            snackActions.error("Could not create zip file. Please try again.");
         }
     });
     const onDownloadBulkPayloads = () => {

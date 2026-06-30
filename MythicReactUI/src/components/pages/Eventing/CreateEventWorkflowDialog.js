@@ -55,7 +55,6 @@ export function TestEventGroupFileDialog({onClose, initialWorkflow}){
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const [testFileForGraphMutation] = useLazyQuery(testFileWebhookMutation, {
@@ -68,7 +67,6 @@ export function TestEventGroupFileDialog({onClose, initialWorkflow}){
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const testFile = () => {

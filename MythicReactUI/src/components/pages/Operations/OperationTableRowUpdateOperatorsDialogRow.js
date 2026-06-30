@@ -44,7 +44,6 @@ export function OperationTableRowUpdateOperatorsDialogRow(props){
         },
         onError: (data) => {
             snackActions.error("Failed to update current operation");
-            console.error(data);
         }
     })
     const makeCurrentOperation = () => {
@@ -53,7 +52,6 @@ export function OperationTableRowUpdateOperatorsDialogRow(props){
     useEffect( () => {
       setChecked(props.operator.checked);
       setViewMode(props.operator.view_mode);
-      //console.log(props.operator);
       if(!props.operator.disabledcommandsprofile){
         setBlockListName("")
       }else{

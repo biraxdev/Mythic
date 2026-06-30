@@ -18,7 +18,7 @@ import Select from '@mui/material/Select';
 import Input from '@mui/material/Input';
 import IconButton from '@mui/material/IconButton';
 import MythicStyledTableCell from "../../MythicComponents/MythicTableCell";
-import {operatorSettingDefaults, taskingContextFieldsOptions, taskTimestampDisplayFieldOptions} from "../../../cache";
+import {operatorSettingDefaults, taskingContextFieldsOptions, taskTimestampDisplayFieldOptions, themePresets} from "../../../cache";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {MythicStyledTooltip} from "../../MythicComponents/MythicStyledTooltip";
@@ -58,7 +58,6 @@ export function SettingsOperatorUIConfigDialog(props) {
     const [getUserPreferences] = useLazyQuery(userSettingsQuery, {
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
-            //console.log("got preferences", data.getOperatorPreferences.preferences)
             if(data.getOperatorPreferences.status === "success"){
                 let settingString = JSON.stringify(data.getOperatorPreferences.preferences, null, 4);
                 copyStringToClipboard(settingString);
@@ -68,14 +67,12 @@ export function SettingsOperatorUIConfigDialog(props) {
             }
         },
         onError: (error) => {
-            console.log(error);
             snackActions.error(error.message);
         }
     })
     const [getUserColorPreferences] = useLazyQuery(userSettingsQuery, {
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
-            //console.log("got preferences", data.getOperatorPreferences.preferences)
             if(data.getOperatorPreferences.status === "success"){
                 let settingString = JSON.stringify({palette: data.getOperatorPreferences.preferences?.palette}, null, 4);
                 copyStringToClipboard(settingString);
@@ -85,7 +82,6 @@ export function SettingsOperatorUIConfigDialog(props) {
             }
         },
         onError: (error) => {
-            console.log(error);
             snackActions.error(error.message);
         }
     })
@@ -409,7 +405,6 @@ export function SettingsOperatorUIConfigDialog(props) {
                 snackActions.info("Updating settings");
                 props.onClose();
             }catch(error){
-                console.log(error);
                 snackActions.error("Failed to parse file as JSON");
             }
         }
@@ -472,7 +467,28 @@ export function SettingsOperatorUIConfigDialog(props) {
         <TableContainer className="mythicElement" style={{paddingLeft: "10px", paddingRight: "10px"}}>
           <Table size="small" style={{ "maxWidth": "100%", "overflow": "scroll"}}>
               <TableBody>
-                  
+                  <TableRow hover>
+                      <MythicStyledTableCell>Theme Preset</MythicStyledTableCell>
+                      <MythicStyledTableCell>
+                          <Select
+                              value={" "}
+                              onChange={(e) => {
+                                  const presetName = e.target.value;
+                                  if (themePresets[presetName]) {
+                                      const preset = themePresets[presetName];
+                                      setPalette(prev => ({...prev, ...preset}));
+                                      snackActions.success(`Applied "${presetName}" theme. Click Save to keep it.`);
+                                  }
+                              }}
+                              input={<Input style={{width: "100%"}}/>}
+                          >
+                              <MenuItem value={" "} disabled>Select a theme preset...</MenuItem>
+                              {Object.keys(themePresets).map(name => (
+                                  <MenuItem key={name} value={name}>{name}</MenuItem>
+                              ))}
+                          </Select>
+                      </MythicStyledTableCell>
+                  </TableRow>
                   <TableRow hover>
                       <MythicStyledTableCell>Font Family</MythicStyledTableCell>
                       <MythicStyledTableCell>

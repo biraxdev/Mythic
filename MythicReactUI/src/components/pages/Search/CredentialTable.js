@@ -268,7 +268,7 @@ function CredentialTableRow(props){
         if(result){
           snackActions.success("Copied text!");
         }else{
-          snackActions.error("Failed to copy text");
+          snackActions.error("Could not copy to clipboard.");
         }
     }
     const options =  [

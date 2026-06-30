@@ -14,7 +14,6 @@ export function toLocalTime(date, view_utc) {
         }
         
     } catch (error) {
-        console.log("warning", "Failed to get local time converted: " + error.toString());
         return date + " UTC";
     }
 }
@@ -43,7 +42,6 @@ export function toLocalTimeShort(date, view_utc) {
         }
 
     } catch (error) {
-        console.log("warning", "Failed to get local time converted: " + error.toString());
         return date + " UTC";
     }
 }
@@ -88,13 +86,11 @@ export function useInterval(callback, delay, mountedRef, parentMountedRef) {
   useEffect(() => {
     function tick() {
       if((mountedRef && !mountedRef.current) || (parentMountedRef && !parentMountedRef.current)){
-        //console.log("returning")
         return;
       }
       savedCallback.current();
     }
     if( (mountedRef && !mountedRef.current) || (parentMountedRef && !parentMountedRef.current)){
-      //console.log("returning2")
       return;
     }
     let id = setInterval(tick, delay);

@@ -56,7 +56,6 @@ export function Step5Build(props){
         variables: {uuid: props.buildOptions[2]},
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
-            //console.log(data)
             if(data.exportPayloadConfig.status === "success"){
                 setPayloadConfig(data.exportPayloadConfig.config);
             }else{
@@ -64,7 +63,6 @@ export function Step5Build(props){
             }
         },
         onError: (data) => {
-            console.log(data);
             snackActions.error("Failed to get configuration: " + data.message)
         }
     })

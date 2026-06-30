@@ -313,11 +313,9 @@ export function DetailedCallbackTable(props){
                     snackActions.warning("No new Callback allowed from this Payload");
                 }
             } else {
-                console.log(data.updatePayload);
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     });
     const onToggleCallbackAllowed = () => {
@@ -327,7 +325,6 @@ export function DetailedCallbackTable(props){
      return <LinearProgress style={{marginTop: "10px"}}/>;
     }
     if (error) {
-     console.error(error);
      return <div>Error! {error.message}</div>;
     }
     return (

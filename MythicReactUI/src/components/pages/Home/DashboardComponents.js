@@ -417,14 +417,12 @@ export const LineTimeMultiChartCard = ({data, additionalStyles, colors=normalCol
             try {
                 return data.x?.[sliderVal]?.toISOString()?.substr(0, 10);
             }catch(error){
-                console.log("sliderDate utc error", error, sliderVal, data.x)
                 return String(sliderVal);
             }
         }
         try {
             return data.x?.[sliderVal]?.toDateString();
         }catch(error){
-            console.log("sliderDate error", error, sliderVal, data.x)
             return String(sliderVal);
         }
     }

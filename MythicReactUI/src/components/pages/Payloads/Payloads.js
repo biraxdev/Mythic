@@ -142,7 +142,6 @@ export function Payloads(props){
       variables: {now:  fromNow},
       fetchPolicy: "no-cache",
       onData: ({data}) => {
-        //console.log("got data", subscriptionData.data.payload_stream)
         if(!mountedRef.current){
           return  null;
         }
@@ -159,11 +158,9 @@ export function Payloads(props){
         setPayloads(updated);
       },
       onCompleted: (data) => {
-        console.log("completed")
       },
       onError: (data) => {
         snackActions.warning("Failed to get payloads");
-        console.log(data);
       }
       });
     
@@ -218,7 +215,6 @@ export function Payloads(props){
         },
         onError: (data) => {
           snackActions.warning("Failed to delete payload");
-          console.log(data);
         }
     });
     const [restorePayload] = useMutation(restorePayloadMutation, {
@@ -237,7 +233,6 @@ export function Payloads(props){
       },
       onError: (data) => {
         snackActions.warning("Failed to mark as not deleted");
-        console.log(data);
       }
   });
     const [callbackAlert] = useMutation(payloadsCallbackAlert, {
@@ -259,7 +254,6 @@ export function Payloads(props){
       },
       onError: (data) => {
         snackActions.warning("Failed to update callback alerting status");
-        console.log(data);
       }
     });
     const [callbackAllowed] = useMutation(payloadsCallbackAllowed, {
@@ -281,7 +275,6 @@ export function Payloads(props){
         },
         onError: (data) => {
             snackActions.warning("Failed to update callback alerting status");
-            console.log(data);
         }
     });
     const onDeletePayload = (payload_uuid) => {

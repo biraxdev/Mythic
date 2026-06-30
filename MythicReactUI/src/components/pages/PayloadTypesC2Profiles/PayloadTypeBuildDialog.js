@@ -81,14 +81,12 @@ export function PayloadTypeBuildDialog(props) {
               return {...param, choices: choices, default_value: default_value}
             });
             setBuildParams(buildParams);
-            console.log(buildParams);
         }
         });
     if (loading) {
      return <LinearProgress />;
     }
     if (error) {
-     console.error(error);
      return <div>Error! {error.message}</div>;
     }
   

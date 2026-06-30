@@ -203,12 +203,12 @@ const ActiveCallbacks = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/callbacks' key={"callbacks"} >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Active Callbacks"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Active Sessions"} tooltipStyle={{display: "inline-flex"}}>
                 <PhoneCallbackIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
 
         </StyledListItemIcon>
-        <ListItemText primary={"Active Callbacks"} />
+        <ListItemText primary={"Active Sessions"} />
       </StyledListItem>
   )
 }
@@ -217,11 +217,11 @@ const Payloads = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/payloads' key={"payloads"} >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Payloads"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Manage Agents"} tooltipStyle={{display: "inline-flex"}}>
                 <FontAwesomeIcon style={{color: theme.navBarTextIconColor}} icon={faBiohazard} size="lg"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Payloads"} />
+        <ListItemText primary={"Manage Agents"} />
       </StyledListItem>
   )
 }
@@ -230,12 +230,12 @@ const SearchCallbacks = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/search?tab=callbacks&searchField=Host&search=' >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Search Callbacks"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Search Sessions"} tooltipStyle={{display: "inline-flex"}}>
                 <PhoneCallbackIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
                 <ManageSearchIcon style={{color: theme.navBarTextIconColor, marginLeft: "-8px", marginTop: "7px", borderRadius: "5px"}} fontSize={"small"} />
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Search Callbacks"} />
+        <ListItemText primary={"Search Sessions"} />
       </StyledListItem>
   )
 }
@@ -244,11 +244,11 @@ const SearchTasks = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/search?tab=tasks&searchField=Command+and+Parameters&search=&taskStatus=' >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Search Tasks"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Search Commands"} tooltipStyle={{display: "inline-flex"}}>
                 <AssignmentIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Search Tasks"} />
+        <ListItemText primary={"Search Commands"} />
       </StyledListItem>
   )
 }
@@ -257,12 +257,12 @@ const SearchPayloads = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/search?tab=payloads&searchField=Filename&search=&taskStatus=&c2=All+C2&payloadtype=All+Payload+Types'>
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Search Payloads"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Search Agents"} tooltipStyle={{display: "inline-flex"}}>
                 <FontAwesomeIcon style={{color: theme.navBarTextIconColor}} size={"lg"} icon={faBiohazard} />
                 <ManageSearchIcon style={{color: theme.navBarTextIconColor, marginLeft: "-8px", marginTop: "7px", borderRadius: "5px"}} fontSize={"small"} />
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Search Payloads"} />
+        <ListItemText primary={"Search Agents"} />
       </StyledListItem>
   )
 }
@@ -310,11 +310,11 @@ const SearchKeylogs = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/search?tab=keylogs&searchField=Host&search='>
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Search Keylogs"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Search Keystrokes"} tooltipStyle={{display: "inline-flex"}}>
                 <KeyboardIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Search Keylogs"} />
+        <ListItemText primary={"Search Keystrokes"} />
       </StyledListItem>
   )
 }
@@ -323,11 +323,11 @@ const SearchArtifacts = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/search?tab=artifacts&searchField=Host&search=' >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Search Artifacts"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Search Indicators"} tooltipStyle={{display: "inline-flex"}}>
                 <FingerprintIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Search Artifacts"} />
+        <ListItemText primary={"Search Indicators"} />
       </StyledListItem>
   )
 }
@@ -336,11 +336,11 @@ const SearchTokens = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/search?tab=tokens&searchField=Host&search=' >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Search Tokens"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Search Access Tokens"} tooltipStyle={{display: "inline-flex"}}>
                 <ConfirmationNumberIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Search Tokens"} />
+        <ListItemText primary={"Search Access Tokens"} />
       </StyledListItem>
   )
 }
@@ -349,11 +349,11 @@ const SearchProxies = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/search?tab=socks'>
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Search Proxies"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Search Tunnels"} tooltipStyle={{display: "inline-flex"}}>
                 <FontAwesomeIcon style={{color: theme.navBarTextIconColor}} size={"lg"} icon={faSocks} />
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Search Proxies"} />
+        <ListItemText primary={"Search Tunnels"} />
       </StyledListItem>
   )
 }
@@ -428,11 +428,11 @@ const Eventing = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/eventing' >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Eventing"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Automation"} tooltipStyle={{display: "inline-flex"}}>
                 <PlayCircleFilledTwoToneIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Eventing"} />
+        <ListItemText primary={"Automation"} />
       </StyledListItem>
   )
 }
@@ -441,7 +441,7 @@ const JupyterNotebook = () => {
       <StyledListItem className={classes.listSubHeader} target="_blank"  component={Link} to='/jupyter' key={"jupyter"} >
         <StyledListItemIcon>
             <MythicStyledTooltip title={"Jupyter Notebooks"} tooltipStyle={{display: "inline-flex"}}>
-                <img src={JupyterLogo} height={"25px"} width={"25px"} />
+                <img src={JupyterLogo} height={"25px"} width={"25px"} alt="Jupyter Notebooks" />
             </MythicStyledTooltip>
         </StyledListItemIcon>
         <ListItemText primary={"Jupyter Notebooks"} />
@@ -453,7 +453,7 @@ const GraphQL = () => {
       <StyledListItem className={classes.listSubHeader} target="_blank"  component={Link} to='/console' key={"console"} >
         <StyledListItemIcon>
             <MythicStyledTooltip title={"GraphQL Console"} tooltipStyle={{display: "inline-flex"}}>
-                <img src={GraphQLLogo} height={"25px"} width={"25px"} className="mythicElement"/>
+                <img src={GraphQLLogo} height={"25px"} width={"25px"} className="mythicElement" alt="GraphQL Console"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
         <ListItemText primary={"GraphQL Console"} />
@@ -465,12 +465,12 @@ const CreatePayload = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/createpayload' key={"createpayload"}  state={{from: 'TopAppBar'}}>
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Create Payload"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Create Agent"} tooltipStyle={{display: "inline-flex"}}>
                 <FontAwesomeIcon style={{color: theme.navBarTextIconColor}} size={"lg"} icon={faBiohazard} />
                 <AddCircleIcon color={"success"} style={{marginLeft: "-8px", marginTop: "7px", backgroundColor: "white", borderRadius: "10px"}} fontSize={"small"} />
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Create Payload"} />
+        <ListItemText primary={"Create Agent"} />
       </StyledListItem>
   )
 }
@@ -506,11 +506,11 @@ const Operations = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/operations' key={"modifyoperations"}>
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Modify Operations"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Operations"} tooltipStyle={{display: "inline-flex"}}>
                 <EditIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"Modify Operations"} />
+        <ListItemText primary={"Operations"} />
       </StyledListItem>
   )
 }
@@ -519,11 +519,11 @@ const BrowserScripts = () => {
   return (
       <StyledListItem className={classes.listSubHeader} component={Link} to='/new/browserscripts' key={"browserscripts"} >
         <StyledListItemIcon>
-            <MythicStyledTooltip title={"Browser Scripts"} tooltipStyle={{display: "inline-flex"}}>
+            <MythicStyledTooltip title={"Agent Scripts"} tooltipStyle={{display: "inline-flex"}}>
                 <CodeOffIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} className="mythicElement"/>
             </MythicStyledTooltip>
         </StyledListItemIcon>
-        <ListItemText primary={"BrowserScripts"} />
+        <ListItemText primary={"Agent Scripts"} />
       </StyledListItem>
   )
 }
@@ -758,14 +758,15 @@ export function TopAppBarVertical(props) {
     <>
       {me?.user?.current_operation_id ? (<EventFeedNotifications me={me} />) : null }
       <Drawer anchor="left" variant="permanent" open={menuOpen} onClose={handleDrawerClose}
+        role="navigation" aria-label="Main navigation"
         style={{borderRight: "1px solid grey !important", backgroundColor: "unset !important"
             }}>
-        <List style={{paddingTop: 0, marginTop: 0, height: "100%", display: "flex", flexDirection: "column",
+        <List role="menubar" aria-label="Navigation menu" style={{paddingTop: 0, marginTop: 0, height: "100%", display: "flex", flexDirection: "column",
             backgroundColor: "unset !important",
             borderBottom: "unset !important", borderLeft: "unset !important", borderTop: "unset !important"}}>
           <ListItem className={classes.listSubHeader} style={{marginTop:0, paddingTop: 0, paddingLeft: "2px", paddingBottom: 0}}>
             <ListItemIcon >
-                <img src={ReactLogo} onClick={()=>navigate('/new')} width={"40px"} height={"35px"}/>
+                <img src={ReactLogo} onClick={()=>navigate('/new')} width={"40px"} height={"35px"} alt="Mythic Home" role="button" aria-label="Go to Dashboard"/>
             </ListItemIcon>
             <ListItemText style={{margin: 0}} primary={
                 <>
@@ -809,7 +810,7 @@ export function TopAppBarVertical(props) {
                 <>
                     <Link style={{display: "inline-flex", alignItems: "center", paddingRight: "10px", color: "#f84d4d",
                         fontWeight: "bold",}} to="/new/operations">
-                        {"CLICK TO SET OPERATION!"}
+                        {"Setup Required: Select an Operation"}
                     </Link>
                 </>
 
@@ -817,13 +818,22 @@ export function TopAppBarVertical(props) {
         </StyledListItem>
             <Divider style={{borderColor: "white"}} />
             <div style={{flexGrow: 1, overflowY: "auto", overflowX: "hidden"}}>
-                {getShortcuts({shortcuts: sideShortcuts})}
-                <Divider style={{borderColor: "white"}} />
+                {menuOpen && <Typography variant="overline" style={{color: theme.navBarTextColor, opacity: 0.6, paddingLeft: "16px", fontSize: "0.65rem", letterSpacing: "0.08em"}}>Operate</Typography>}
+                {getShortcuts({shortcuts: sideShortcuts.filter(s => ["Dashboard", "ActiveCallbacks"].includes(s))})}
+                {menuOpen && <Typography variant="overline" style={{color: theme.navBarTextColor, opacity: 0.6, paddingLeft: "16px", fontSize: "0.65rem", letterSpacing: "0.08em", marginTop: "8px", display: "block"}}>Build</Typography>}
+                {getShortcuts({shortcuts: sideShortcuts.filter(s => ["CreatePayload", "CreateWrapper", "Payloads"].includes(s))})}
+                {menuOpen && <Typography variant="overline" style={{color: theme.navBarTextColor, opacity: 0.6, paddingLeft: "16px", fontSize: "0.65rem", letterSpacing: "0.08em", marginTop: "8px", display: "block"}}>Investigate</Typography>}
+                {getShortcuts({shortcuts: sideShortcuts.filter(s => s.startsWith("Search"))})}
+                {menuOpen && <Typography variant="overline" style={{color: theme.navBarTextColor, opacity: 0.6, paddingLeft: "16px", fontSize: "0.65rem", letterSpacing: "0.08em", marginTop: "8px", display: "block"}}>Configure</Typography>}
+                {getShortcuts({shortcuts: sideShortcuts.filter(s => ["Operations", "PayloadTypesAndC2", "Eventing", "BrowserScripts"].includes(s))})}
+                {menuOpen && <Typography variant="overline" style={{color: theme.navBarTextColor, opacity: 0.6, paddingLeft: "16px", fontSize: "0.65rem", letterSpacing: "0.08em", marginTop: "8px", display: "block"}}>Report</Typography>}
+                {getShortcuts({shortcuts: sideShortcuts.filter(s => ["Mitre", "Reporting", "Tags"].includes(s))})}
+                <Divider style={{borderColor: "white", marginTop: "8px"}} />
                 <StyledListItem className={classes.listSubHeader} onClick={handleToggleExtra}>
                     <StyledListItemIcon>
                         <MoreHorizIcon style={{color: theme.navBarTextIconColor}} fontSize={"medium"} />
                     </StyledListItemIcon>
-                    <ListItemText>Extra Shortcuts</ListItemText>
+                    <ListItemText>More</ListItemText>
                     {openExtra ? <ExpandLess /> : <ExpandMore />}
                 </StyledListItem>
                 {openExtra &&  getExtraShortcuts()}

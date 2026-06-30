@@ -37,7 +37,6 @@ export function TaskCommentDialog(props) {
     });
     const [updateComment] = useMutation(updateCommentMutation, {
         update: (cache, {data}) => {
-            //console.log(data);
             props.onClose();
         }
     });
@@ -45,7 +44,6 @@ export function TaskCommentDialog(props) {
      return <LinearProgress />;
     }
     if (error) {
-     console.error(error);
      return <div>Error!</div>;
     }
     const onCommitSubmit = (newValue) => {

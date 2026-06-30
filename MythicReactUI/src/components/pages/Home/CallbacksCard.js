@@ -312,7 +312,6 @@ const HealthInstalledServicesDashboardElement = ({me, data, editing, removeEleme
         };
         fetch('/healthDetailed', requestOptions).then((response) => {
             response.json().then(data => {
-                //console.log(data);
                 let total = 0;
                 let currentOnline = 0;
                 for (const [key, value] of Object.entries(data.installed_services_success)) {
@@ -324,7 +323,6 @@ const HealthInstalledServicesDashboardElement = ({me, data, editing, removeEleme
                 setOnline({online: currentOnline, total: total});
             }).catch(error => {
                 snackActions.warning("Error getting JSON from server: " + error.toString());
-                console.log("Error trying to get json response", error, response);
             });
         }).catch(error => {
             if(error.toString() === "TypeError: Failed to fetch"){
@@ -332,7 +330,6 @@ const HealthInstalledServicesDashboardElement = ({me, data, editing, removeEleme
             } else {
                 snackActions.warning("Error talking to server: " + error.toString());
             }
-            console.log("There was an error!", error);
         });
     }, [data]);
     return (
@@ -344,7 +341,6 @@ const Top10TagTypesDashboardElement = ({me, data, editing, removeElement}) => {
     const [tags, setTags] = React.useState([]);
     const navigate = useNavigate();
     const handleTagClick = (event, itemIdentifier, item) => {
-        //console.log(event, itemIdentifier, item);
         navigate("/new/search?tab=tags&searchField=TagType&search=" + item.id);
     };
     React.useEffect(() => {
@@ -372,7 +368,6 @@ const Top10ArtifactsDashboardElement = ({me, data, editing, removeElement}) => {
     const [taskArtifacts, setTaskArtifacts] = React.useState([]);
     const navigate = useNavigate();
     const handleArtifactClick = (event, itemIdentifier, item) => {
-        //console.log(event, itemIdentifier, item);
         navigate("/new/search?tab=artifacts&searchField=Type&search=" + item.id);
     };
     React.useEffect(() => {
@@ -411,7 +406,6 @@ const ProxyUsageDashboardElement = ({me, data, editing, removeElement}) => {
     const navigate = useNavigate();
     const [callbackPorts, setCallbackPorts] = React.useState([]);
     const handlePortClick = (entry) => {
-        //console.log(event, itemIdentifier, item);
         navigate("/new/search?tab=socks");
     };
     React.useEffect(() => {
@@ -916,7 +910,6 @@ const MyOperationsDashboardElement = ({me, data, reloadDashboard, editing, remov
     const currentOperationRef = React.useRef(0);
     const [newOperation] = useMutation(newOperationMutation, {
         onCompleted: (data) => {
-            //console.log(data);
             if(data.createOperation.status === "success"){
                 snackActions.success("Successfully created operation!");
             }else{
@@ -925,7 +918,6 @@ const MyOperationsDashboardElement = ({me, data, reloadDashboard, editing, remov
         },
         onError: (data) => {
             snackActions.error("Unable to create new operation - Access Denied")
-            console.log(data);
         }
     });
     const [openUpdateNotifications, setOpenUpdateNotifications] = React.useState(false);
@@ -963,7 +955,6 @@ const MyOperationsDashboardElement = ({me, data, reloadDashboard, editing, remov
         },
         onError: (data) => {
             snackActions.error("Failed to update current operation");
-            console.error(data);
         }
     });
     const [updateOperation] = useMutation(Update_Operation, {
@@ -986,7 +977,6 @@ const MyOperationsDashboardElement = ({me, data, reloadDashboard, editing, remov
         },
         onError: (data) => {
             snackActions.error("Failed to update operation");
-            console.log("error updating operation", data);
         }
     });
     const makeCurrentOperation = (p) => {
@@ -1163,7 +1153,6 @@ const Top10CommandErrorStatsDashboardElement = ({me, data, editing, removeElemen
     const navigate = useNavigate();
     const [commands, setCommands] = React.useState([]);
     const handleErrorTaskClick = (event, item) => {
-        //console.log(event, item);
         navigate("/new/search?searchField=Command&search=" + commands[0].data[item.dataIndex].id + "&tab=tasks&taskStatus=error");
     };
     React.useEffect(() => {
@@ -1207,7 +1196,6 @@ const Top10CommandStatsDashboardElement = ({me, data, editing, removeElement}) =
     const navigate = useNavigate();
     const [commands, setCommands] = React.useState([]);
     const handleErrorTaskClick = (event, item) => {
-        //console.log(event, item);
         navigate("/new/search?searchField=Command&search=" + commands[1].data[item.dataIndex].id + "&tab=tasks&taskStatus=");
     };
     React.useEffect(() => {
@@ -1629,7 +1617,7 @@ const Top10RecentCredentialsDashboardElement = ({me, data, editing, removeElemen
         if(result){
             snackActions.success("Copied text!");
         }else{
-            snackActions.error("Failed to copy text");
+            snackActions.error("Could not copy to clipboard.");
         }
     }
     return (
@@ -1692,7 +1680,6 @@ const OperatorDashboard = ({me, setLoading, loading}) => {
             processData({data}).then(r => setLoading(false));
         },
         onError: (data) => {
-            console.log("onError fetchData");
         }
     });
     React.useEffect(() => {
@@ -1801,7 +1788,6 @@ const CustomDashboard = ({me, setLoading, loading, editing}) => {
             setLoading(false);
         },
         onError: (data) => {
-            console.log("onError fetchData");
         }
     });
     React.useEffect( () => {

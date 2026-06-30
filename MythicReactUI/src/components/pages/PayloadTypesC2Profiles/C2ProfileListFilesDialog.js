@@ -73,10 +73,8 @@ export function C2ProfileListFilesDialog(props) {
           
       },
       onError: data => {
-          console.error(data);
       },
       onCompleted: data => {
-          //console.log(data);
           if(data.containerWriteFile.status === "success"){
               snackActions.success("Updated file");
           }else{
@@ -99,7 +97,6 @@ export function C2ProfileListFilesDialog(props) {
      return <LinearProgress />;
     }
     if (error) {
-     console.error(error);
      return <div>Error! {error.message}</div>;
     }
   
@@ -146,10 +143,8 @@ const C2ProfileListFilesDialogTableRow = ({container_name, id, filename}) => {
         
     },
     onError: data => {
-        console.error(data);
     },
     onCompleted: data => {
-        //console.log(data);
         if(data.containerWriteFile.status === "success"){
             snackActions.success("Updated file");
         }else{
@@ -158,7 +153,6 @@ const C2ProfileListFilesDialogTableRow = ({container_name, id, filename}) => {
     }
   });
   const onConfigSubmit = (content) => {
-    //console.log(content)
     configSubmit({variables: {container_name: container_name, file_path: filename, data: content}});
   }
   const [removeFile] = useMutation(containerRemoveFileMutation, {
@@ -166,10 +160,8 @@ const C2ProfileListFilesDialogTableRow = ({container_name, id, filename}) => {
         
     },
     onError: data => {
-        console.error(data);
     },
     onCompleted: data => {
-        //console.log(data);
         if(data.containerRemoveFile.status === "success"){
             snackActions.success("Removed file");
         }else{
@@ -189,7 +181,6 @@ const C2ProfileListFilesDialogTableRow = ({container_name, id, filename}) => {
       }
     },
     onError: error => {
-      console.log(error);
       snackActions.error(error.message);
     }
   })

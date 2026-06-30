@@ -28,7 +28,7 @@ const onCopyToClipboard = (data) => {
   if(result){
     snackActions.success("Copied text!");
   }else{
-    snackActions.error("Failed to copy text");
+    snackActions.error("Could not copy to clipboard.");
   }
 }
 export const getIconName = (iconName) => {
@@ -512,7 +512,6 @@ export const ResponseDisplayTable = ({table, callback_id, expand, task}) =>{
           try{
             return parseInt(a[sortData.sortKey]["plaintext"]) > parseInt(b[sortData.sortKey]["plaintext"]) ? 1 : -1;
           }catch(error){
-            console.log("failed to parse ints for sorting", a[sortData.sortKey]["plaintext"], b[sortData.sortKey]["plaintext"]);
             return a[sortData.sortKey]["plaintext"] > b[sortData.sortKey]["plaintext"] ? 1: -1;
           }
         }
@@ -530,7 +529,6 @@ export const ResponseDisplayTable = ({table, callback_id, expand, task}) =>{
           try{
             return (new Date(a[sortData.sortKey]["plaintext"])) > (new Date(b[sortData.sortKey]["plaintext"])) ? 1: -1
           }catch(error){
-            console.log("failed to parse dates for sorting", a[sortData.sortKey]["plaintext"], b[sortData.sortKey]["plaintext"]);
             return a[sortData.sortKey]["plaintext"] > b[sortData.sortKey]["plaintext"] ? 1: -1;
           }
         }
@@ -548,7 +546,6 @@ export const ResponseDisplayTable = ({table, callback_id, expand, task}) =>{
           try{
             return a[sortData.sortKey]["plaintext"].localeCompare(b[sortData.sortKey]["plaintext"]);
           }catch(error){
-            console.log("failed to localeCompare strings for sorting", a[sortData.sortKey]["plaintext"], b[sortData.sortKey]["plaintext"]);
             return a[sortData.sortKey]["plaintext"] > b[sortData.sortKey]["plaintext"] ? 1: -1;
           }
         }

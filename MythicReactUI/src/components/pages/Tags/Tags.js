@@ -47,7 +47,6 @@ export function Tags(props){
       },
       onError: (data) => {
         snackActions.warning("Failed to get tag types");
-        console.log(data);
       }
       });
     const [deleteTagtype] = useMutation(tagtypeDelete, {
@@ -63,7 +62,6 @@ export function Tags(props){
         },
         onError: (data) => {
           snackActions.warning("Failed to delete payload");
-          console.log(data);
         }
     });
     const onDeleteTagtype = (id) => {

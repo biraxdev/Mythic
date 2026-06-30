@@ -44,7 +44,6 @@ export const TaskDisplayInteractiveSearch = ({me, task}) => {
             setTaskDisplayID(data.task[0].display_id);
         },
         onError: (data) => {
-            console.log(data.message, data);
         }
     })
     return (

@@ -35,7 +35,6 @@ export function ConsumingServicesGetIDPMetadataDialog(props) {
                 }
             }).catch(error => {
                 snackActions.warning("Error getting JSON from server: " + error.toString());
-                console.log("Error trying to get json response", error, response);
             });
         }).catch(error => {
             if(error.toString() === "TypeError: Failed to fetch"){
@@ -43,7 +42,6 @@ export function ConsumingServicesGetIDPMetadataDialog(props) {
             } else {
                 snackActions.warning("Error talking to server: " + error.toString());
             }
-            console.log("There was an error!", error);
         });
     }, []);
     

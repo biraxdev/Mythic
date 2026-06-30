@@ -19,7 +19,6 @@ export const CallbacksTabsFileBrowserTreePreMemo = ({ treeRootData, treeAdjMatri
     const [openViewGroupsDialog, setOpenViewGroupDialog] = React.useState(false);
     const lastOpenedNodeRef = React.useRef({group: "", host: "", full_path_text: ""});
     const toggleNodeExpanded = (nodeId, nodeData) => {
-        //console.log("toggleNodeExpanded", nodeId, nodeData);
         let lastOpenedNodeNewState = true;
         let lastOpenedNodeID = getOpenIDFromNode(lastOpenedNodeRef.current);
         if(!lastOpenedNodeRef.current?.has_children){
@@ -47,7 +46,6 @@ export const CallbacksTabsFileBrowserTreePreMemo = ({ treeRootData, treeAdjMatri
             groupName.current = nodeData.group;
             setOpenViewGroupDialog(true);
         }else {
-            //console.log(nodeData);
             //setTableData(nodeData);
             toggleNodeExpanded(nodeId, nodeData);
         }
@@ -170,7 +168,6 @@ export const CallbacksTabsFileBrowserTreePreMemo = ({ treeRootData, treeAdjMatri
         event.stopPropagation();
         setOpenContextMenu(false);
     };
-    //console.log(selectedFolderData)
   return(
       <>
           <FileBrowserVirtualTree

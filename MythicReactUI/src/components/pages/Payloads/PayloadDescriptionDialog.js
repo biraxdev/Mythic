@@ -51,7 +51,6 @@ export function PayloadDescriptionDialog(props) {
             props.onClose();
         },
         onError: (data) => {
-            console.log(data);
         }
     });
     const [updateCallbackDescriptions] = useMutation(updateCallbackDescriptionsMutation, {
@@ -64,7 +63,6 @@ export function PayloadDescriptionDialog(props) {
 
         },
         onError: (data) => {
-            console.log(data);
         }
     });
     const [openUpdateAll, setOpenUpdateAll] = React.useState(false);

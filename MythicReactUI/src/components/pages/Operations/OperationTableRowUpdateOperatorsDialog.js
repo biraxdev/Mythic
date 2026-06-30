@@ -95,7 +95,6 @@ export function OperationTableRowUpdateOperatorsDialog(props) {
       },
       onError: (data) => {
         snackActions.error("Failed to get operational data");
-        console.error(data);
       }
     });
     const [updateOperationLead] = useMutation(Update_Lead, {
@@ -104,7 +103,6 @@ export function OperationTableRowUpdateOperatorsDialog(props) {
       },
       onError: (data) => {
         snackActions.error("Failed to update operation");
-        console.log("error updating operation", data);
       }
     })
     const [updateOperationMembers] = useMutation(Update_Operators, {
@@ -178,7 +176,6 @@ export function OperationTableRowUpdateOperatorsDialog(props) {
           // op wasnt checked then, isn't checked now, so move on
         }
       });
-      //console.log( {operation_id: props.id, add_users: newOperators, remove_users: removeOperators, spectators: spectatorViewMode, operators: operatorViewMode, disabledCommands: disabledCommandMap})
       updateOperationMembers({variables: {operation_id: props.id, add_users: newOperators, remove_users: removeOperators, spectators: spectatorViewMode, operators: operatorViewMode,
       disabledCommands: disabledCommandMap}})
   

@@ -142,7 +142,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
                         return parseInt(props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][a]?.metadata[sortData.sortKey]) >
                         parseInt(props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][b]?.metadata[sortData.sortKey]) ? 1 : -1;
                     }catch(error) {
-                        console.log("failed to parse data for sorting", error);
                         return props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][a]?.metadata[sortData.sortKey] >
                         props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][b]?.metadata[sortData.sortKey] ? 1 : -1
                     }
@@ -162,7 +161,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
                         }
                         return parseInt(props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][a][sortData.sortKey]) > parseInt(props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][b][sortData.sortKey]) ? 1 : -1;
                     } catch (error) {
-                        console.log("failed to parse data for sorting", error);
                         return props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][a][sortData.sortKey] > props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][b][sortData.sortKey] ? 1 : -1;
                     }
                 }
@@ -185,7 +183,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
                     }
                     return props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][a][sortData.sortKey].localeCompare(props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][b][sortData.sortKey]);
                 }catch(error){
-                    console.log("failed to parse data for sorting", error);
                     return props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][a][sortData.sortKey] > props.treeRootData[props.selectedFolderData.group][props.selectedFolderData.host][b][sortData.sortKey] ? 1 : -1
                 }
 
@@ -201,7 +198,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
         try{
             updateSetting({setting_name: `file_browser_filter_options`, value: {...filterOptions,[selectedColumn.key]: value }});
         }catch(error){
-            console.log("failed to save filter options");
         }
     }
     const filterRow = (row) => {
@@ -285,14 +281,12 @@ export const CallbacksTabsFileBrowserTable = (props) => {
     const displayFormat = getDisplayFormat();
     useEffect(() => {
         // when the folder changes, we need to aggregate all of the entries
-        //console.log(props.selectedFolderData, props.treeAdjMatrix, props.treeRootData)
         let desiredPath = props.selectedFolderData.full_path_text;
         if(props.selectedFolderData.id === props.selectedFolderData.host){
             desiredPath = "";
         }
         let newAllData = Object.keys(props.treeAdjMatrix[props.selectedFolderData.group]?.[props.selectedFolderData.host]?.[desiredPath] || {});
         setAllData(newAllData);
-        //console.log("just set all data")
     }, [props.selectedFolderData, props.treeAdjMatrix]);
     const onRowDoubleClick = (e, rowIndex, rowData) => {
         if (!rowData.can_have_children) {
@@ -363,7 +357,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
                 }
             }
         }catch(error){
-            console.log("Failed to load custom browser_table_columns", error);
         }
         try {
             const storageItemOptions = GetMythicSetting({setting_name: `file_browser_filter_options`, default_value: {}});
@@ -371,7 +364,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
                 setFilterOptions(storageItemOptions);
             }
         }catch(error){
-            console.log("Failed to load custom browser_table_filter_options", error);
         }
         try {
             const storageColumnOrder = GetMythicSetting({setting_name: `file_browser_column_order`, default_value: columns.map(c => c.name)});
@@ -388,7 +380,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
                 setColumnOrder(newOrder);
             }
         }catch(error){
-            console.log("Failed to load file_browser_table_filter_options", error);
         }
         setLoading(false);
     }, []);
@@ -406,7 +397,6 @@ export const CallbacksTabsFileBrowserTable = (props) => {
             snackActions.error("Can't update to show no fields");
             return;
         }
-        console.log("newOrder", newOrder)
         updateSetting({setting_name: `file_browser_column_order`, value: newOrder.map(c => c.name)});
         setColumnOrder(newOrder);
         setColumnVisibility({visible: newVisible, hidden: newHidden});
@@ -848,7 +838,6 @@ export const TableRowDateCell = ({ cellData, rowData, view_utc_time }) => {
             const dateData = new Date( ((cellDataInt / 10000000) - 11644473600) * 1000).toISOString();
             return toLocalTime(dateData.slice(0, 10) + " " + dateData.slice(11,-1), view_utc_time);
         }catch(error2){
-            console.log("error with timestamp: ", cellData);
             return String(cellData);
         }
         

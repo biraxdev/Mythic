@@ -416,7 +416,6 @@ const TaskRow = ({task, filterOptions, me, newlyIssuedTasks, indentLevel, collap
   useSubscription(getSubTaskingQuery, {
       variables: {task_id: task.id},
       onData:  ({data}) => {
-        //console.log(subscriptionData);
         // need to merge in the tasking data
         const newTaskingData = data.data.task_stream.reduce( (prev, cur) => {
           for(let i = 0; i < prev.length; i++){
@@ -711,7 +710,6 @@ const TaskLabel = ({task, dropdownOpen, toggleTaskDropdown, me, newlyIssuedTasks
   const theme = useTheme();
   const prevResponseMaxId = useRef(0);
   useEffect( () => {
-    //console.log("in use effect", prevResponseCount.current, props.task.responses);
     let currentData = task.response_count;
     if(!dropdownOpen){
       // only automatically open the dropdown if a new response comes in while we're looking
@@ -836,7 +834,6 @@ const TaskRowConsole = ({task, filterOptions, me, newlyIssuedTasks, indentLevel}
   useSubscription(getSubTaskingQuery, {
     variables: {task_id: task.id},
     onData:  ({data}) => {
-      //console.log(subscriptionData);
       // need to merge in the tasking data
       const newTaskingData = data.data.task_stream.reduce( (prev, cur) => {
         for(let i = 0; i < prev.length; i++){

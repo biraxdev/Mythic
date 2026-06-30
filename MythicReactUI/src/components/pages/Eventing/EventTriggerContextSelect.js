@@ -103,7 +103,6 @@ export function EventTriggerContextSelectDialog({onClose, triggerContext}) {
             }
         },
         onError: (error) => {
-            console.log(error);
         }
     })
     const [dictionaryData, setDictionaryData] = React.useState([]);
@@ -118,7 +117,6 @@ export function EventTriggerContextSelectDialog({onClose, triggerContext}) {
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const [triggerManualBulk] = useMutation(triggerManualBulkMutation, {
@@ -131,7 +129,6 @@ export function EventTriggerContextSelectDialog({onClose, triggerContext}) {
             }
         },
         onError: (data) => {
-            console.log(data);
         }
     })
     const handleWorkflowChange = (event) => {
